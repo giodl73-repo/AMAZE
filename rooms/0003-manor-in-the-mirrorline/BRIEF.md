@@ -3,8 +3,8 @@
 ## Status
 
 - Lifecycle state: Seed
-- Current version: v0.theme-lock
-- Last evidence source: object-first theme jam
+- Current version: v0.house-echoes
+- Last evidence source: delight-layer pass
 - Next gate: graphed
 
 ## Concept
@@ -30,7 +30,7 @@ characters, names, rooms, artwork, or story.
 | Player role | Guests at a stormbound manor asked to solve what happened before the house folds completely into the trailer. | Whether they are guests, estate auditors, paranormal inspectors, or inheritors. |
 | Tone | Spooky manor-in-a-trailer, eerie but not horror. | How campy, gothic, or cozy the performances and props should feel. |
 | Trailer identity | A parlor trailer containing compressed manor rooms as stations. | Visual style: decayed aristocratic, carnival gothic, Victorian seance, or old-money roadside attraction. |
-| Final reveal | Correct accusation makes the miniature manor align in the mirror and reveal the hidden exit token. | Whether the truth is supernatural, theatrical, or mundane-but-strange. |
+| Final reveal | Correct accusation makes the miniature manor align in the mirror, reveals the hidden exit token, and shows one short "house echo" line tying the solved suspect/object/location together. | Exact final echo copy and light/sound level. |
 
 ## Story spine
 
@@ -43,6 +43,19 @@ The players are invited as late guests and deputized by the house ledger: identi
 the suspect, object, and location before the manor folds one more time. The room
 should feel less like filling out a logic worksheet and more like physically
 interrogating a tiny haunted house.
+
+## P0 prototype content lock
+
+This is original working content for the cardboard sprint, not final production
+canon. It exists to make the first playable prototype concrete enough to test.
+
+| Category | P0 content | Notes |
+|---|---|---|
+| Suspects | Lady Maribel Vane, Orris Pike, Cora Fen, Ivo Quill, Nella Ash | gothic family, staff, guest, clerk, and restorer mix |
+| Objects | candlestick, letter opener, snuff box, iron key, hand mirror, bell-pull weight | all should be safe, blunt, oversized props |
+| Rooms | library, greenhouse, observatory, kitchen, parlor | high-contrast miniature room stations |
+| P0 solution | Nella Ash / hand mirror / observatory | use only for P0 reset maps and prototype answer keys |
+| P0 final echo | "The manor exhales. For one minute, it is a house again." | reward copy, not a clue |
 
 ## Audience
 
@@ -71,6 +84,7 @@ interrogating a tiny haunted house.
 ## Success criteria
 
 - Players should say: "We solved a tiny haunted manor, not a worksheet."
+- Players should also remember one eerie physical moment: a portrait, object, room, and mirror all seemed to answer the same accusation.
 - Operators should say: "I can see the accusation state and correct a slow team without spoiling the whole deduction."
 - Builder should say: "Each room station is modular, mounted, resettable, and replaceable."
 

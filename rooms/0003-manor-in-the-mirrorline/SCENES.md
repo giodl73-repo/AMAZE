@@ -15,7 +15,7 @@
 
 | Team archetype | Team promise/risk | Scene/beat probe | Observable signal | Operator response | Design revision |
 |---|---|---|---|---|---|
-| Amazing team | May solve too fast and feel thin. | P1-P4 | They identify all three categories before target time. | Offer optional manor lore/exclusion challenge. | Add optional depth if target total is low. |
+| Amazing team | May solve too fast and feel thin. | P1-P4 | They identify all three categories before target time. | Offer optional house-echo reads after proofs are earned. | Add optional depth that does not affect required solve. |
 | Confused team | May search props without deduction frame. | P1-P2 | They do not separate suspect/object/location. | Prompt house ledger categories. | Make category affordances stronger. |
 | Fighting team | One player may dominate the deduction. | P2-P5 | Others wait while one player reasons aloud. | Assign caller/checker/handler roles. | Split evidence across physical stations. |
 | Chaotic team | May guess or scatter objects. | P3-P5 | Random selector changes or misplaced objects. | Enforce "proved accusation only" protocol. | Add prop trays, tethers, selector locks. |
@@ -28,7 +28,7 @@
 |---|---|---|---|---|---|
 | Deduction captain | agency | Gets satisfying reasoning without taking over. | P2-P5 | untested | require physical verification by others |
 | Prop handler | agency | Handles objects meaningfully, not as assistant labor. | P3, P5 | untested | object marks must matter |
-| Quiet observer | recognition | Can notice contradictions and overlay mismatches. | P2, P4 | untested | make state changes visible |
+| Quiet observer | recognition | Can notice broken mirrorlines and overlay mismatches. | P2, P4 | untested | make state changes visible |
 | Operator | control | Can recover category/timing state. | all | untested | add state board if needed |
 
 ## Behavior probes
@@ -36,10 +36,10 @@
 | Behavior | Team/persona | Scene/beat probe | Observable signal | Risk if unsupported | Design response |
 |---|---|---|---|---|---|
 | over-searching | Confused team | P1-P2 | scanning every prop with no category theory | search soup | ledger categories and bounded stations |
-| logic domination | Fighting team | P2-P5 | one player controls deduction and cabinet | low group fun | caller/checker/handler split |
-| random guessing | Chaotic team | P5 | selector spinning without evidence | false solves, breakage | cabinet locked until category proofs |
+| logic domination | Fighting team | P2-P5 | one player controls deduction, tokens, and cabinet | low group fun | caller/checker/handler split with separate proof and selector jobs |
+| random guessing | Chaotic team | P5 | selector-cover forcing or slider spinning without evidence | false solves, breakage | proof-locked selector covers |
 | low-light/glare avoidance | Accessibility-varied team | P4 | cannot read overlay/window marks | unfair location solve | work-light inspection window with high-contrast marks |
-| speedrunning | Amazing team | P1-P4 | solves before manor atmosphere lands | thin delight | optional lore/exclusion depth |
+| speedrunning | Amazing team | P1-P4 | solves before manor atmosphere lands | thin delight | optional house echoes after proof earns |
 | state tracking under pressure | Operator stress team | full run | operator loses proven categories | bad hinting or unsafe rush | operator state map |
 
 ## Scene list
@@ -49,17 +49,23 @@
 | S1 Arrival | Establish guests, visible exit, and three-question mystery. | team enters parlor trailer | team understands suspect/object/location categories | 0-7 | confused, over-searching |
 | S2 Evidence rooms | Split category work across gallery, sideboard, and room stations. | category rule learned | at least two categories narrowed | 7-24 | fighting, chaotic, accessibility-varied |
 | S3 Accusation | Converge on final suspect/object/location and set cabinet. | all categories narrowed | mirrorline reveal and exit token | 24-40 | random guessing, operator stress |
-| S4 Exit/reset | Land reveal, keep egress clear, reset modular stations. | reveal complete | team exits and reset starts | 40-45 | all teams |
+| S4 Exit/reset | Land reveal, optional house echo, keep egress clear, reset modular stations. | reveal complete | team exits and reset starts | 40-45 | all teams |
+
+## P0 content assumptions
+
+P0 uses the prototype-only answer set from `PUZZLE-GRAPH.md`: Nella Ash,
+hand mirror, observatory. Scene timing should test whether players can follow
+category proofs without needing to memorize those labels.
 
 ## Beat cards
 
 | Scene | Beat | Player action | Aha | Check | Behavior probe | Target min | Hint at min | Slow max min | Mechanism | Reliability risk | DC | Success | Partial | Stall/hint trigger | Reset effect |
 |---|---|---|---|---|---|---:|---:|---:|---|---|---|---|---|---|---|
 | S1 | P1 House ledger intake | inspect ledger, bell, and visible stations | mystery has three physical categories | team names suspect/object/location | over-searching | 5 | 3 | 7 | ledger, bell, category plaques | reading overload | 9 | categories understood | one category named | searching before category frame | reset ledger/bell |
-| S2 | P2 Suspect gallery | open/rotate portraits, compare alibi tokens, and claim the suspect crest | one portrait physically contradicts its own alibi | suspect proof token earned | logic domination | 7 | 5 | 9 | portrait frames, alibi tokens, suspect crest token | frame or token damage | 12 | suspect crest placed in team tray | one suspect excluded | rereading without action; at slow path give one suspect exclusion | reset portraits/crest |
+| S2 | P2 Suspect gallery | open portrait backs, place alibi tokens in truth windows, and claim the suspect crest | four alibi tokens complete the mirrorline; Nella Ash's breaks it | suspect proof token earned | logic domination | 7 | 5 | 9 | portrait frames, alibi tokens, truth windows, suspect crest token | frame damage, token swap, or subtle line read | 12 | suspect crest placed in team tray | one true alibi line proven | rereading without token tests; at slow path demonstrate one true alibi line | reset portraits/tokens/crest |
 | S2 | P3 Object sideboard | sort objects, test them on the mirrorline balance plinth, and claim the object seal | the true object is the only one that balances the mirrorline | object proof token earned | random guessing | 6 | 4 | 8 | counted prop tray, balance plinth, object seal token | lost object or plinth tolerance drift | 11 | object seal placed in team tray | correct object tested but seal not claimed | object pile chaos or pure visual searching | replace objects/seal and reset plinth |
-| S2 | P4 Room stations | use work-light inspection windows and transparent proof overlays to compare rooms, then claim the room-key tile | the true location is the room that refuses the suspect/object alignment | location proof token earned | low-light avoidance | 8 | 5 | 9 | miniature room panels, work-light inspection windows, transparent overlays, room-key tile | glare, swapped overlay, or unreadable marks | 13 | room-key tile placed in team tray | one false room excluded | no overlay use by 5 min; at slow path demonstrate one false alignment | reset panels/overlays/tile |
-| S3 | P5 Mirrorline accusation | seat crest, seal, and tile; call/check answers; then set selectors | truth appears only when physical proofs and accusation align | final accusation state set | random guessing | 6 | 4 | 8 | keyed proof-token sockets, accusation selectors, mirror reveal | socket/selector jam or false positive | 13 | reveal and exit token | tokens seated but one selector wrong | selector spinning, missing token, or argument | reset cabinet/tokens |
+| S2 | P4 Room stations | use work-light inspection windows and transparent proof overlays to compare rooms, then claim the room-key tile | the true location is the room that refuses the suspect/object alignment | location proof token earned | low-light/glare avoidance | 8 | 5 | 9 | miniature room panels, work-light inspection windows, transparent overlays, room-key tile | glare, swapped overlay, or unreadable marks | 13 | room-key tile placed in team tray | one false room excluded | no overlay use by 5 min; at slow path demonstrate one false alignment | reset panels/overlays/tile |
+| S3 | P5 Mirrorline accusation | move crest, seal, and tile from proof rail to cabinet sockets; lift unlocked selector covers; call/check answers; then set sliders | proof opens access before accusation becomes possible | final accusation state set | random guessing | 6 | 4 | 8 | public proof rail, keyed proof-token sockets, selector covers, accusation sliders, mirror reveal | token missing from rail, socket jam, cover jam, slider slip, or false positive | 13 | reveal and exit token | tokens seated but one selector wrong | cover forcing, slider spinning, missing token, or argument | reset proof rail/cabinet/tokens/covers/sliders |
 
 ## Session timing model
 
@@ -77,26 +83,29 @@
 | One-player domination | Assign roles | "The manor requires a caller, a checker, and a hand at the cabinet." | ask dominant player to verify only |
 | Object chaos | Reset tray frame | "The sideboard inventory is part of the testimony." | demonstrate one failed balance test |
 | Low-light block | Offer work-light inspection | "The housekeeper kept a daylight lamp for inspections." | demonstrate one false room alignment |
-| Final guessing | Pause selector changes | "The manor rejects accusations without evidence." | seat staff proof token for proven categories |
+| Final guessing | Pause selector covers/sliders | "The manor rejects accusations without evidence." | seat staff proof token for proven categories |
+| Fast team wants more | Offer house echoes after proof earns | "The house remembers more than it needed to prove." | point to one optional station-back echo |
 
 ## Prototype simulation focus
 
 | Prototype question | Team most likely to expose it | Watch for | Pass condition |
 |---|---|---|---|
 | Do players understand that crest/seal/tile are category proofs? | Confused team | carrying tokens without knowing what they prove | team says "we need all three proofs" before P5 hint |
-| Does token seating split roles? | Fighting team | one player takes all tokens and selectors | caller/checker/handler roles emerge or operator can assign them cleanly |
-| Are sockets resistant to guessing and force? | Chaotic team | wrong-token attempts, spinning selectors, jamming | no damage, no false reveal, clear "wrong category" feedback |
+| Does token seating split roles? | Fighting team | one player takes all tokens from proof rail, covers, and sliders | caller/checker/handler roles emerge or operator can assign them cleanly |
+| Are sockets/covers resistant to guessing and force? | Chaotic team | wrong-token attempts, cover forcing, slider spinning, jamming | no damage, no false reveal, clear "proof first" feedback |
+| Is P2 a real physical contradiction rather than reading? | Confused team | rereading portrait text without trying alibi tokens | team tests tokens in truth windows before hint time |
 | Is P3 a real physical test rather than search? | Confused team | inspecting objects for hidden marks without using plinth | team uses the balance plinth as the obvious test surface |
 | Is P4 readable without spooky darkness? | Accessibility-varied team | avoiding overlay/window clue or needing high reach | high-contrast overlay route works under work light |
-| Can staff reset tokens quickly? | Operator stress team | missing token, wrong home, socket unclear | reset verifies under 10 minutes |
+| Can staff reset tokens quickly? | Operator stress team | missing token, wrong home, proof rail clutter, socket unclear | reset verifies under 10 minutes |
 
 ## Consequence log
 
 | Beat | Consequence | Affected clock | Operator visibility | Revision |
 |---|---|---|---|---|
 | P1 | If categories are unclear, the room becomes search soup. | S1 | visible in early movement | strengthen ledger/category plaques |
-| P2 | If gallery is too text-heavy, one player dominates. | S2 | group posture/audio | make alibis physical |
+| P2 | If gallery is too text-heavy or token windows are subtle, one player dominates. | S2 | group posture/audio | make truth-window line bold and token actions obvious |
 | P3 | If sideboard becomes hidden-mark search, the object category is weak. | S2 | object handling and plinth use | make balance plinth the obvious test |
 | P4 | If overlay reveal is glare-prone or fiddly, accessibility fails. | S2 | station camera | enlarge overlays and make false-room alignment obvious |
-| P5 | If cabinet allows guessing, deduction loses meaning. | S3 | selector and proof-socket camera | add/test category proof locks |
+| P5 | If cabinet covers can be forced or one player controls all sliders, deduction loses meaning. | S3 | selector-cover and proof-socket camera | test category proof locks and caller/checker/handler ritual |
+| Optional echoes | If house-echo copy reads like a clue, teams may slow down or overthink. | S2-S4 | observer notes and hint log | keep echoes after proof earns and label as memory/flavor |
 
