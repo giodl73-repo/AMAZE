@@ -25,6 +25,7 @@ pub(crate) enum Command {
     Lint(LintArgs),
     Visuals(VisualsArgs),
     Bench(BenchArgs),
+    Ops(OpsArgs),
     Help,
 }
 
@@ -130,6 +131,12 @@ pub(crate) struct BenchArgs {
     pub(crate) target: Option<String>,
 }
 
+#[derive(Debug)]
+pub(crate) struct OpsArgs {
+    pub(crate) room: Option<PathBuf>,
+    pub(crate) rooms: Option<PathBuf>,
+}
+
 pub(crate) fn parse_cli(args: Vec<String>) -> Result<Cli, String> {
     if args.is_empty() {
         return Ok(Cli {
@@ -151,6 +158,7 @@ pub(crate) fn parse_cli(args: Vec<String>) -> Result<Cli, String> {
         "lint" => parse_lint(&args[1..]).map(|command| Cli { command }),
         "visuals" => parse_visuals(&args[1..]).map(|command| Cli { command }),
         "bench" => parse_bench(&args[1..]).map(|command| Cli { command }),
+        "ops" => parse_ops(&args[1..]).map(|command| Cli { command }),
         "help" | "-h" | "--help" => Ok(Cli {
             command: Command::Help,
         }),
@@ -740,6 +748,36 @@ fn parse_bench(args: &[String]) -> Result<Command, String> {
     }))
 }
 
+fn parse_ops(args: &[String]) -> Result<Command, String> {
+    let mut room = None;
+    let mut rooms = None;
+    let mut i = 0;
+
+    while i < args.len() {
+        match args[i].as_str() {
+            "--room" => {
+                i += 1;
+                room = args.get(i).map(PathBuf::from);
+            }
+            "--rooms" => {
+                i += 1;
+                rooms = args.get(i).map(PathBuf::from);
+            }
+            other => return Err(format!("unknown ops argument '{other}'")),
+        }
+        i += 1;
+    }
+
+    if room.is_none() && rooms.is_none() {
+        return Err("ops requires --room <path> or --rooms <rooms-root>".to_string());
+    }
+    if room.is_some() && rooms.is_some() {
+        return Err("ops accepts either --room or --rooms, not both".to_string());
+    }
+
+    Ok(Command::Ops(OpsArgs { room, rooms }))
+}
+
 pub(crate) fn print_help() {
     println!(
         "AMAZE harness\n\n\
@@ -756,6 +794,8 @@ pub(crate) fn print_help() {
             amaze bench --rooms <rooms-root> --kind admin --status not-run\n\
             amaze bench --rooms <rooms-root> --open --blocker \"P2 promotion\"\n\
             amaze bench --rooms <rooms-root> --open --target DEV-SOCKET-001\n\
+            amaze ops --room <room-path>\n\
+            amaze ops --rooms <rooms-root>\n\
             amaze run --room <room-path> --team <team archetype> [--behavior <behavior>] [--clock <minutes>]\n\
             amaze simulate --room <room-path> [--runs 100] [--seed 1] [--target <minutes>]\n\
             amaze optimize --room <room-path> [--target <minutes>]\n\
@@ -860,5 +900,24 @@ mod tests {
         assert!(
             matches!(all_rooms.command, Command::Score(args) if args.rooms.is_some() && args.target_minutes == Some(45))
         );
+    }
+
+    #[test]
+    fn parses_ops_room_or_rooms() {
+        let one_room = parse_cli(vec![
+            "ops".to_string(),
+            "--room".to_string(),
+            "rooms\\TEMPLATE".to_string(),
+        ])
+        .expect("parse room ops");
+        assert!(matches!(one_room.command, Command::Ops(args) if args.room.is_some()));
+
+        let all_rooms = parse_cli(vec![
+            "ops".to_string(),
+            "--rooms".to_string(),
+            "rooms".to_string(),
+        ])
+        .expect("parse rooms ops");
+        assert!(matches!(all_rooms.command, Command::Ops(args) if args.rooms.is_some()));
     }
 }

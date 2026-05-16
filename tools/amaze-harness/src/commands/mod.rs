@@ -2,6 +2,7 @@ pub(crate) mod bench;
 pub(crate) mod catalog;
 pub(crate) mod check;
 pub(crate) mod lint;
+pub(crate) mod ops;
 pub(crate) mod score;
 pub(crate) mod simulation;
 pub(crate) mod timing;
@@ -24,6 +25,7 @@ pub(crate) fn run(command: Command) -> Result<(), String> {
         Command::Lint(args) => lint::lint_room_pack(args),
         Command::Visuals(args) => visuals::visual_readiness_report(args),
         Command::Bench(args) => bench::bench_evidence_report(args),
+        Command::Ops(args) => ops::ops_readiness_report(args),
         Command::Help => {
             crate::cli::print_help();
             Ok(())

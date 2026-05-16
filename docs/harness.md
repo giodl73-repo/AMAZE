@@ -132,6 +132,10 @@ cargo run --manifest-path tools\amaze-harness\Cargo.toml -- bench --rooms rooms 
 ```
 
 ```powershell
+cargo run --manifest-path tools\amaze-harness\Cargo.toml -- ops --rooms rooms
+```
+
+```powershell
 cargo run --manifest-path tools\amaze-harness\Cargo.toml -- run --room rooms\TEMPLATE --team "Confused team" --behavior "overthinking" --clock 25
 ```
 
@@ -175,6 +179,7 @@ cargo run --manifest-path tools\amaze-harness\Cargo.toml -- packages --query soc
 | `lint --room <path>` / `lint --rooms <root>` | Uses `mdpath` to lint room Markdown structure before deeper room-specific parsing. |
 | `visuals --room <path>` / `visuals --rooms <root>` | Prints C4-C5 visual readiness status, diagrams, and build-readiness gaps for one room or a portfolio of room folders. Add `--open-c5` to show only unresolved C5 showstoppers, `--status draft|blocked|build-ready`, or `--gap <text>` to target repeated blockers. |
 | `bench --room <path>` / `bench --rooms <root>` | Prints physical evidence queues from `PLAYTEST.md`: device bench tests, admin replacement drills, and chaos probes. Add `--open`, `--kind bench|admin|chaos`, `--status pending|not-run|passed|failed|blocked`, `--blocker <text>`, or `--target <text>` to plan the next evidence sprint. |
+| `ops --room <path>` / `ops --rooms <root>` | Prints NPC/operator voices, multi-room rotation models, shared-operator capacity, and dedicated-staff trigger themes for one room or a room portfolio. |
 | `run --room <path> --team <team> [--behavior <behavior>] [--clock <minutes>]` | Reads `SCENES.md` and prints a beat-by-beat run sheet. |
 | `simulate --room <path> [--runs <n>] [--seed <n>] [--target <minutes>]` | Runs a deterministic randomized batch across team archetypes, beat timings, hints, chaos probes, reliability pressure, BOM break/loss events, admin replacement recovery, build-time pressure, per-run scores, and average simulation score. |
 | `optimize --room <path> [--target <minutes>]` | Totals beat timing budgets, flags overrun risk, and recommends hint/acceleration changes. |
