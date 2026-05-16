@@ -1,0 +1,19 @@
+# Local/editor state
+.claude/settings.local.json
+.vscode/
+.idea/
+
+# Generated/build output
+dist/
+build/
+out/
+*.zip
+
+# Private operations material
+operations/private/
+vendors/private/
+site-visits/private/
+
+# OS files
+.DS_Store
+Thumbs.db
