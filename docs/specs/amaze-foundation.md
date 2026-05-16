@@ -19,7 +19,8 @@ digital room.
 | Room brief | Theme, audience, duration, capacity, trailer constraints, success criteria. |
 | Floorplan | Dimensions, circulation, sightlines, egress, operator zones, reset paths. |
 | Puzzle graph | Dependencies, aha beats, hint ladder, bottlenecks, reset state. |
-| Build plan | Props, locks, sensors, scenic elements, mounting, power, transport. |
+| Scene harness | Party roles, group-game stakes, beat checks, clocks, interventions. |
+| Build plan | BOM, budget, props, locks, sensors, durability, reliability, mounting, power, transport. |
 | Safety review | Egress, fire, electrical, accessibility, emergency procedures. |
 | Playtest record | Team behavior, stuck points, hint use, reset timing, operator notes. |
 | Ops pack | Staff script, reset checklist, maintenance plan, failure-mode handling. |
@@ -36,6 +37,9 @@ A room concept is ready for deeper build planning only when it has:
 
 1. a declared trailer envelope;
 2. a floorplan with egress and staff access;
-3. a puzzle graph with no unintentional bottlenecks;
-4. a reset path under the target reset time;
-5. a safety review with open risks named rather than hidden.
+3. a puzzle graph with no unintentional bottlenecks and every required beat
+   physically embodied;
+4. a scene simulation with puzzle-hunt checks and group-game stakes;
+5. a BOM/budget and durability review for required mechanisms;
+6. a reset path under the target reset time;
+7. a safety review with open risks named rather than hidden.

@@ -36,6 +36,11 @@ AMAZE/
   README.md
   CLAUDE.md
   docs/specs/                  design specs and constraints
+  docs/puzzle-hopper.md        puzzle-hunt-grade idea intake and promotion
+  docs/scene-beat-harness.md   D&D-style simulation harness for rooms
+  docs/build-economics.md      BOM, budget, durability, and reliability gates
+  scoring/                     escape-room rubric and scoring protocol
+  personas/                    player, operator, builder, and venue lenses
   rooms/                       one directory per room concept
   components/                  reusable prop, lock, sensor, lighting, and scenic modules
   operations/                  reset, staffing, maintenance, transport, and safety checklists
@@ -46,15 +51,33 @@ AMAZE/
 ## Initial workflow
 
 ```text
-BRIEF -> FLOORPLAN -> PUZZLE GRAPH -> BUILD PLAN -> SAFETY REVIEW -> PLAYTEST -> OPS PACK
+BRIEF -> FLOORPLAN -> PUZZLE GRAPH -> SIMULATION -> BOM/BUDGET -> BUILD PLAN -> SAFETY REVIEW -> PLAYTEST -> OPS PACK
 ```
 
 The workflow is intentionally physical. A puzzle graph that cannot fit in the
 room, survive transport, or reset cleanly is not ready.
 
+## Design loop
+
+AMAZE uses the Games Design loop:
+
+```text
+DESIGN -> SIMULATE -> SCORE -> LOG SURPRISES -> IMPROVE -> LOCK NEXT VERSION
+```
+
+Rooms are scored with [`scoring/RUBRIC.md`](scoring/RUBRIC.md). New puzzle ideas
+enter through [`docs/puzzle-hopper.md`](docs/puzzle-hopper.md), then simulations
+use the D&D-style [`docs/scene-beat-harness.md`](docs/scene-beat-harness.md) and
+personas in [`personas/`](personas/) to test different teams, staff choices,
+hint timing, reset friction, and safety edge cases before a build plan advances.
+Every promoted puzzle beat also needs a physical mechanism and build economics
+review through [`docs/build-economics.md`](docs/build-economics.md): BOM, budget,
+durability, reliability, breakage recovery, and replacement plan.
+
 ## Current status
 
-Foundation scaffold. No room concepts have shipped yet.
+Foundation scaffold plus first room seed:
+[`rooms/0001-signal-in-the-silverstream/`](rooms/0001-signal-in-the-silverstream/).
 
 ## License
 

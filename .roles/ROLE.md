@@ -13,6 +13,7 @@ advance.
 |---|---|---|
 | `parliament/safety-governance-steward.md` | Safety Governance Steward | Immersive confinement vs. real egress and operator control |
 | `parliament/build-readiness-auditor.md` | Build Readiness Auditor | Exciting concept vs. trailer-scale build feasibility |
+| `parliament/bom-durability-auditor.md` | BOM Durability Auditor | Magical props vs. budget, breakage, spares, and device reliability |
 
 ## Spatial
 
@@ -29,6 +30,7 @@ Puzzle roles protect aha moments, dependency structure, and fair hinting.
 | File | Role | Primary tension |
 |---|---|---|
 | `puzzle-craft/aha-graph-editor.md` | Aha Graph Editor | Discovery and surprise vs. bottlenecks and search soup |
+| `puzzle-craft/puzzle-hopper-curator.md` | Puzzle Hopper Curator | Big idea inventory vs. buildable room beats |
 
 ## Operations
 
@@ -37,6 +39,7 @@ Operations roles protect reset, maintenance, staffing, and transport.
 | File | Role | Primary tension |
 |---|---|---|
 | `operations/reset-ops-reviewer.md` | Reset Ops Reviewer | Magical player experience vs. repeatable staff workflow |
+| `operations/throughput-hint-captain.md` | Throughput Hint Captain | Letting teams struggle vs. keeping sessions on time and fun |
 
 ## Review order
 
