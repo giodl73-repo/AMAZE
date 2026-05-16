@@ -67,6 +67,7 @@ Keep one Rust package for now, but split the code into modules as seams stabiliz
 | `commands\mod.rs` | command module registry and `Command` dispatch |
 | `commands\check.rs` | structured room-contract issue rendering and visual-reference gate wiring |
 | `commands\lint.rs` | `mdpath`-backed room Markdown hygiene checks before deeper parsing |
+| `commands\lifecycle.rs` | lifecycle state, gate blocker, and promotion sprint reporting |
 | `commands\catalog.rs` | inventory and beat-package catalog reports |
 | `commands\visuals.rs` | C4-C5 visual readiness report and portfolio sprint queue |
 | `commands\bench.rs` | bench/admin/chaos evidence report and portfolio sprint queue |
@@ -75,7 +76,7 @@ Keep one Rust package for now, but split the code into modules as seams stabiliz
 | `commands\simulation.rs` | randomized run simulation, reliability/chaos pressure, and build-time pressure report surfaces |
 | `commands\timing.rs` | run sheets, session optimization reports, timing analysis reports, playtest recording, and team matrices |
 | `domain` | typed row contracts for repeated rules: scenes, beat cards, components, part diagrams, team/behavior probes, NPC/operator voices, multi-room rotation, variability, chaos, evidence, and catalogs |
-| `commands` | `check`, `visuals`, `bench`, `packages`, `simulate`, `record`, `matrix`, `inventory` |
+| `commands` | `check`, `lifecycle`, `visuals`, `bench`, `packages`, `simulate`, `record`, `matrix`, `inventory` |
 | `rules` | visual readiness, timing policy, simulation reliability, and promotion gates |
 | `sim` | deterministic RNG, sampling, and percentage math primitives |
 

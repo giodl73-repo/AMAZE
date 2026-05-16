@@ -34,9 +34,11 @@ while the room model is still changing, but the code is split along stable seams
 | `commands\mod.rs` | command module registry and `Command` dispatch |
 | `commands\check.rs` | structured room-contract issue rendering and visual-reference gate wiring |
 | `commands\lint.rs` | `mdpath`-backed room Markdown hygiene checks before deeper parsing |
+| `commands\lifecycle.rs` | room lifecycle state, gate blockers, and promotion sprint reports |
 | `commands\catalog.rs` | inventory and beat-package catalog reports |
 | `commands\visuals.rs` | C4-C5 visual readiness report and portfolio sprint queue |
 | `commands\bench.rs` | bench/admin/chaos evidence report and portfolio sprint queue |
+| `commands\ops.rs` | NPC/operator voice reports, multi-room rotation readiness, and shared-operator stagger models |
 | `commands\score.rs` | draft rubric scorecards for one room or a room portfolio |
 | `commands\simulation.rs` | randomized run simulation, reliability/chaos pressure, and build-time pressure report surfaces |
 | `commands\timing.rs` | run sheets, session optimization reports, timing analysis reports, playtest recording, and team matrices |
@@ -136,6 +138,10 @@ cargo run --manifest-path tools\amaze-harness\Cargo.toml -- ops --rooms rooms --
 ```
 
 ```powershell
+cargo run --manifest-path tools\amaze-harness\Cargo.toml -- lifecycle --rooms rooms
+```
+
+```powershell
 cargo run --manifest-path tools\amaze-harness\Cargo.toml -- run --room rooms\TEMPLATE --team "Confused team" --behavior "overthinking" --clock 25
 ```
 
@@ -177,6 +183,7 @@ cargo run --manifest-path tools\amaze-harness\Cargo.toml -- packages --query soc
 |---|---|
 | `check --room <path>` | Verifies required room files, key harness headings, visual references for C4-C5 BOM rows, declared transformation/unlock readiness rows, and declared NPC/rotation ops rows. |
 | `lint --room <path>` / `lint --rooms <root>` | Uses `mdpath` to lint room Markdown structure before deeper room-specific parsing. |
+| `lifecycle --room <path>` / `lifecycle --rooms <root>` | Reads `BRIEF.md` lifecycle status and next gate, then summarizes contract issues, open C5 visuals, blocked visuals, open bench evidence, and recommended promotion work. Alias: `gates`. |
 | `visuals --room <path>` / `visuals --rooms <root>` | Prints C4-C5 visual readiness status, diagrams, and build-readiness gaps for one room or a portfolio of room folders. Add `--open-c5` to show only unresolved C5 showstoppers, `--status draft|blocked|build-ready`, or `--gap <text>` to target repeated blockers. |
 | `bench --room <path>` / `bench --rooms <root>` | Prints physical evidence queues from `PLAYTEST.md`: device bench tests, admin replacement drills, and chaos probes. Add `--open`, `--kind bench|admin|chaos`, `--status pending|not-run|passed|failed|blocked`, `--blocker <text>`, or `--target <text>` to plan the next evidence sprint. |
 | `ops --room <path>` / `ops --rooms <root>` | Prints NPC/operator voices, multi-room rotation models, shared-operator capacity, a staggered start model, and dedicated-staff trigger themes for one room or a room portfolio. Use `--stagger <minutes>` and `--finale-window <minutes>` to stress-test shared-operator rotation timing. |

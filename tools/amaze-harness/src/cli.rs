@@ -26,6 +26,7 @@ pub(crate) enum Command {
     Visuals(VisualsArgs),
     Bench(BenchArgs),
     Ops(OpsArgs),
+    Lifecycle(LifecycleArgs),
     Help,
 }
 
@@ -139,6 +140,12 @@ pub(crate) struct OpsArgs {
     pub(crate) finale_minutes: u32,
 }
 
+#[derive(Debug)]
+pub(crate) struct LifecycleArgs {
+    pub(crate) room: Option<PathBuf>,
+    pub(crate) rooms: Option<PathBuf>,
+}
+
 pub(crate) fn parse_cli(args: Vec<String>) -> Result<Cli, String> {
     if args.is_empty() {
         return Ok(Cli {
@@ -161,6 +168,7 @@ pub(crate) fn parse_cli(args: Vec<String>) -> Result<Cli, String> {
         "visuals" => parse_visuals(&args[1..]).map(|command| Cli { command }),
         "bench" => parse_bench(&args[1..]).map(|command| Cli { command }),
         "ops" => parse_ops(&args[1..]).map(|command| Cli { command }),
+        "lifecycle" | "gates" => parse_lifecycle(&args[1..]).map(|command| Cli { command }),
         "help" | "-h" | "--help" => Ok(Cli {
             command: Command::Help,
         }),
@@ -801,6 +809,36 @@ fn parse_ops(args: &[String]) -> Result<Command, String> {
     }))
 }
 
+fn parse_lifecycle(args: &[String]) -> Result<Command, String> {
+    let mut room = None;
+    let mut rooms = None;
+    let mut i = 0;
+
+    while i < args.len() {
+        match args[i].as_str() {
+            "--room" => {
+                i += 1;
+                room = args.get(i).map(PathBuf::from);
+            }
+            "--rooms" => {
+                i += 1;
+                rooms = args.get(i).map(PathBuf::from);
+            }
+            other => return Err(format!("unknown lifecycle argument '{other}'")),
+        }
+        i += 1;
+    }
+
+    if room.is_none() && rooms.is_none() {
+        return Err("lifecycle requires --room <path> or --rooms <rooms-root>".to_string());
+    }
+    if room.is_some() && rooms.is_some() {
+        return Err("lifecycle accepts either --room or --rooms, not both".to_string());
+    }
+
+    Ok(Command::Lifecycle(LifecycleArgs { room, rooms }))
+}
+
 pub(crate) fn print_help() {
     println!(
         "AMAZE harness\n\n\
@@ -819,6 +857,8 @@ pub(crate) fn print_help() {
             amaze bench --rooms <rooms-root> --open --target DEV-SOCKET-001\n\
             amaze ops --room <room-path>\n\
             amaze ops --rooms <rooms-root> [--stagger 10] [--finale-window 10]\n\
+            amaze lifecycle --room <room-path>\n\
+            amaze lifecycle --rooms <rooms-root>\n\
             amaze run --room <room-path> --team <team archetype> [--behavior <behavior>] [--clock <minutes>]\n\
             amaze simulate --room <room-path> [--runs 100] [--seed 1] [--target <minutes>]\n\
             amaze optimize --room <room-path> [--target <minutes>]\n\
@@ -948,5 +988,24 @@ mod tests {
         assert!(
             matches!(all_rooms.command, Command::Ops(args) if args.rooms.is_some() && args.stagger_minutes == 12 && args.finale_minutes == 8)
         );
+    }
+
+    #[test]
+    fn parses_lifecycle_room_or_rooms() {
+        let one_room = parse_cli(vec![
+            "lifecycle".to_string(),
+            "--room".to_string(),
+            "rooms\\0001-signal-in-the-silverstream".to_string(),
+        ])
+        .expect("parse room lifecycle");
+        assert!(matches!(one_room.command, Command::Lifecycle(args) if args.room.is_some()));
+
+        let all_rooms = parse_cli(vec![
+            "gates".to_string(),
+            "--rooms".to_string(),
+            "rooms".to_string(),
+        ])
+        .expect("parse rooms lifecycle alias");
+        assert!(matches!(all_rooms.command, Command::Lifecycle(args) if args.rooms.is_some()));
     }
 }

@@ -1,6 +1,7 @@
 pub(crate) mod bench;
 pub(crate) mod catalog;
 pub(crate) mod check;
+pub(crate) mod lifecycle;
 pub(crate) mod lint;
 pub(crate) mod ops;
 pub(crate) mod score;
@@ -26,6 +27,7 @@ pub(crate) fn run(command: Command) -> Result<(), String> {
         Command::Visuals(args) => visuals::visual_readiness_report(args),
         Command::Bench(args) => bench::bench_evidence_report(args),
         Command::Ops(args) => ops::ops_readiness_report(args),
+        Command::Lifecycle(args) => lifecycle::lifecycle_report(args),
         Command::Help => {
             crate::cli::print_help();
             Ok(())
