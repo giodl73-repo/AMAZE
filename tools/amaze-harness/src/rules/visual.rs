@@ -1,4 +1,4 @@
-use std::path::Path;
+use std::path::{Path, PathBuf};
 
 use crate::domain::{BuildDoc, Component, PartDiagram};
 use crate::room::read_build_doc;
@@ -364,7 +364,19 @@ pub(crate) fn is_usable_visual_reference(room: &Path, text: &str) -> bool {
 
     diagram_paths(trimmed)
         .iter()
-        .any(|path| room.join(path).exists() || Path::new(path).exists())
+        .any(|path| visual_path_exists(room, path))
+}
+
+fn visual_path_exists(room: &Path, path: &str) -> bool {
+    let normalized = normalize_visual_path(path);
+    room.join(path).exists()
+        || Path::new(path).exists()
+        || room.join(&normalized).exists()
+        || normalized.exists()
+}
+
+fn normalize_visual_path(path: &str) -> PathBuf {
+    path.split(['\\', '/']).collect()
 }
 
 fn diagram_paths(text: &str) -> Vec<String> {
@@ -379,10 +391,13 @@ fn diagram_paths(text: &str) -> Vec<String> {
 
 #[cfg(test)]
 mod tests {
+    use std::path::PathBuf;
+
     use crate::domain::{Component, PartDiagram};
 
     use super::{
-        beat_ids, requires_visual_reference, visual_match_score, visual_readiness, VisualReadiness,
+        beat_ids, normalize_visual_path, requires_visual_reference, visual_match_score,
+        visual_readiness, VisualReadiness,
     };
 
     #[test]
@@ -395,6 +410,18 @@ mod tests {
                 "P4".to_string(),
                 "P5".to_string()
             ]
+        );
+    }
+
+    #[test]
+    fn normalizes_visual_paths_across_platforms() {
+        assert_eq!(
+            normalize_visual_path("components\\diagrams\\part.excalidraw"),
+            PathBuf::from_iter(["components", "diagrams", "part.excalidraw"])
+        );
+        assert_eq!(
+            normalize_visual_path("components/diagrams/part.excalidraw"),
+            PathBuf::from_iter(["components", "diagrams", "part.excalidraw"])
         );
     }
 
