@@ -31,6 +31,7 @@ Puzzle roles protect aha moments, dependency structure, and fair hinting.
 |---|---|---|
 | `puzzle-craft/aha-graph-editor.md` | Aha Graph Editor | Discovery and surprise vs. bottlenecks and search soup |
 | `puzzle-craft/puzzle-hopper-curator.md` | Puzzle Hopper Curator | Big idea inventory vs. buildable room beats |
+| `puzzle-craft/phase-wave-planner.md` | Phase Wave Planner | Mechanic skill development vs. novelty-code overload |
 
 ## Operations
 
@@ -41,8 +42,28 @@ Operations roles protect reset, maintenance, staffing, and transport.
 | `operations/reset-ops-reviewer.md` | Reset Ops Reviewer | Magical player experience vs. repeatable staff workflow |
 | `operations/throughput-hint-captain.md` | Throughput Hint Captain | Letting teams struggle vs. keeping sessions on time and fun |
 
+## Playtest
+
+Playtest roles protect simulation discipline, evidence quality, and revision
+decisions.
+
+| File | Role | Primary tension |
+|---|---|---|
+| `playtest/simulation-evidence-analyst.md` | Simulation Evidence Analyst | Author confidence vs. observed team behavior |
+
+## System
+
+System roles protect the reusable AMAZE design contract.
+
+| File | Role | Primary tension |
+|---|---|---|
+| `system/template-contract-steward.md` | Template Contract Steward | Useful shared standards vs. template bureaucracy |
+
 ## Review order
 
 1. Use Spatial and Puzzle craft roles while shaping the room.
 2. Use Operations roles once components, staff paths, or reset state appear.
-3. Use Parliament roles before a concept advances to build planning or playtest.
+3. Use Playtest roles when running simulations, scoring, or deciding revisions.
+4. Use Parliament roles before a concept advances to build planning or playtest.
+5. Use System roles when changing principles, invariants, pitfalls, lifecycle
+   gates, or room templates.

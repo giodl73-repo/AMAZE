@@ -1,0 +1,10 @@
+[package]
+name = "amaze-harness"
+version = "0.1.0"
+edition = "2021"
+
+[workspace]
+
+[[bin]]
+name = "amaze"
+path = "src/main.rs"

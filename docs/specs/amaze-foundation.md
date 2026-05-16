@@ -25,6 +25,14 @@ digital room.
 | Playtest record | Team behavior, stuck points, hint use, reset timing, operator notes. |
 | Ops pack | Staff script, reset checklist, maintenance plan, failure-mode handling. |
 
+## System specs
+
+| Spec | Purpose |
+|---|---|
+| `docs/specs/design-system.md` | Principles, invariants, pitfalls, and puzzlehunt lessons used across rooms. |
+| `docs/specs/room-lifecycle.md` | Required room template files, lifecycle states, promotion gates, and template evolution rules. |
+| `docs/puzzle-phases.md` | Puzzle-type phases, waves, pulses, base skills, and theme fits used to seed room hoppers. |
+
 ## Non-goals
 
 - No final engineering certification or code-compliance claim.
@@ -43,3 +51,6 @@ A room concept is ready for deeper build planning only when it has:
 5. a BOM/budget and durability review for required mechanisms;
 6. a reset path under the target reset time;
 7. a safety review with open risks named rather than hidden.
+
+These checks are elaborated in `docs/specs/design-system.md` and
+`docs/specs/room-lifecycle.md`.

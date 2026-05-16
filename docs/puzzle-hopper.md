@@ -5,12 +5,17 @@ the inventory of possible aha moments, clue systems, transformations, and
 physical interactions that a room can draw from.
 
 The hopper is not a backlog of things to build. It is a design laboratory.
+Seed the hopper from puzzle-type phases in `docs/puzzle-phases.md`, then promote
+only the candidates that survive physicalization, simulation, scoring, and
+room-specific gates.
 
 ## Candidate card
 
 | Field | Question |
 |---|---|
 | Name | What is the short handle? |
+| Phase | Which puzzle-type phase from `docs/puzzle-phases.md` does this candidate develop? |
+| Design wave/pulse | Which AMAZE design wave and test pulse produced this idea? |
 | Aha | What must players realize? |
 | Inputs | What do players see, hear, touch, sort, count, align, or infer? |
 | Transform | What puzzle-hunt skill converts input to output? |
@@ -73,12 +78,27 @@ A candidate promotes only when it passes all gates:
 8. **Safety gate** - it does not require unsafe movement, force, darkness, heat,
    electrical exposure, or panic pressure.
 
+## Review pass
+
+Every hopper needs an explicit editorial review before candidates promote. This
+is where AMAZE says whether a puzzle is actually good, merely thematic, too
+fragile, or not yet fair.
+
+| Field | Question |
+|---|---|
+| Candidate | Which hopper item is being reviewed? |
+| Verdict | Keep, rework, park, cut, or promote. |
+| Why it might be fun | What player experience could make this worth building? |
+| Why it might fail | What is the likely boredom, confusion, bottleneck, safety, or reset failure? |
+| User/design input needed | What creative choice must be made before the puzzle gets more build detail? |
+| Next revision | What concrete change improves the candidate? |
+
 ## Hopper table
 
 Use this table in room docs or future `hopper/` files:
 
-| ID | State | Name | Skill tags | Aha | Physical action | Risk | Next test |
-|---|---|---|---|---|---|---|---|
+| ID | State | Phase | Name | Skill tags | Aha | Physical action | Risk | Next test |
+|---|---|---|---|---|---|---|---|---|
 
 ## Examples for trailer rooms
 

@@ -1,5 +1,12 @@
 # Signal in the Silverstream
 
+## Status
+
+- Lifecycle state: Graphed
+- Current version: v0.graph
+- Last evidence source: seed-room timing migration
+- Next gate: simulated
+
 ## Concept
 
 A polished silver travel trailer has been receiving impossible radio broadcasts
@@ -14,8 +21,9 @@ maintenance compartments.
 
 - Envelope: Airstream-size trailer or larger.
 - Team size: 2-5.
-- Target session: 25 minutes.
-- Reset target: 7 minutes.
+- Target session: 30-minute prototype; 45-minute staffed-hour profile under evaluation.
+- Ops slot: 45 minutes for prototype, 60 minutes for staffed-hour profile.
+- Reset target: 7 minutes prototype; 10-15 minutes staffed-hour turnover.
 - Staff: one operator with audio/video monitoring and manual override.
 
 ## Theme promise
@@ -34,3 +42,12 @@ just reconstructed.
 - Players say: "The trailer itself was the puzzle."
 - Operators say: "I can keep slow teams moving without breaking the story."
 - Builder says: "Every interaction can mount, travel, and reset."
+
+## Invariants check
+
+- Egress visible in floorplan: draft in `FLOORPLAN.md`.
+- Staff override declared: yes, one operator with audio/video monitoring and manual override.
+- Accessibility assumptions named: draft in `SAFETY.md` and `FLOORPLAN.md`.
+- Physical signature moment declared: radio convergence through route, power, frequency, and bearing.
+- Reset target declared: 7 minutes.
+- Safety unknowns named: electrical prop isolation, table force, low-light/audio alternatives.

@@ -3,6 +3,11 @@
 Personas are used for simulation and review. They are not governance roles; the
 governance roles live in `.roles/parliament/`.
 
+Personas are individual or role lenses. Use `docs/team-testing.md` for
+whole-team archetypes and `docs/behavior-testing.md` for specific behavior
+probes. A simulation run should name all three: team archetype, personas/roles,
+and behaviors under test.
+
 ## Player personas
 
 | Persona | What they test |
@@ -22,7 +27,8 @@ governance roles live in `.roles/parliament/`.
 
 ## Simulation use
 
-For every room concept, run at least:
+For every room concept, run the required team archetypes in
+`docs/team-testing.md`, including at least:
 
 1. one novice/social team;
 2. one fast expert team;
@@ -31,3 +37,7 @@ For every room concept, run at least:
 
 Record time, hints, stuck states, safety flags, reset friction, and what each
 team would tell a friend.
+
+Also record team and behavior probes: the team dynamic being tested, the
+behavior being tested, the scene or beat that probes it, the observable signal,
+and the design response.

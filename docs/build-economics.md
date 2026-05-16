@@ -22,15 +22,23 @@ paired with a tactile or spatial action.
 
 ## BOM line item
 
+Use `components/INVENTORY.md` first. Room BOMs should reference an inventory ID
+when possible, then record any room-specific quantity, source, and cost decision.
+If an item is custom or one-off, mark it as `CUSTOM-*` and add a substitute or
+fabrication plan before build readiness review.
+
 Use this for every component:
 
 | Field | Meaning |
 |---|---|
+| Inventory ID | Reusable component ID from `components/INVENTORY.md`, or `CUSTOM-*`. |
 | Component | Named part or assembly. |
 | Beat IDs | Puzzle beats that depend on it. |
-| Quantity | Installed count plus spares. |
-| Unit cost | Current estimate or cost band. |
-| Source | Vendor, fabrication path, or "TBD." |
+| Installed qty | Count installed in the room. |
+| Spare qty | Minimum spare count for public operation. |
+| Unit cost band | Current estimate or verified cost band. |
+| Source tier | Common supplier class or fabrication path. |
+| Price confidence | Planning, checked, quoted, or purchased. |
 | Lead time | Known or estimated procurement delay. |
 | Durability class | Low, medium, high, consumable, unknown. |
 | Failure mode | How it breaks or misreads. |
@@ -48,6 +56,23 @@ Track budgets separately:
 | Spares | replacements for high-touch and fragile parts |
 | Maintenance | consumables, batteries, cleaning, calibration tools |
 | Transport | cases, vibration protection, tie-downs, weather covers |
+
+## Common sourcing
+
+Prefer repeatable sources:
+
+1. Big-box hardware for wood, fasteners, hinges, brackets, cable raceway, and
+   basic lighting.
+2. Electronics suppliers for switches, low-voltage power, LEDs, sensors, and
+   connectors.
+3. Industrial suppliers for robust latches, magnets, hinges, labels, cases, and
+   serviceable hardware.
+4. Office/print shops for clue cards, laminated evidence, labels, and reset
+   sheets.
+5. Thrift/scenic sources only for non-critical dressing unless the item has a
+   documented substitute.
+
+See `components/SOURCING.md` for supplier tiers and price confidence rules.
 
 ## Durability review
 
@@ -78,7 +103,8 @@ A room fails build readiness if any required beat has:
 
 - no physical mechanism;
 - no BOM line item;
-- unknown cost for a critical component;
+- no inventory ID or custom fabrication plan for a critical component;
+- unknown cost band for a critical component;
 - no bypass for an electronic or sensor device;
 - a durability rating of D;
 - a reset action that staff cannot verify under time pressure.

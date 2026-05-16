@@ -36,13 +36,20 @@ AMAZE/
   README.md
   CLAUDE.md
   docs/specs/                  design specs and constraints
+  docs/specs/design-system.md  principles, invariants, pitfalls, puzzlehunt lessons
+  docs/specs/room-lifecycle.md room template contract and evolution gates
   docs/puzzle-hopper.md        puzzle-hunt-grade idea intake and promotion
+  docs/puzzle-phases.md        puzzle-type phases, waves, pulses, and theme fits
+  docs/team-testing.md         whole-team archetypes for simulation/playtest
+  docs/behavior-testing.md     first-class behavior probes for simulation/playtest
+  docs/session-duration.md     30/45/60 minute timing profiles and ops slots
   docs/scene-beat-harness.md   D&D-style simulation harness for rooms
+  docs/harness.md              Rust CLI harness for fast beat runs
   docs/build-economics.md      BOM, budget, durability, and reliability gates
   scoring/                     escape-room rubric and scoring protocol
   personas/                    player, operator, builder, and venue lenses
   rooms/                       one directory per room concept
-  components/                  reusable prop, lock, sensor, lighting, and scenic modules
+  components/                  reusable inventory, sourcing, props, locks, sensors, lighting, scenic modules
   operations/                  reset, staffing, maintenance, transport, and safety checklists
   research/                    escape-room, trailer, accessibility, and build references
   .roles/                      governance and creative review lenses
@@ -66,13 +73,35 @@ DESIGN -> SIMULATE -> SCORE -> LOG SURPRISES -> IMPROVE -> LOCK NEXT VERSION
 ```
 
 Rooms are scored with [`scoring/RUBRIC.md`](scoring/RUBRIC.md). New puzzle ideas
-enter through [`docs/puzzle-hopper.md`](docs/puzzle-hopper.md), then simulations
-use the D&D-style [`docs/scene-beat-harness.md`](docs/scene-beat-harness.md) and
-personas in [`personas/`](personas/) to test different teams, staff choices,
-hint timing, reset friction, and safety edge cases before a build plan advances.
-Every promoted puzzle beat also needs a physical mechanism and build economics
-review through [`docs/build-economics.md`](docs/build-economics.md): BOM, budget,
-durability, reliability, breakage recovery, and replacement plan.
+start from puzzle-type phases in
+[`docs/puzzle-phases.md`](docs/puzzle-phases.md), enter the hopper through
+[`docs/puzzle-hopper.md`](docs/puzzle-hopper.md), then simulations use the
+D&D-style [`docs/scene-beat-harness.md`](docs/scene-beat-harness.md) and personas
+in [`personas/`](personas/) to test different teams, staff choices, hint timing,
+reset friction, and safety edge cases before a build plan advances.
+Whole-team dynamics are tested through
+[`docs/team-testing.md`](docs/team-testing.md): amazing teams, confused teams,
+fighting teams, quiet teams, chaotic teams, speed teams, family/mixed teams,
+trust/anxiety teams, and accessibility-varied teams. Specific player and staff
+behaviors are tested through [`docs/behavior-testing.md`](docs/behavior-testing.md).
+Fast beat runs and configurable session optimization can be generated with the
+Rust CLI described in [`docs/harness.md`](docs/harness.md). Session length is a
+room variable: see [`docs/session-duration.md`](docs/session-duration.md) for
+30-minute trailer, 45-minute staffed-hour, and 60-minute standard profiles.
+Every promoted puzzle beat also needs a physical mechanism, reusable inventory
+ID or custom fabrication plan, and build economics review through
+[`docs/build-economics.md`](docs/build-economics.md): BOM, supplier class, price
+band, durability, reliability, breakage recovery, and replacement plan. Common
+parts live in [`components/INVENTORY.md`](components/INVENTORY.md), with sourcing
+rules in [`components/SOURCING.md`](components/SOURCING.md).
+
+The repo-level design contract lives in
+[`docs/specs/design-system.md`](docs/specs/design-system.md), with room lifecycle,
+promotion gates, and template evolution rules in
+[`docs/specs/room-lifecycle.md`](docs/specs/room-lifecycle.md). Start new room
+folders from [`rooms/TEMPLATE/`](rooms/TEMPLATE/) and keep all eight room
+surfaces current as the design moves from seed to simulation, prototype,
+playtest, and field-ready versions.
 
 ## Current status
 

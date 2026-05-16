@@ -6,11 +6,11 @@ This is an initial build pass, not a vendor quote.
 
 | Budget | Estimate | Notes |
 |---|---:|---|
-| Prototype | TBD | paper route set, mock switch panel, temporary UV cabinet, radio audio test |
-| Production | TBD | mounted panels, durable table mechanism, finished scenic props |
-| Spares | TBD | duplicate postcards, labels, cabinet objects, switch caps, radio knobs |
-| Maintenance | TBD | batteries, cleaning, replacement labels, calibration checklist |
-| Transport | TBD | padded cases for removable props and shock protection for electronics |
+| Prototype | `$200-600` | paper route set, mock switch panel, temporary UV cabinet, radio audio test |
+| Production | `$600-2,000+` | mounted panels, durable table mechanism, finished scenic props |
+| Spares | `$75-250` | duplicate postcards, labels, cabinet objects, switch caps, radio knobs |
+| Maintenance | `$25-100/run season` | batteries, cleaning, replacement labels, calibration checklist |
+| Transport | `$50-200` | padded cases for removable props and shock protection for electronics |
 
 ## Puzzle mechanism map
 
@@ -24,15 +24,16 @@ This is an initial build pass, not a vendor quote.
 
 ## Bill of materials
 
-| Component | Beat IDs | Quantity | Unit cost | Source | Lead time | Durability class | Failure mode | Bypass | Maintenance |
-|---|---|---:|---:|---|---|---|---|---|---|
-| laminated postcards | P1 | 2 sets | TBD | print/fabricate | TBD | B | bending, loss, markings | spare set | wipe and inspect |
-| mounted route map | P1 | 1 | TBD | print/fabricate | TBD | A | scratches or peeling | operator verbal clue | clean, reattach |
-| prop switch panel | P2 | 1 plus spare caps | TBD | fabricate | TBD | Unknown | switch false negative | manual UV trigger | test before session |
-| UV cabinet strip | P3 | 1 plus spare | TBD | vendor/fabricate | TBD | B | light failure | reveal backup labels | test, replace strip |
-| galley object set | P3 | 2 sets | TBD | source/fabricate | TBD | C | missing object | spare set | count after reset |
-| rotating table latch | P4 | 1 plus spare latch | TBD | fabricate | TBD | Unknown | jams or loosens | operator compass clue | tighten and test |
-| radio dial and audio module | P5 | 1 plus spare knob | TBD | vendor/fabricate | TBD | Unknown | bad read or audio failure | operator playback | pre-run audio test |
+| Inventory ID | Component | Beat IDs | Installed qty | Spare qty | Unit cost band | Source tier | Price confidence | Lead time | Durability class | Failure mode | Bypass | Maintenance |
+|---|---|---|---:|---:|---:|---|---|---|---|---|---|---|
+| PRINT-001 | laminated postcards | P1 | 1 set | 1 set | `$5-30` | Staples, FedEx Office, local print shop | Planning | 0-1 week | C | bending, loss, markings | spare set | wipe and inspect |
+| PRINT-001 or CUSTOM-PRINT | mounted route map | P1 | 1 | 1 reprint file | `$5-60` | print shop or local fabrication | Planning | 0-1 week | B | scratches or peeling | operator verbal clue | clean, reattach |
+| ELEC-002 | prop breaker switches | P2 | 4-8 | 2 | `$2-12` each | Digi-Key, Mouser, Adafruit, Amazon | Planning | 0-1 week | B | switch false negative | manual UV trigger | test before session |
+| ELEC-001 | UV cabinet strip | P3 | 1 | 1 strip | `$10-35` | Amazon, Adafruit, big-box lighting | Planning | 0-1 week | B | light failure | reveal backup labels | test, replace strip |
+| SCENIC-005 or CUSTOM-SCENIC | galley object set | P3 | 1 set | 1 set | `$15-75` | general retail, thrift/scenic, local fabrication | Planning | 0-2 weeks | C | missing object | spare set | count after reset |
+| MECH-001 or MECH-004 | rotating table latch/track | P4 | 1 | 1 latch | `$12-70` | big-box hardware, McMaster-Carr, local fabrication | Planning | 0-2 weeks | Unknown | jams or loosens | operator compass clue | tighten and test |
+| MECH-006 | radio dial/knob | P5 | 1 | 1 knob | `$3-25` | Amazon, McMaster-Carr, electronics suppliers | Planning | 0-1 week | B | knob loosened or slips | operator playback | inspect set screw |
+| ELEC-006 | audio module/player | P5 | 1 | 1 optional | `$15-50` | Amazon, Adafruit audio board, thrift retail | Planning | 0-1 week | C | audio failure | operator playback | pre-run audio test |
 
 ## Reliability risks
 

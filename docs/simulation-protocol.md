@@ -17,32 +17,38 @@ harness as the play model.
 - `rooms/<slug>/SAFETY.md`
 - `rooms/<slug>/OPS.md`
 - selected personas from `personas/`
+- team archetypes from `docs/team-testing.md`
+- behavior probes from `docs/behavior-testing.md`
 
 ## Procedure
 
 1. Set the clock: target session time, soft-warning time, hard-exit time, and
    reset target.
-2. Pick a team persona, assign party roles, draft group-game stakes, and read
-   the room from that point of view.
-3. Walk scenes and beats in time order, recording:
-   - discovery time;
-   - skill checks;
-   - group-game stakes earned, contested, refuted, or silent;
+2. Pick a team archetype, select personas inside that team, assign party roles,
+   draft group-game stakes, and read the room from that point of view.
+3. Choose the behavior probes for this run: search, solve, social, physical,
+   sensory, pressure, trust, or reset/ops behavior.
+4. Walk scenes and beats in time order, recording:
+    - discovery time;
+    - beat target time, actual time, hint time, and slow maximum;
+    - skill checks;
+    - behavior signals;
+    - group-game stakes earned, contested, refuted, or silent;
    - stuck states;
    - hint triggers;
    - physical mechanism reliability;
    - BOM, durability, and breakage concerns;
    - physical crowding;
    - safety discomfort;
-   - operator intervention;
-   - reset consequences.
-4. Repeat for at least three different team personas.
-5. Run one operator stress pass: late team, failed component, messy reset, or
-   anxious participant.
-6. Score with `scoring/RUBRIC.md`.
-7. Move puzzle ideas through `docs/puzzle-hopper.md`: promote, park, retire, or
-   revise.
-8. Write top revisions before adding new puzzles.
+    - operator intervention;
+    - reset consequences.
+5. Repeat across the required team archetypes in `docs/team-testing.md`.
+6. Run one operator stress pass: late team, failed component, messy reset, or
+    anxious participant.
+7. Score with `scoring/RUBRIC.md`.
+8. Move puzzle ideas through `docs/puzzle-hopper.md`: promote, park, retire, or
+    revise.
+9. Write top revisions before adding new puzzles.
 
 ## Output
 
@@ -50,6 +56,19 @@ Each simulation produces a table:
 
 | Persona | Party roles | Finish time | Hints | Stuck states | Physical failures | Safety flags | Reset notes | Memorable beat |
 |---|---|---:|---:|---|---|---|---|---|
+
+Beat timing evidence:
+
+| Beat | Target min | Actual min | Hint at min | Hint used at min | Slow max min | Timing decision |
+|---|---:|---:|---:|---:|---:|---|
+
+And team/behavior matrices:
+
+| Team archetype | Team promise/risk | Scene/beat probe | Observable signal | Operator response | Design revision |
+|---|---|---|---|---|---|
+
+| Behavior | Persona/team | Scene/beat probe | Observable signal | Risk if unsupported | Design response | Evidence result |
+|---|---|---|---|---|---|---|
 
 ## Timing rules
 

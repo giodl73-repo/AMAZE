@@ -1,7 +1,7 @@
 ---
 name: AMAZE Escape Room Rubric
 slug: amaze-escape-room-rubric
-version: v0.1
+version: v0.2
 status: draft
 ---
 
@@ -30,11 +30,12 @@ A room cannot advance to build planning when any hard gate fails:
 | Dimension | Points | Core question |
 |---|---:|---|
 | Theme and story | 8 | Does the trailer feel like a place with a reason to exist? |
-| Puzzle graph | 14 | Are aha beats fair, connected, and free of accidental bottlenecks? |
-| Physical interaction and reliability | 16 | Are mechanisms satisfying, durable, budgeted, and recoverable? |
-| Spatial flow | 12 | Can bodies move, search, gather, turn, and exit in the declared trailer? |
+| Puzzle graph | 12 | Are aha beats fair, connected, and free of accidental bottlenecks? |
+| Physical interaction and reliability | 14 | Are mechanisms satisfying, durable, budgeted, and recoverable? |
+| Spatial flow | 10 | Can bodies move, search, gather, turn, and exit in the declared trailer? |
+| Purpose mapping and integration | 8 | Is the trailer fully, coherently, and intentionally used? |
 | Safety and accessibility | 18 | Are egress, override, hazards, and accessible participation designed in? |
-| Operator support | 12 | Can staff monitor, hint, accelerate, reset, and recover failures? |
+| Operator support | 10 | Can staff monitor, hint, accelerate, reset, and recover failures? |
 | Throughput and timing | 8 | Does the room fit session length, reset window, and exit rhythm? |
 | Group-game quality | 8 | Do agency, role coverage, interaction texture, and social safety hold up? |
 | Delight and memorability | 4 | Will players tell someone what happened afterward? |
@@ -57,26 +58,46 @@ Use the same bands for each dimension:
 - **7**: story, space, and puzzle actions reinforce each other.
 - **8**: the room's best puzzle could not be reskinned without losing its meaning.
 
-### Puzzle graph (14)
+### Puzzle graph (12)
 
 - **0-4**: linear lock chain, search soup, or unearned leaps.
 - **5-8**: fair local puzzles, weak dependency graph or obvious bottlenecks.
-- **9-12**: visible aha chain with redundant clueing and recoverable stuck points.
-- **13-14**: multiple teams can solve through different paths while converging cleanly.
+- **9-11**: visible aha chain with redundant clueing and recoverable stuck points.
+- **12**: multiple teams can solve through different paths while converging cleanly.
 
-### Physical interaction and reliability (16)
+### Physical interaction and reliability (14)
 
 - **0-4**: required beats lack physical mechanisms, BOM, bypasses, or durability review.
 - **5-9**: mechanisms are plausible, but cost, reset, breakage, or reliability risks remain.
-- **10-13**: interactions feel tactile, readable, budgeted, repeatable, and recoverable.
-- **14-16**: the physical act is the aha, and the BOM/spares/bypass plan can survive public use.
+- **10-12**: interactions feel tactile, readable, budgeted, repeatable, and recoverable.
+- **13-14**: the physical act is the aha, and the BOM/spares/bypass plan can survive public use.
 
-### Spatial flow (12)
+### Spatial flow (10)
 
 - **0-3**: unsafe, cramped, inaccessible, or unplayable at target team size.
 - **4-6**: fits on paper but creates crowding or blind corners.
-- **7-10**: zones, sightlines, movement, and gathering points are deliberate.
-- **11-12**: the compact space creates tension without making bodies the puzzle.
+- **7-9**: zones, sightlines, movement, and gathering points are deliberate.
+- **10**: the compact space creates tension without making bodies the puzzle.
+
+### Purpose mapping and integration (8)
+
+This dimension asks whether the trailer behaves like a coherent designed system.
+Use injection/surjection/bijection as design tests, not as strict math.
+
+- **0-2**: many props/zones are unused, duplicated accidentally, or become misleading clue noise.
+- **3-5**: most visible elements have purpose, but some spaces are underused, overburdened, or only decorative without being signaled as atmosphere.
+- **6-7**: zones, props, clues, reveals, reset states, and staff controls are intentionally allocated; overlaps are useful and legible.
+- **8**: the trailer feels bijective at play scale: every important thing has a reason, every required purpose has a visible home, and reused elements build meaning over time.
+
+#### Mapping tests
+
+| Test | Design question | Healthy answer | Failure smell |
+|---|---|---|---|
+| Injection | Do distinct visible things map to distinct player-understandable purposes? | Similar props either have distinct roles or are clearly atmosphere. | duplicate-looking objects create accidental red herrings or two props do the same job for no reason. |
+| Surjection | Does every required purpose map onto something players can perceive and use? | Every clue, beat, reset state, staff control, and safety function has a visible or documented home. | abstract logic exists only in designer notes; trailer zones are empty or unused. |
+| Bijection | Do player-visible elements and game purposes line up cleanly at the moment they matter? | Players later say "of course that belonged there." | after use, props feel arbitrary, decorative, or like puzzle furniture. |
+| Overlap/share | Are reused elements intentionally layered? | A prop can teach, clue, reset, and reveal if each layer is staged. | one object carries too many unrelated meanings or causes premature solves. |
+| Build | Do earlier uses make later uses more meaningful? | The trailer accumulates understanding; final convergence reuses learned affordances. | puzzles feel interchangeable, episodic, or disconnected. |
 
 ### Safety and accessibility (18)
 
@@ -85,12 +106,12 @@ Use the same bands for each dimension:
 - **11-15**: safety procedures and accessible participation are integrated.
 - **16-18**: safety systems preserve immersion while staying obvious to staff.
 
-### Operator support (12)
+### Operator support (10)
 
 - **0-3**: staff cannot see, hint, reset, repair, or extract reliably.
 - **4-6**: staff can operate, but only with hidden knowledge.
-- **7-10**: monitoring, hinting, reset, and failure recovery are documented.
-- **11-12**: operators can keep teams moving gracefully under real schedule pressure.
+- **7-9**: monitoring, hinting, reset, and failure recovery are documented.
+- **10**: operators can keep teams moving gracefully under real schedule pressure.
 
 ### Throughput and timing (8)
 
@@ -121,6 +142,8 @@ Use the same bands for each dimension:
 3. Draft group-game stakes from `docs/group-game-axes.md`.
 4. Record stuck points, hints, elapsed time, safety flags, reset friction,
    physical failures, device reliability risks, and budget/durability issues.
-5. Score each dimension with evidence.
-6. Name the top three revision moves.
-7. Log any repeated surprise as a candidate rubric amendment.
+5. Run the purpose-mapping tests: injection, surjection, bijection, intentional
+   overlap/share, and build.
+6. Score each dimension with evidence.
+7. Name the top three revision moves.
+8. Log any repeated surprise as a candidate rubric amendment.
