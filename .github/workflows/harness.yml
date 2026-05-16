@@ -1,0 +1,58 @@
+name: Harness gates
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  amaze-harness:
+    name: AMAZE harness
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt
+
+      - name: Allow GitHub Cargo dependencies
+        shell: pwsh
+        run: git config --global url."https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf "https://github.com/"
+
+      - name: Format check
+        shell: pwsh
+        run: cargo fmt --manifest-path tools\amaze-harness\Cargo.toml -- --check
+
+      - name: Test harness
+        shell: pwsh
+        run: cargo test --quiet --manifest-path tools\amaze-harness\Cargo.toml
+
+      - name: Lint room packs
+        shell: pwsh
+        run: cargo run --quiet --manifest-path tools\amaze-harness\Cargo.toml -- lint --rooms rooms
+
+      - name: Check room packs
+        shell: pwsh
+        run: |
+          $rooms = Get-ChildItem rooms -Directory |
+            Where-Object { $_.Name -ne 'TEMPLATE' -and (Test-Path (Join-Path $_.FullName 'BUILD.md')) }
+          foreach ($room in $rooms) {
+            cargo run --quiet --manifest-path tools\amaze-harness\Cargo.toml -- check --room $room.FullName
+            if ($LASTEXITCODE -ne 0) {
+              exit $LASTEXITCODE
+            }
+          }
+
+      - name: Score portfolio
+        shell: pwsh
+        run: cargo run --quiet --manifest-path tools\amaze-harness\Cargo.toml -- score --rooms rooms

@@ -21,8 +21,11 @@ room-specific gates.
 | Transform | What puzzle-hunt skill converts input to output? |
 | Output | What does the puzzle yield? |
 | Physical action | What satisfying trailer-scale action expresses the transform? |
+| Alternatives | What other physical implementations could preserve the same aha? |
+| Backup | How can staff preserve pace if the implementation fails mid-run? |
 | Build economics | What component, cost band, breakage risk, and spare plan does it imply? |
 | Clue sources | How does the room teach the aha fairly? |
+| Hint intent | What should the first hint teach: attention, relationship, or acceleration? |
 | Red herrings | What might players reasonably but wrongly try? |
 | Failure mode | How does this break, confuse, bottleneck, or overrun? |
 | Reset state | What must staff restore? |
@@ -77,6 +80,8 @@ A candidate promotes only when it passes all gates:
 7. **Ops gate** - staff can monitor, hint, reset, and recover it.
 8. **Safety gate** - it does not require unsafe movement, force, darkness, heat,
    electrical exposure, or panic pressure.
+9. **Alternative gate** - the same aha has a simpler or safer fallback if the
+   primary device proves unreliable.
 
 ## Review pass
 
@@ -90,6 +95,8 @@ fragile, or not yet fair.
 | Verdict | Keep, rework, park, cut, or promote. |
 | Why it might be fun | What player experience could make this worth building? |
 | Why it might fail | What is the likely boredom, confusion, bottleneck, safety, or reset failure? |
+| Alternative implementation | What different device or technique could preserve the aha? |
+| Backup/hint | What can staff do or say if this candidate stalls or fails? |
 | User/design input needed | What creative choice must be made before the puzzle gets more build detail? |
 | Next revision | What concrete change improves the candidate? |
 

@@ -2,13 +2,23 @@
 
 ## Nodes
 
-| ID | Beat | Skill tags | Physical mechanism | Input | Aha | Output | Reset state |
-|---|---|---|---|---|---|---|---|
-| P1 | Route fragments | observation, ordering, association | postcards, wall map, mileage plaques | postcards, map, mileage plaques | postcards are stops, not souvenirs | ordered route code | shuffle postcards |
-| P2 | Shore-power panel | indexing, ordering, tactile reasoning | prop breaker panel with safe low-voltage switches | route code, breaker labels | power labels map to route stops | safe power sequence | reset switches |
-| P3 | Galley inventory | observation, extraction, classification | UV-lit cabinet and removable galley objects | powered UV strip, cabinet items | missing objects mark radio frequencies | three frequency digits | replace objects |
-| P4 | Fold-down table | spatial reasoning, transformation | rotating/latching table with etched compass rose and service-notch bearing mark | frequencies, etched compass rose, service notch | table orientation changes the dial meaning | bearing word | reset table latch |
-| P5 | Radio convergence | metapuzzle, audio reasoning, collaboration | tactile radio dial, route display, and final audio playback | route, power, frequency, bearing | all systems tune one impossible trip | final broadcast and exit key | reset radio state |
+| ID | Beat | Technique/device | Skill tags | Physical mechanism | Input | Aha | Output | Reset state |
+|---|---|---|---|---|---|---|---|---|
+| P1 | Route fragments | `TECH-SORT-002`, `TECH-ALIGN-001` / `DEV-TRAY-001` | observation, ordering, association | postcards, wall map, mileage plaques | postcards, map, mileage plaques | postcards are stops, not souvenirs | ordered route code | shuffle postcards |
+| P2 | Shore-power panel | `TECH-SORT-002`, `TECH-REVEAL-002` / `DEV-SWITCH-001` | indexing, ordering, tactile reasoning | prop breaker panel with safe low-voltage switches | route code, breaker labels | power labels map to route stops | safe power sequence | reset switches |
+| P3 | Galley inventory | `TECH-SORT-004`, `TECH-REVEAL-002` / `DEV-LED-001` | observation, extraction, classification | UV-lit cabinet and removable galley objects | powered UV strip, cabinet items | missing objects mark radio frequencies | three frequency digits | replace objects |
+| P4 | Fold-down table | `TECH-ALIGN-004`, `TECH-REVEAL-003` / `DEV-FOLD-001` | spatial reasoning, transformation | rotating/latching table with etched compass rose and service-notch bearing mark | frequencies, etched compass rose, service notch | table orientation changes the dial meaning | bearing word | reset table latch |
+| P5 | Radio convergence | `TECH-TEAM-002`, `TECH-REVEAL-004` / `DEV-DIAL-001` | metapuzzle, audio reasoning, collaboration | tactile radio dial, route display, and final audio playback | route, power, frequency, bearing | all systems tune one impossible trip | final broadcast and exit key | reset radio state |
+
+## Technique play profile
+
+| Beat/candidate | Technique(s) | Crowd profile | Advantage in this room | Frustration trigger | Safeguard |
+|---|---|---|---|---|---|
+| P1 Route fragments | `TECH-SORT-002`, `TECH-ALIGN-001` | helper | makes travel route logic physical and public | postcards become private reading/search soup | map silhouettes, mileage plaques, low card count |
+| P2 Shore-power panel | `TECH-SORT-002`, `TECH-REVEAL-002` | tactile helper | safe switching makes the trailer system feel real | random toggling or light-state ambiguity | fused low voltage, visible/manual accepted state |
+| P3 Galley inventory | `TECH-SORT-004`, `TECH-REVEAL-002` | discovery helper | missing objects and powered reveal connect inventory to radio | UV-only clue or object reset debt | visible backup labels, object count, duplicate set |
+| P4 Fold-down table | `TECH-ALIGN-004`, `TECH-REVEAL-003` | transformation pleaser | trailer furniture changes meaning in a memorable way | latch force, reach, or players leaning on table | no-load stop, staff compass fallback, reset photo |
+| P5 Radio convergence | `TECH-TEAM-002`, `TECH-REVEAL-004` | finale pleaser with audio risk | tactile tuning plus broadcast creates the impossible-trip payoff | fine tuning or audio-only success | detents/big marks, transcript/visual confirmation |
 
 ## Edges
 

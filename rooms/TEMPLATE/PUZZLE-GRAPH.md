@@ -1,6 +1,7 @@
 # Puzzle Graph Template
 
-Use `docs/puzzle-phases.md` and `docs/puzzle-hopper.md`; keep every required
+Use `docs/puzzle-phases.md`, `docs/puzzle-hopper.md`,
+`components/TECHNIQUES.md`, and `components/DEVICES.md`; keep every required
 beat physical.
 
 Phase, wave, and pulse are AMAZE design-cadence terms. Use scenes, beats, and
@@ -21,18 +22,30 @@ clocks for the player-facing rhythm of this room.
 
 ## Hopper
 
-| ID | State | Phase | Name | Skill tags | Aha | Physical action | Clue sources | Failure mode | Promotion test |
-|---|---|---|---|---|---|---|---|---|---|
+| ID | State | Phase | Name | Technique/device | Skill tags | Aha | Physical action | Clue sources | Failure mode | Promotion test |
+|---|---|---|---|---|---|---|---|---|---|---|
 
 ## Puzzle review
 
-| Candidate | Verdict | Why it might be fun | Why it might fail | User/design input needed | Next revision |
+| Candidate | Verdict | Why it might be fun | Why it might fail | Alternative implementation | Backup/hint | User/design input needed | Next revision |
+|---|---|---|---|---|---|---|---|
+
+## Alternatives
+
+Use `docs/learning-loop.md`.
+
+| Beat/device | Primary implementation | Alternative implementation | What stays the same | Tradeoff | Trigger to switch |
+|---|---|---|---|---|---|
+
+## Technique play profile
+
+| Beat/candidate | Technique(s) | Crowd profile | Advantage in this room | Frustration trigger | Safeguard |
 |---|---|---|---|---|---|
 
 ## Nodes
 
-| ID | Beat | Skill tags | Physical mechanism | Input | Aha | Output | Reset state |
-|---|---|---|---|---|---|---|---|
+| ID | Beat | Technique/device | Skill tags | Physical mechanism | Input | Aha | Output | Reset state |
+|---|---|---|---|---|---|---|---|---|
 
 ## Edges
 

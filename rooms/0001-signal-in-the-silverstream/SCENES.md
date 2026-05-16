@@ -71,6 +71,23 @@ Use `docs/behavior-testing.md`.
 | Table orientation | P4 fold-down table | rotate/latch table against compass mark | orientation changes dial reading | spatial reasoning | dominant solver | 5 | 3 | 6 | rotating table, latch, and service-notch bearing mark | jammed latch or excess force | High | bearing word | compass noticed and service notch aligned | table treated as normal furniture or argument continues | reset table latch |
 | Final broadcast | P5 radio convergence | tune radio using route, power, frequency, bearing | all systems describe one trip | metapuzzle | exit trust | 4 | 3 | 6 | tactile radio dial and audio module | audio misfire or loose knob | Medium | final broadcast | correct station range | final data remains separate after soft warning | reset radio |
 
+## Transformation states
+
+| ID | Beat | Object/space | From state | Trigger | To state | Visible proof | Reset state | Failure/bypass |
+|---|---|---|---|---|---|---|---|---|
+| T1 | P2 | Shore-power panel | switches dark and UV strip off | route order set on labeled switches | UV strip powers the galley cabinet | lit cabinet clearly narrows inventory | switches reset, UV off | operator triggers UV after team explains route order |
+| T2 | P3 | Galley cabinet | full inventory appears ordinary | UV reveals missing-object comparison | frequency digits become visible through absence | changed/missing inventory visible to all players | objects replaced, UV off | staff gives one frequency digit after inventory proof |
+| T3 | P4 | Fold-down table | table reads as normal furniture | table rotates/latches to compass mark | service-notch bearing mark becomes readable | bearing word visible from table edge | table latch reset | operator shows compass mark and service notch |
+| T4 | P5 | Radio module | radio silent or static | route, power, frequency, and bearing converge on station | final broadcast plays | audio plus visible dial setting confirms solve | radio reset to static | final playback bypass after team calls verified station |
+| T5 | P5 | Exit key/reveal | final reveal hidden | final broadcast acknowledged | exit key/reveal available | operator sees team receive exit token/key | reveal reset, key/token home | operator supplies exit token after verified broadcast |
+
+## Unlock paths
+
+| Path | Beats | Unlocks | Fast coherence | Slow coherence | Operator acceleration |
+|---|---|---|---|---|---|
+| Systems online | P1-P3 | Powered galley and frequency digits | Fast teams still move from route artifacts to power before frequency data appears, so the trailer feels causal. | Slow teams can receive one switch or inventory nudge while preserving the trip-order logic. | Operator powers UV or gives one digit only after the team explains route order and changed inventory. |
+| Final broadcast | P4-P5 | Final radio response and exit reveal | Fast teams must combine bearing with route/power/frequency instead of treating the radio as code entry. | Slow teams can use a final alignment card without skipping the all-systems convergence. | Playback bypass and exit token are allowed after verified station call. |
+
 ## Session timing model
 
 Target session: 30-minute prototype. Also evaluate a 45-minute staffed-hour

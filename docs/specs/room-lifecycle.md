@@ -31,9 +31,9 @@ Required files:
 | Mapped | Space is playable on paper. | `FLOORPLAN.md` names dimensions, zones, egress, sightlines, crowding risks, reset paths, and staff access. |
 | Graphed | Puzzle structure is explicit. | `PUZZLE-GRAPH.md` has nodes, edges, hint ladder, bottlenecks, physical mechanisms, and reset states. |
 | Simulated | The room has survived dry runs. | `SCENES.md` includes at least three player personas and one operator stress pass; `PLAYTEST.md` records outcomes. |
-| Build-candidate | Mechanisms are credible enough to prototype. | `BUILD.md` has BOM, budget bands, durability classes, reliability risks, bypasses, and spares for required beats. |
+| Build-candidate | Mechanisms are credible enough to prototype. | `BUILD.md` has BOM, budget bands, technique/device/kit IDs, durability classes, reliability risks, chaos probes, bypasses, and spares for required beats; `amaze visuals --room <path>` has no C4-C5 blocked rows. |
 | Safety-reviewed | Known risks are visible and mitigated or blocking. | `SAFETY.md` covers egress, override, hazards, accessibility, communication, and extraction. |
-| Playtest-ready | A rough physical run is safe and operable. | Ops script, reset checklist, hint ladder, hard-exit plan, and component bypasses are usable by staff. |
+| Playtest-ready | A rough physical run is safe and operable. | Ops script, reset checklist, hint ladder, hard-exit plan, component bypasses, and physical evidence queues are usable by staff; `amaze bench --room <path> --open` has no unresolved bench/admin/chaos rows except explicitly accepted risks. |
 | Field-ready | The room can run for real teams under schedule pressure. | Repeated playtests meet score, safety, reset, reliability, and operator thresholds with no blocking risks. |
 | Parked | Good idea, wrong time or constraints. | Open blockers and resume conditions are named. |
 | Retired | Evidence says not to continue. | Retire reason and reusable lessons are logged. |
@@ -47,9 +47,12 @@ A room advances only when all gates for the next state pass.
 | Safety gate | Unresolved egress, emergency exit, staff override, unsafe movement, panic pressure, electrical/fire hazard, or inaccessible required path. |
 | Envelope gate | Unknown or impossible dimensions, weight, power, mounting, staff access, reset, transport, or venue assumptions. |
 | Puzzle gate | Missing aha, unfair leap, search soup, accidental bottleneck, unclear output, or no hintable stuck signal. |
-| Physicality gate | Required beat lacks a physical mechanism, reset state, BOM line, durability review, or manual fallback. |
+| Physicality gate | Required beat lacks a physical mechanism, technique/device/kit mapping, reset state, BOM line, durability review, or manual fallback. |
 | Operator gate | Staff cannot monitor, hint, accelerate, reset, recover failure, or hard-exit gracefully. |
 | Evidence gate | Advancement is based on author confidence rather than simulation, playtest, score, or explicit risk acceptance. |
+| Reliability gate | Required device has untested false-positive, false-negative, force, sensory, reset, transport, or operator-visibility risk. |
+| Visual readiness gate | C4-C5 component lacks an editable diagram, declared room-specific build spec, or reviewable failure/recovery path. |
+| Bench evidence gate | Device bench tests, admin replacement drills, or chaos probes remain pending/not-run/failed without an explicit risk acceptance. |
 
 ## Versioning
 
@@ -75,9 +78,11 @@ Each room evolves through the same loop:
 2. Simulate with personas and operator stress.
 3. Score with `scoring/RUBRIC.md`.
 4. Log surprises, stuck states, failures, and reset friction in `PLAYTEST.md`.
-5. Promote, revise, park, or retire hopper items.
-6. Update the brief, floorplan, graph, scenes, build, safety, and ops docs only where evidence requires it.
-7. Lock the next version before adding more scope.
+5. Run visual readiness and bench evidence reports before promotion:
+   `amaze visuals --room <path>` and `amaze bench --room <path> --open`.
+6. Promote, revise, park, or retire hopper items.
+7. Update the brief, floorplan, graph, scenes, build, safety, and ops docs only where evidence requires it.
+8. Lock the next version before adding more scope.
 
 ## Template evolution
 

@@ -23,6 +23,21 @@
 | P4 cabinet toggling | repeated switch guessing | "Evidence control hates random toggles." | "The route phrase is an order, not a label." | give first switch group |
 | P5 latch/force risk | pulling, twisting, or frustration | "If it resists, it is not ready to open." | "Use caller, checker, handler." | manual safe release |
 
+## NPC and operator characters
+
+| NPC/voice | Function | Trigger | Delivery mode | Sample line | Limits | Reset/ops burden |
+|---|---|---|---|---|---|---|
+| Evidence Control | onboarding, no-force intervention, final bypass | P1 evidence search, P5 latch force, manual release | live operator voice or intercom | "If it resists, it is not ready to open." | does not reveal route phrase or latch order | evidence-control script and manual release key |
+| Court Transcript | accessibility backup and audio hint | P3 audio replay loop or audio avoidance | printed transcript plus operator line | "The recorder was transcribed for court." | transcript indexes only earned words unless accelerating | transcript cards counted/reset |
+| Dispatch | hard-exit and safety escalation | late/tired group, stuck cabinet, player distress | direct staff voice | "Dispatch found the last chain-of-custody note." | safety and extraction override fiction | bypass log and post-run inspection |
+
+## Multi-room operator rotation
+
+| Scope | Coverage model | Max rooms | Safe when | Unsafe when | Handoff signal | Dedicated staff trigger |
+|---|---|---:|---|---|---|---|
+| Two evidence trailers | roving operator with central-object camera | 2 | both central boxes are not in final latch handling and door views are clear | latch force, manual release, audio/access support, or reset | box-state dashboard and next-intervention timer | final latch handling, player force, or accessibility support request |
+| Escape-room building cluster | control desk plus hall runner | 3 | room phases are staggered and each central object has camera/audio | overlapping final openings or no runner | desk log with route phrase state | stuck latch, egress issue, or player distress |
+
 ## Reset checklist
 
 | Step | Action | Verify |

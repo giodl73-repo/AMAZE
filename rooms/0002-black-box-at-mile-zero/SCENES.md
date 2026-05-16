@@ -61,6 +61,23 @@
 | S3 | P4 Utility cabinet | set safe low-voltage switches from route phrase | route phrase orders latch power | cabinet lights correct latch path | forceful handling | 7 | 5 | 10 | low-voltage cabinet and indicators | switch or light fault | 12 | latch sequence powered | one correct switch group | cabinet toggling without theory | reset switches |
 | S3 | P5 Box opening | coordinate caller, checker, and handler to open recorder | clues converge when the team reconstructs a road, not a crash | final latch stack set | forceful handling | 6 | 4 | 7 | central box latches and reveal | latch force or pinch risk | 13 | Mile Zero reveal and exit | box state correct but opening unclear | tugging or stalled opening | relock box and replace reveal |
 
+## Transformation states
+
+| ID | Beat | Object/space | From state | Trigger | To state | Visible proof | Reset state | Failure/bypass |
+|---|---|---|---|---|---|---|---|---|
+| T1 | P2 | Recorder windows | sealed box windows in neutral state | evidence marks set correct window states | active evidence subset becomes visible | changed window states visible to caller/checker | sliders reset | staff sets one window after team explains witness mark |
+| T2 | P3 | Recorder audio/transcript | recorder loops unclear skip pattern | skip pattern indexed with transcript backup | impossible-road phrase extracted | phrase written/called from public transcript | recorder/cards reset | operator reveals one indexed word if audio blocks |
+| T3 | P4 | Utility cabinet | cabinet dark and latch path unpowered | route phrase orders safe switches | latch indicators light correct path | powered latch sequence visible | switches reset, indicators off | operator sets one switch group after phrase proof |
+| T4 | P5 | Central recorder box | latches locked and reveal hidden | final latch stack set by caller/checker/handler | box opens to Mile Zero reveal | reveal visible without tugging | relock box and replace reveal | manual bypass after no-force stop and state verification |
+| T5 | P5 | Exit reveal | exit payoff hidden | Mile Zero reveal plays | exit token/key available | team can leave through visible exit path | token/key reset | operator supplies token after verified box state |
+
+## Unlock paths
+
+| Path | Beats | Unlocks | Fast coherence | Slow coherence | Operator acceleration |
+|---|---|---|---|---|---|
+| Evidence reconstruction | P1-P3 | Route phrase and utility cabinet purpose | Fast teams still see the recorder change state before the phrase matters. | Slow teams can move to transcript backup without losing the witness-window relationship. | Staff sets one window or gives one indexed word after team explains the evidence relationship. |
+| Recorder release | P4-P5 | Central box reveal and exit token | Fast teams must power the latch path before touching the final box. | Slow teams can use final chain-of-custody acceleration while retaining caller/checker/handler proof. | Manual latch bypass after route phrase and switch state are verified. |
+
 ## Session timing model
 
 | Timing field | Meaning |

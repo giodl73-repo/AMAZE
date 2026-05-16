@@ -21,6 +21,13 @@ runs, scenes, beats, clocks, stuck states, hints, reveals, and reset effects.
 | Design pulse | Phase | Wave | Persona/team | Base skill tested | Result | Revision |
 |---|---|---|---|---|---|---|
 
+## Learning ledger
+
+Use `docs/learning-loop.md`.
+
+| Learning | Evidence | Scope | Decision | Follow-up |
+|---|---|---|---|---|
+
 ## Group-game evidence
 
 | Run ID | Persona/role | Axis | Stake | Evidence beats | State | Revision |
@@ -40,6 +47,20 @@ Use `docs/behavior-testing.md`.
 | Run ID | Behavior | Team/persona | Scene/beat probe | Observable signal | Severity | Design response | Revision |
 |---|---|---|---|---|---|---|---|
 
+## Variability matrix
+
+Use `components/RELIABILITY.md`.
+
+| Team/behavior | Beat(s) stressed | What changes | Reliability issue IDs | Mitigation | Evidence needed |
+|---|---|---|---|---|---|
+
+## Chaos protocol
+
+Use `components/RELIABILITY.md`.
+
+| Probe ID | Beat/device | Probe action | Watch signal | Expected recovery | Status |
+|---|---|---|---|---|---|
+
 ## Stuck-state log
 
 | Run ID | Beat | Observable signal | Cause | Hint used | Revision |
@@ -52,8 +73,27 @@ Use `docs/behavior-testing.md`.
 
 ## Physical and reset failures
 
-| Run ID | Component/beat | Failure | Player impact | Operator recovery | Post-run fix | Template lesson? |
-|---|---|---|---|---|---|---|
+| Run ID | Component/beat | Failure | Player impact | Operator recovery | Recovery time | In time? | Post-run fix | Template lesson? |
+|---|---|---|---|---|---:|---|---|---|
+
+## Reliability issue log
+
+| Run/Test ID | Beat/device | Issue ID | Failure mode | Player impact | Operator detection | Bypass | Post-run fix | Result |
+|---|---|---|---|---|---|---|---|---|
+
+## Admin replacement drills
+
+Use `components\RELIABILITY.md`.
+
+| Test ID | Component | Criticality | Failure simulated | Spare/bypass used | Target replacement min | Actual replacement min | Result | Required change |
+|---|---|---|---|---|---:|---:|---|---|
+
+## Device bench tests
+
+Use `components/DEVICE-REVIEW.md` and `components/RELIABILITY.md`.
+
+| Test ID | Version | Device | Risk band | Crowd profile | Pass type | Required observation | Result | Follow-up |
+|---|---|---|---|---|---|---|---|---|
 
 ## Safety and accessibility observations
 

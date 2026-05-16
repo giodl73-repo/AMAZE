@@ -1,0 +1,133 @@
+{
+  "type": "excalidraw",
+  "version": 2,
+  "source": "github-copilot",
+  "elements": [
+    {
+      "id": "title",
+      "type": "text",
+      "x": 40,
+      "y": 30,
+      "width": 760,
+      "height": 70,
+      "text": "OPS recovery kit / reset-spare organizer",
+      "fontSize": 28,
+      "fontFamily": 1,
+      "strokeColor": "#000000",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 1,
+      "textAlign": "left",
+      "verticalAlign": "top"
+    },
+    {
+      "id": "kit_box",
+      "type": "rectangle",
+      "x": 50,
+      "y": 130,
+      "width": 280,
+      "height": 190,
+      "strokeColor": "#1864ab",
+      "backgroundColor": "#a5d8ff",
+      "fillStyle": "hachure",
+      "strokeWidth": 2,
+      "roundness": { "type": 3 }
+    },
+    {
+      "id": "kit_text",
+      "type": "text",
+      "x": 70,
+      "y": 150,
+      "width": 240,
+      "height": 150,
+      "text": "Public-safe spare kit\n- labeled pouches\n- duplicate proof tokens\n- printed backups\n- manual release tokens",
+      "fontSize": 16,
+      "fontFamily": 1,
+      "strokeColor": "#000000",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 1,
+      "textAlign": "left",
+      "verticalAlign": "top"
+    },
+    {
+      "id": "operator_box",
+      "type": "rectangle",
+      "x": 410,
+      "y": 130,
+      "width": 290,
+      "height": 190,
+      "strokeColor": "#2f9e44",
+      "backgroundColor": "#b2f2bb",
+      "fillStyle": "hachure",
+      "strokeWidth": 2,
+      "roundness": { "type": 3 }
+    },
+    {
+      "id": "operator_text",
+      "type": "text",
+      "x": 430,
+      "y": 150,
+      "width": 250,
+      "height": 150,
+      "text": "Operator action\n1. confirm failed/missing item\n2. pull matching pouch\n3. deploy spare or bypass\n4. log repair before reset",
+      "fontSize": 16,
+      "fontFamily": 1,
+      "strokeColor": "#000000",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 1,
+      "textAlign": "left",
+      "verticalAlign": "top"
+    },
+    {
+      "id": "arrow_kit_to_operator",
+      "type": "arrow",
+      "x": 340,
+      "y": 225,
+      "width": 60,
+      "height": 0,
+      "strokeColor": "#495057",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "points": [
+        [0, 0],
+        [60, 0]
+      ]
+    },
+    {
+      "id": "reset_box",
+      "type": "rectangle",
+      "x": 50,
+      "y": 370,
+      "width": 650,
+      "height": 110,
+      "strokeColor": "#e67700",
+      "backgroundColor": "#fff3bf",
+      "fillStyle": "hachure",
+      "strokeWidth": 2,
+      "roundness": { "type": 3 }
+    },
+    {
+      "id": "reset_text",
+      "type": "text",
+      "x": 70,
+      "y": 390,
+      "width": 610,
+      "height": 80,
+      "text": "Check gate: every C4-C5 pouch has a count, a photo/reset state, a replacement-minute target, and a named bypass. If staff cannot find it under pressure, it is not a live spare.",
+      "fontSize": 16,
+      "fontFamily": 1,
+      "strokeColor": "#000000",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 1,
+      "textAlign": "left",
+      "verticalAlign": "top"
+    }
+  ],
+  "appState": {
+    "viewBackgroundColor": "#ffffff"
+  }
+}

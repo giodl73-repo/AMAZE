@@ -1,0 +1,104 @@
+{
+  "type": "excalidraw",
+  "version": 2,
+  "source": "copilot",
+  "elements": [
+    {
+      "id": "title",
+      "type": "text",
+      "x": 40,
+      "y": 20,
+      "width": 540,
+      "height": 70,
+      "text": "Clockwork Greenhouse bloom wheel",
+      "fontSize": 28,
+      "fontFamily": 1,
+      "strokeColor": "#000000",
+      "backgroundColor": "transparent",
+      "textAlign": "left",
+      "verticalAlign": "top"
+    },
+    {
+      "id": "wheel",
+      "type": "ellipse",
+      "x": 170,
+      "y": 110,
+      "width": 300,
+      "height": 300,
+      "strokeColor": "#2f9e44",
+      "backgroundColor": "#b2f2bb",
+      "fillStyle": "hachure",
+      "strokeWidth": 2
+    },
+    {
+      "id": "root",
+      "type": "rectangle",
+      "x": 90,
+      "y": 190,
+      "width": 120,
+      "height": 60,
+      "strokeColor": "#1864ab",
+      "backgroundColor": "#a5d8ff",
+      "fillStyle": "hachure",
+      "strokeWidth": 2,
+      "roundness": { "type": 3 }
+    },
+    {
+      "id": "water",
+      "type": "rectangle",
+      "x": 260,
+      "y": 80,
+      "width": 120,
+      "height": 60,
+      "strokeColor": "#1864ab",
+      "backgroundColor": "#a5d8ff",
+      "fillStyle": "hachure",
+      "strokeWidth": 2,
+      "roundness": { "type": 3 }
+    },
+    {
+      "id": "light",
+      "type": "rectangle",
+      "x": 430,
+      "y": 190,
+      "width": 120,
+      "height": 60,
+      "strokeColor": "#1864ab",
+      "backgroundColor": "#a5d8ff",
+      "fillStyle": "hachure",
+      "strokeWidth": 2,
+      "roundness": { "type": 3 }
+    },
+    {
+      "id": "time",
+      "type": "rectangle",
+      "x": 260,
+      "y": 380,
+      "width": 120,
+      "height": 60,
+      "strokeColor": "#1864ab",
+      "backgroundColor": "#a5d8ff",
+      "fillStyle": "hachure",
+      "strokeWidth": 2,
+      "roundness": { "type": 3 }
+    },
+    {
+      "id": "labels",
+      "type": "text",
+      "x": 105,
+      "y": 205,
+      "width": 430,
+      "height": 190,
+      "text": "Root socket      Water socket      Light socket\n\nFlower wheel: low-force turn, finger guard,\nmanual bloom card behind service hatch\n\nBloom/time socket",
+      "fontSize": 16,
+      "fontFamily": 1,
+      "strokeColor": "#000000",
+      "backgroundColor": "transparent",
+      "textAlign": "left",
+      "verticalAlign": "top"
+    }
+  ],
+  "appState": {
+    "viewBackgroundColor": "#ffffff"
+  }
+}

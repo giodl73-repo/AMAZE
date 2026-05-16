@@ -8,3 +8,6 @@ edition = "2021"
 [[bin]]
 name = "amaze"
 path = "src/main.rs"
+
+[dependencies]
+mdpath = { git = "https://github.com/giodl73-repo/MDPATH.git" }

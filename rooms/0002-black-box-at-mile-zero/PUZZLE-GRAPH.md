@@ -21,23 +21,33 @@ recorder, roadside investigators, and an eerie-wonder reveal.
 
 ## Hopper
 
-| ID | State | Phase | Name | Skill tags | Aha | Physical action | Clue sources | Failure mode | Promotion test |
-|---|---|---|---|---|---|---|---|---|---|
-| H1 | candidate | mechanical state | Witness windows | observation, alignment | box windows are not labels; they are state indicators | slide panels and read changing windows | black box, evidence rail | players treat windows as flavor text | amazing and confused teams both explain the state change |
-| H2 | candidate | route/spatial transform | Mile tags | ordering, mapping | evidence tags mark distance from an impossible origin | hang tags on rail in route order | wall rail, box interior | search soup if tags are too similar | team finds order without operator hint in target time |
-| H3 | candidate | audio/reveal | Recorder skip | audio, transcription | repeated noise is a usable index, not ambience | play recorder, match transcript fragments | audio player, printed backup | audio-dependent failure | quiet and accessibility-varied teams solve with backup |
-| H4 | candidate | classification/indexing | Evidence bags | sorting, extraction | bag numbers are chain-of-custody, not puzzle order | sort and clip physical evidence | evidence bags, case board | too much reading | family/mixed team can assign child-friendly role |
-| H5 | candidate | mechanical state | Final latch stack | collaboration, sequencing | each subsystem unlocks a safe latch, but opening requires restraint | set latches and open box with one handle | box, rail, recorder, cabinet | players force latches | no-force affordance works under chaotic team |
+| ID | State | Phase | Name | Technique/device | Skill tags | Aha | Physical action | Clue sources | Failure mode | Promotion test |
+|---|---|---|---|---|---|---|---|---|---|---|
+| H1 | candidate | mechanical state | Witness windows | `TECH-ALIGN-003`, `TECH-REVEAL-003` / `DEV-WINDOW-001` | observation, alignment | box windows are not labels; they are state indicators | slide panels and read changing windows | black box, evidence rail | players treat windows as flavor text | amazing and confused teams both explain the state change |
+| H2 | candidate | route/spatial transform | Mile tags | `TECH-SORT-002`, `TECH-TEAM-001` / `DEV-TRAY-001` | ordering, mapping | evidence tags mark distance from an impossible origin | hang tags on rail in route order | wall rail, box interior | search soup if tags are too similar | team finds order without operator hint in target time |
+| H3 | candidate | audio/reveal | Recorder skip | `TECH-REVEAL-004`, `TECH-SORT-003` / `DEV-AUDIO-001` | audio, transcription | repeated noise is a usable index, not ambience | play recorder, match transcript fragments | audio player, printed backup | audio-dependent failure | quiet and accessibility-varied teams solve with backup |
+| H4 | candidate | classification/indexing | Evidence bags | `TECH-SORT-001` / `DEV-BIN-001` | sorting, extraction | bag numbers are chain-of-custody, not puzzle order | sort and clip physical evidence | evidence bags, case board | too much reading | family/mixed team can assign child-friendly role |
+| H5 | candidate | mechanical state | Final latch stack | `TECH-FIT-004`, `TECH-TEAM-002` / `DEV-LATCH-001` | collaboration, sequencing | each subsystem unlocks a safe latch, but opening requires restraint | set latches and open box with one handle | box, rail, recorder, cabinet | players force latches | no-force affordance works under chaotic team |
+
+## Technique play profile
+
+| Beat/candidate | Technique(s) | Crowd profile | Advantage in this room | Frustration trigger | Safeguard |
+|---|---|---|---|---|---|
+| P1 Evidence intake | `TECH-SORT-001`, `TECH-TEAM-001` | helper | case-board sorting makes the investigation public | evidence feels like paperwork or search soup | low tag count, silhouettes, first repeated mark |
+| P2 Witness windows | `TECH-ALIGN-003`, `TECH-REVEAL-003` | central-object pleaser | the box visibly changes state and earns attention | windows look decorative or jam | big state change, staff-set first window fallback |
+| P3 Recorder skip | `TECH-REVEAL-004`, `TECH-SORT-003` | atmosphere pleaser with access risk | recorder feels like a witness instead of a generic lock | audio-only replay loop | transcript is equivalent and indexed visually |
+| P4 Utility cabinet | `TECH-REVEAL-002`, `TECH-SORT-002` | tactile helper | safe switches make site operations physical | random toggling or light mismatch | fused low voltage, manual state card, reset photo |
+| P5 Box opening | `TECH-FIT-004`, `TECH-TEAM-002`, `TECH-REVEAL-003` | finale pleaser with force risk | opening the sealed object is the room's promise | latch resistance invites pulling | no-force script, stops, staff release, role split |
 
 ## Nodes
 
-| ID | Beat | Skill tags | Physical mechanism | Input | Aha | Output | Reset state |
-|---|---|---|---|---|---|---|---|
-| P1 | Evidence intake | observation, role assignment | evidence rail, tags, case board | visible evidence and sealed roadside recorder | evidence is a route witness, not decoration | first box state and team roles | rehang evidence tags |
-| P2 | Witness windows | mechanical state, alignment | sliding windows on black box | evidence tag marks | windows reveal which evidence matters now | active evidence subset | reset sliders |
-| P3 | Recorder skip | audio, transcription, indexing | rugged audio recorder with printed transcript backup | active evidence subset | the skip pattern is the recorder trying to protect a route phrase | route phrase or coordinate fragment | reset audio and transcript cards |
-| P4 | Utility cabinet | ordering, safe switching | low-voltage cabinet, lights, manual bypass | route phrase plus cabinet labels | cabinet energizes the correct latch path | final latch sequence | reset switches |
-| P5 | Box opening | collaboration, restraint, metapuzzle | central box latches, one-handle opening, interior reveal | window state, recorder phrase, latch sequence | the recorder opens when the incident is reconstructed as a road, not a crash | Mile Zero reveal and exit | relock box and replace reveal |
+| ID | Beat | Technique/device | Skill tags | Physical mechanism | Input | Aha | Output | Reset state |
+|---|---|---|---|---|---|---|---|---|
+| P1 | Evidence intake | `TECH-SORT-001`, `TECH-TEAM-001` / `DEV-TRAY-001` | observation, role assignment | evidence rail, tags, case board | visible evidence and sealed roadside recorder | evidence is a route witness, not decoration | first box state and team roles | rehang evidence tags |
+| P2 | Witness windows | `TECH-ALIGN-003`, `TECH-REVEAL-003` / `DEV-WINDOW-001` | mechanical state, alignment | sliding windows on black box | evidence tag marks | windows reveal which evidence matters now | active evidence subset | reset sliders |
+| P3 | Recorder skip | `TECH-REVEAL-004`, `TECH-SORT-003` / `DEV-AUDIO-001` | audio, transcription, indexing | rugged audio recorder with printed transcript backup | active evidence subset | the skip pattern is the recorder trying to protect a route phrase | route phrase or coordinate fragment | reset audio and transcript cards |
+| P4 | Utility cabinet | `TECH-REVEAL-002`, `TECH-SORT-002` / `DEV-SWITCH-001` | ordering, safe switching | low-voltage cabinet, lights, manual bypass | route phrase plus cabinet labels | cabinet energizes the correct latch path | final latch sequence | reset switches |
+| P5 | Box opening | `TECH-FIT-004`, `TECH-TEAM-002`, `TECH-REVEAL-003` / `DEV-LATCH-001` | collaboration, restraint, metapuzzle | central box latches, one-handle opening, interior reveal | window state, recorder phrase, latch sequence | the recorder opens when the incident is reconstructed as a road, not a crash | Mile Zero reveal and exit | relock box and replace reveal |
 
 ## Edges
 

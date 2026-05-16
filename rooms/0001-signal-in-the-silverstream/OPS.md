@@ -23,6 +23,21 @@
 | P4 table treated as furniture | table ignored or argued over after frequencies | "That table has more travel in it than it should." | "The compass mark changes how the dial should be read." | show compass mark, then service-notch bearing mark |
 | P5 data remains separate | route/power/frequency/bearing not combined by hard-exit minus 3 | "The broadcast is trying to lock onto a bearing." | "Every repaired system is part of the same trip." | provide final alignment card |
 
+## NPC and operator characters
+
+| NPC/voice | Function | Trigger | Delivery mode | Sample line | Limits | Reset/ops burden |
+|---|---|---|---|---|---|---|
+| Dispatch | onboarding, hints, final broadcast recovery | P1 route confusion, P5 convergence, audio failure | live operator voice or radio playback | "Dispatch says the previous crew always logged stops." | does not name route order unless accelerating | script card and backup audio ready |
+| Repair Light | diegetic confirmation and access hint | P2/P3 power state, UV failure, unrelated search | light cue plus operator line | "The repair light is stable; compare what changed." | does not reveal all frequency digits | UV test/reset and manual trigger |
+| Roadside Safety Stop | safety break and anxious-player support | exit trust issue, volume distress, hard stop request | direct staff voice outside fiction | "Safety stop. The trailer is stable." | safety overrides story immediately | pause/extraction log |
+
+## Multi-room operator rotation
+
+| Scope | Coverage model | Max rooms | Safe when | Unsafe when | Handoff signal | Dedicated staff trigger |
+|---|---|---:|---|---|---|---|
+| Prototype trailer pair | roving operator with camera/audio wall | 2 | both rooms are before final broadcast and egress views are live | anxious player, final audio, manual UV/table/radio bypass, or reset | green/yellow/red room state card | safety stop, audio distress, or manual final playback |
+| Escape-room building cluster | central desk plus hall runner | 3 | rooms are staggered and no more than one final is active | camera/audio blind spot, overlapping hard exits, or no hall runner | desk log with next hint time | egress issue, player distress, or stuck latch |
+
 ## Reset checklist
 
 | Step | Action | Verify |

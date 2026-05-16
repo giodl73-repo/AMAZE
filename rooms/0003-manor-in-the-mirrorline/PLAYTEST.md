@@ -22,6 +22,7 @@ runs, scenes, beats, clocks, stuck states, hints, reveals, and reset effects.
 | v0.house-echoes | 2026-05-15 | Seed | Added optional station-back house echoes and a final mirror echo as non-required delight rewards. | Test whether fast teams remember the manor more without confused teams treating echoes as clues. |
 | v0.prototype-sprint | 2026-05-15 | Seed | Added cardboard prototype sprint, stop rules, reset timing budget, operator run script, and floor tape-out checklist. | Build P0 cardboard/tape-out before adding scenic finish. |
 | v0.p0-content-lock | 2026-05-15 | Seed | Locked original P0 suspect/object/room candidate set and answer key for the cardboard sprint. | Use Nella Ash / hand mirror / observatory for P0 only; revise after playtest evidence. |
+| v0.catalog-retrofit | 2026-05-16 | Seed | Retrofitted technique/device/kit IDs, crowd profiles, risk bands, and bench-test plan to the manor room. | Use cataloged L1 cardboard bench tests before build-candidate promotion. |
 
 ## Simulation and playtest runs
 
@@ -98,6 +99,29 @@ Use `docs/behavior-testing.md`.
 | SIM-0003-P0 | prototype abuse/reset | Mixed prototype team | all | wrong token opens cover, reset over 10 min, proof rail blocks egress | high | stop-rule fix before more content | Treat prototype failure as design evidence, not build failure. |
 | SIM-0003-P0C | content confusion | Confused team | all | players mix up Nella/object/observatory because labels are too similar | medium | bigger icons and repeated category language | Preserve physical proof path; edit names only if needed. |
 
+## Variability matrix
+
+Use `components/RELIABILITY.md`.
+
+| Team/behavior | Beat(s) stressed | What changes | Reliability issue IDs | Mitigation | Evidence needed |
+|---|---|---|---|---|---|
+| Confused/quiet | P1-P2 | alibis become reading homework or token homes are missed | REL-SOUP, REL-STATE | category plaques, one true-line demo, keyed token homes | BT-0003-P2-C, BT-0003-P2-W |
+| Fighting/dominant | P2-P5 | one logician controls proof interpretation and final sliders | REL-SOCIAL | token tester/checker/caller roles and proof-locked covers | SIM-0003-F3, BT-0003-P5-H |
+| Chaotic/family | P2, P3, P5 | tokens/objects move fast and final cabinet gets attacked | REL-LOSS, REL-FORCE, REL-FP | oversized proofs, counts, no-force stops, staff duplicates | BT-0003-P3-H, BT-0003-P5-H |
+| Accessibility-varied | P2, P4 | linework/overlays/glare may exclude players | REL-SENSORY | bold marks, work-light route, duplicate printed card | BT-0003-P4-X |
+| Operator stress | proof rail, all reset | proof state hides or reset exceeds 10 minutes | REL-OPS, REL-RESET | shallow proof rail, reset photos, duplicate proof kit | BT-0003-R |
+
+## Chaos protocol
+
+Use `components/RELIABILITY.md`.
+
+| Probe ID | Beat/device | Probe action | Watch signal | Expected recovery | Status |
+|---|---|---|---|---|---|
+| CHAOS-SWAP | P2 alibi tokens / P4 overlays | swap homes/orientations | impossible or false deduction | keyed homes and corner keys catch swap | pending |
+| CHAOS-DUMP | P3 object sideboard | scatter objects and seal | object loss/search soup | tray count and spare object set | pending |
+| CHAOS-FORCE | P3 plinth / P5 cabinet | press pointer, force covers/sliders | false seal/reveal or unsafe force | stops survive; staff proof/release | pending |
+| CHAOS-CROWD | P5 cabinet | all players crowd final | one-player domination or egress block | role lane and caller/checker/handler script | pending |
+
 ## Stuck-state log
 
 | Run ID | Beat | Observable signal | Cause | Hint used | Revision |
@@ -117,8 +141,44 @@ Use `docs/behavior-testing.md`.
 
 ## Physical and reset failures
 
-| Run ID | Component/beat | Failure | Player impact | Operator recovery | Post-run fix | Template lesson? |
-|---|---|---|---|---|---|---|
+| Run ID | Component/beat | Failure | Player impact | Operator recovery | Recovery time | In time? | Post-run fix | Template lesson? |
+|---|---|---|---|---|---:|---|---|---|
+
+## Reliability issue log
+
+| Run/Test ID | Beat/device | Issue ID | Failure mode | Player impact | Operator detection | Bypass | Post-run fix | Result |
+|---|---|---|---|---|---|---|---|---|
+| BT-0003-P2-W | P2 truth windows | REL-STATE, REL-RESET | swapped token homes create false/unclear contradiction | wrong suspect proof or confusion | reset photo/token count mismatch | operator demonstrates true line | stronger keyed homes | Not run |
+| BT-0003-P3-H | P3 balance plinth | REL-FP, REL-DRIFT | wrong object releases seal or true object fails | players blame plinth | pointer behavior inconsistent | staff object seal | widen tolerance or replace mechanism | Not run |
+| BT-0003-P4-X | P4 overlays | REL-SENSORY | glare/subtle marks block location solve | access failure | low-light checker cannot read route | printed alignment card | larger matte marks | Not run |
+| BT-0003-P5-H | P5 cabinet | REL-FORCE, REL-FP, REL-SOCIAL | cover forced or one player controls finale | false reveal or social monopoly | cover state/crowding visible | staff release/role script | stronger covers and role spacing | Not run |
+
+## Admin replacement drills
+
+Use `components\RELIABILITY.md`.
+
+| Test ID | Component | Criticality | Failure simulated | Spare/bypass used | Target replacement min | Actual replacement min | Result | Required change |
+|---|---|---|---|---|---:|---:|---|---|
+| AR-0003-P2-ALIBI | alibi token/card set | C4 required | token swapped or missing | duplicate alibi pouch | 1 | TBD | Not run | stage P2 pouch and reset photo |
+| AR-0003-P3-OBJECT | prop object/true behavior | C4 required | object missing or plinth false-negative | duplicate object or staff object seal | 2 | TBD | Not run | label P3 pouch and staff seal |
+| AR-0003-P4-OVERLAY | room overlay set | C4 required | overlay scratched/swapped/not found | spare overlay or printed alignment card | 2 | TBD | Not run | corner-key overlay pouch |
+| AR-0003-P5-PROOF | proof token/socket set | C4 required | proof token missing or jammed | locked staff proof pouch | 1 | TBD | Not run | verify proof handoff script |
+| AR-0003-P5-CABINET | proof-locked cabinet | C5 showstopper | cover or reveal jams | staff release/manual reveal | 1 | TBD | Not run | prove release without false reveal |
+
+## Device bench tests
+
+Use `components/DEVICE-REVIEW.md`. Passing these moves devices from L0 idea to
+L1 cardboard.
+
+| Test ID | Version | Device | Risk band | Crowd profile | Pass type | Required observation | Status | Promotion impact |
+|---|---|---|---|---|---|---|---|---|
+| BT-0003-P2-C | v0.catalog-retrofit | `DEV-WINDOW-001` truth windows | Yellow | deduction pleaser | correct-use | Nella's broken mirrorline is identified by physical contradiction | pending | blocks P2 promotion |
+| BT-0003-P2-W | v0.catalog-retrofit | `DEV-SOCKET-001` alibi/token homes | Yellow | deduction pleaser | wrong-use | swapped/wrong alibi tokens reject or remain visibly wrong without jam | pending | blocks P2 promotion |
+| BT-0003-P3-C | v0.catalog-retrofit | `DEV-BALANCE-001` object plinth | Yellow | discovery pleaser | correct-use | hand mirror success is obvious and repeatable | pending | blocks P3 promotion |
+| BT-0003-P3-H | v0.catalog-retrofit | `DEV-BALANCE-001` object plinth | Yellow | discovery pleaser | chaotic-use | wrong objects and pressure do not release the seal | pending | blocks P3 promotion |
+| BT-0003-P4-X | v0.catalog-retrofit | `DEV-OVERLAY-001` inspection windows | Yellow, Orange if lit | aha pleaser | accessibility | work-light overlay path is readable by seated/low-light-sensitive checker | pending | blocks P4 promotion |
+| BT-0003-P5-H | v0.catalog-retrofit | `DEV-FINAL-002` cabinet | Yellow, Orange if lit | premium finale pleaser | chaotic-use | wrong tokens/forced covers/slider spinning create no false reveal | pending | blocks P5 promotion |
+| BT-0003-R | v0.catalog-retrofit | full proof/reset kit | Yellow | helper | reset/transport | one operator resets frames, props, overlays, proof rail, and cabinet under 10 minutes | pending | blocks playtest-ready |
 
 ## Safety and accessibility observations
 
@@ -156,6 +216,7 @@ Use `scoring/RUBRIC.md`.
 | v0.house-echoes | 2026-05-15 | v0.2 | 7 | 11 | 10 | 7 | 8 | 10 | 9 | 7 | 8 | 4 | 81 | Prototype optional echo cards; ensure they reward speed without adding clue load. |
 | v0.prototype-sprint | 2026-05-15 | v0.2 | 7 | 11 | 10 | 7 | 8 | 10 | 10 | 8 | 8 | 4 | 83 | Build P0 cardboard sprint; enforce stop rules; measure one-operator reset before scenic build. |
 | v0.p0-content-lock | 2026-05-15 | v0.2 | 8 | 12 | 10 | 7 | 8 | 10 | 10 | 8 | 8 | 4 | 85 | Use original P0 answer set: Nella Ash / hand mirror / observatory; test recall and fairness. |
+| v0.catalog-retrofit | 2026-05-16 | v0.2 | 8 | 12 | 11 | 7 | 8 | 11 | 10 | 8 | 8 | 4 | 87 | Run L1 bench tests for truth windows, balance plinth, overlays, proof-locked cabinet, and reset kit. |
 
 ## Surprise log
 
@@ -174,6 +235,7 @@ Use `scoring/RUBRIC.md`.
 | Delight should be optional but physical. | House echoes add touchable/readable reward after proofs are earned. | Atmosphere should deepen the room without becoming homework or a hidden clue path. |
 | Prototype order is a design tool. | The P0 sprint now tests flow, affordance, reset, force, and accessibility before scenic finish. | Build the cheapest evidence that can kill or promote the idea. |
 | Content must be prototypeable too. | P0 now has a fixed original cast, object set, room set, and answer. | Names and labels should be tested for recall and originality before scenic art is commissioned. |
+| The catalog works across room genres. | Manor and Brineworks now share technique/device/kit language despite different themes. | Keep adding catalog IDs when a room beat becomes build-serious. |
 
 ## Promotion decision
 
@@ -191,4 +253,5 @@ Use `scoring/RUBRIC.md`.
 | v0.house-echoes | Seed | Graphed | Not ready | Prototype house echo cards; run amazing and confused passes to confirm delight improves without clue confusion. |
 | v0.prototype-sprint | Seed | Graphed | Not ready | Run P0 cardboard sprint; pass stop rules, one-operator reset under 10 minutes, and no false cabinet solve before promotion. |
 | v0.p0-content-lock | Seed | Graphed | Not ready | Run P0 content pass; verify original naming, category recall, and that players solve by physical proof rather than memorizing labels. |
+| v0.catalog-retrofit | Seed | Graphed | Not ready | Complete L1 cardboard bench tests and record whether each manor device remains a pleaser or becomes a frustration risk. |
 

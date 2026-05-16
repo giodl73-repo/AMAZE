@@ -24,6 +24,10 @@ lock and record actual purchases in the room build pack.
 | MECH-004 | drawer slide or linear track | Home Depot, Lowe's, McMaster-Carr | `$12-45` | Planning | B | sliding windows and reveal panels | use over-rated load capacity |
 | MECH-005 | hinge set | big-box hardware, McMaster-Carr | `$5-30` | Planning | A/B | boxes, doors, reveals | keep matching hinge screws |
 | MECH-006 | rotary dial/knob | Amazon, McMaster-Carr, electronics suppliers | `$3-25` | Planning | B | alignment and selection props | use set-screw knobs; keep extras |
+| MECH-007 | compression spring assortment | Amazon, McMaster-Carr, hardware suppliers | `$5-25` | Planning | B | returns, reveal flags, soft stops | keep labeled by size; substitute rubber bands only for prototype |
+| MECH-008 | magnets / magnetic sheet | Amazon, McMaster-Carr, craft stores | `$5-30` | Planning | B | route tiles, removable overlays, state panels | keep matched polarity sets and non-magnetic fallback |
+| MECH-009 | ball detent / indexing hardware | McMaster-Carr, Amazon, industrial supply | `$5-40` | Planning | B | satisfying selector positions, route clicks | use visible index marks as fallback |
+| MECH-010 | rubber bumper / soft stop | big-box hardware, McMaster-Carr, Amazon | `$3-15` | Planning | A/B | no-force closures, drawer stops, pinch reduction | keep assorted bumpers in maintenance kit |
 
 ## Electronics, light, and audio
 
@@ -37,6 +41,9 @@ lock and record actual purchases in the room build pack.
 | ELEC-006 | rugged/simple audio player | Amazon, Adafruit audio board, thrift retail | `$15-50` | Planning | C | recorder playback, radio effects | transcript or printed backup required |
 | ELEC-007 | small speaker | Amazon, Adafruit, electronics suppliers | `$8-35` | Planning | B/C | local audio clue or ambience | keep wired backup speaker |
 | ELEC-008 | reed switch or microswitch | Digi-Key, Mouser, Adafruit, Amazon | `$2-12` | Planning | B | detecting panels, drawers, latches | design manual bypass; keep spares |
+| ELEC-009 | addressable LED pixel/module | Adafruit, SparkFun, Amazon, Digi-Key | `$5-30` | Planning | B/C | state lights, dry bubble gags, progress indicators | keep simple non-addressable LED fallback |
+| ELEC-010 | limit switch | Digi-Key, Mouser, Amazon, industrial supply | `$3-15` | Planning | B | detecting cover/slider end states | design so switch is not structural |
+| ELEC-011 | small fan/blower | Amazon, Adafruit, electronics suppliers | `$5-25` | Planning | B/C | dry steam, airflow, paper/bubble gags | printed/LED gag fallback |
 
 ## Print, evidence, and reset consumables
 
@@ -47,6 +54,8 @@ lock and record actual purchases in the room build pack.
 | PRINT-003 | evidence tags | office supply, Amazon, print shop | `$5-20` | Planning | C | inventory and clue tagging | stock extra blank tags |
 | PRINT-004 | dry erase/grease pencil marks | office supply, Amazon | `$3-15` | Planning | Consumable | operator notes, temporary tests | keep multiple markers |
 | PRINT-005 | small bags/pouches | Amazon, ULINE, craft stores | `$5-25` | Planning | C | reset kits, evidence bundles | keep extras by size |
+| PRINT-006 | printable acetate/transparency film | office supply, Amazon, print shop | `$5-25` | Planning | C | overlays, inspection windows, alignment clues | keep source files and duplicate overlay set |
+| PRINT-007 | magnetic/laminated token sheet | Amazon, office supply, print shop | `$5-30` | Planning | C | route tiles, proof tokens, reset labels | duplicate before playtest |
 
 ## Scenic and container props
 
@@ -57,6 +66,22 @@ lock and record actual purchases in the room build pack.
 | SCENIC-003 | clipboard/case board | office supply, Amazon, thrift | `$5-25` | Planning | B/C | briefing, evidence rail support | keep duplicate board |
 | SCENIC-004 | acrylic window/sheet | Home Depot, Lowe's, TAP Plastics/local plastics | `$10-60` | Planning | B/C | witness windows, covers, reveal panels | round edges; keep replacement panel |
 | SCENIC-005 | hook-and-loop/rare-earth magnets | Amazon, craft stores, McMaster-Carr | `$5-30` | Planning | B | removable evidence, service panels | stock extra matched magnets |
+| SCENIC-006 | foamcore / corrugated plastic sheet | craft stores, office supply, Home Depot | `$5-25` | Planning | C | cardboard sprint devices, temporary panels | prototype only; replace for production |
+| SCENIC-007 | oversized plastic/wood prop blanks | craft stores, thrift, Amazon, local fabrication | `$5-50` | Planning | C/B | safe food/object tokens, shaped proof props | duplicate critical props; avoid sharp/fragile items |
+| SCENIC-008 | dry visual effect material | craft stores, party supply, Amazon | `$5-30` | Planning | C | streamers, bubble cards, fake steam | no wet/mist use without safety review |
+
+## Craft and maker materials
+
+| ID | Item | Common sources | Unit cost band | Price confidence | Durability | Typical use | Spare/substitute plan |
+|---|---|---|---:|---|---|---|---|
+| MAT-PAPER-001 | cardstock/construction paper | craft stores, office supply, classroom supplies | `$3-15` | Planning | Prototype/low | labels, prototype cards, color blocks | laminate or reprint; upgrade to plastic/vinyl |
+| MAT-PAPER-002 | cardboard/chipboard | shipping boxes, craft stores, office supply | `$0-15` | Planning | Prototype | proof tokens, rough boxes, cabinet faces | upgrade to plywood/acrylic/HDPE |
+| MAT-PAPER-003 | foamcore/corrugated plastic | craft stores, office supply, Home Depot | `$5-25` | Planning | Prototype/low | mock panels, rails, temporary devices | upgrade to plywood/PVC/acrylic |
+| MAT-ADH-002 | hook-and-loop strips/dots | craft stores, Amazon, office supply | `$5-20` | Planning | Low/medium | removable token homes, temporary panels | upgrade to magnets/keyed sockets |
+| MAT-SCENIC-001 | paper mache supplies | craft stores, classroom supplies | `$3-20` | Planning | Low/medium if sealed | lightweight scenic texture | seal or upgrade to hardcoat/foam/plastic |
+| MAT-SCENIC-002 | craft foam/EVA sheets | craft stores, Amazon | `$5-25` | Planning | Low/medium | soft tokens, fake food, bumpers | upgrade to rubber/wood/plastic |
+| MAT-SCENIC-005 | glitter/foil decorative sheet | craft stores, office supply | `$3-20` | Planning | Consumable/C | sealed sparkle accents | avoid loose glitter; use foil vinyl/laminate |
+| MAT-DUR-003 | PVC board/expanded PVC | sign shops, plastics suppliers, Amazon | `$15-80` | Planning | Medium | clean panels, durable signs, tokens | substitute sealed plywood or acrylic |
 
 ## Operations and safety
 

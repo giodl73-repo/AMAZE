@@ -40,6 +40,25 @@ Use `docs/behavior-testing.md`.
 | Scene | Beat | Player action | Aha | Check | Behavior probe | Target min | Hint at min | Slow max min | Mechanism | Reliability risk | DC | Success | Partial | Stall/hint trigger | Reset effect |
 |---|---|---|---|---|---|---:|---:|---:|---|---|---|---|---|---|---|
 
+## Transformation states
+
+Use this table for every visible object, prop, cabinet, wall, light state, or
+room phase that changes because of player progress. `From state` and `To state`
+describe what players can see/touch, while `Trigger` and `Failure/bypass`
+separate design intent from build implementation.
+
+| ID | Beat | Object/space | From state | Trigger | To state | Visible proof | Reset state | Failure/bypass |
+|---|---|---|---|---|---|---|---|---|
+
+## Unlock paths
+
+Use this table to test whether connected tissue still works when one team opens
+an act quickly and another reaches the same unlock late. `Beats` accepts lists
+or ranges such as `P2-P4, P7`; `simulate` reports fast and slow unlock minutes.
+
+| Path | Beats | Unlocks | Fast coherence | Slow coherence | Operator acceleration |
+|---|---|---|---|---|---|
+
 ## Session timing model
 
 Use the target session declared in `BRIEF.md`. See
