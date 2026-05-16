@@ -135,6 +135,8 @@ pub(crate) struct BenchArgs {
 pub(crate) struct OpsArgs {
     pub(crate) room: Option<PathBuf>,
     pub(crate) rooms: Option<PathBuf>,
+    pub(crate) stagger_minutes: u32,
+    pub(crate) finale_minutes: u32,
 }
 
 pub(crate) fn parse_cli(args: Vec<String>) -> Result<Cli, String> {
@@ -751,6 +753,8 @@ fn parse_bench(args: &[String]) -> Result<Command, String> {
 fn parse_ops(args: &[String]) -> Result<Command, String> {
     let mut room = None;
     let mut rooms = None;
+    let mut stagger_minutes = Some(10);
+    let mut finale_minutes = Some(10);
     let mut i = 0;
 
     while i < args.len() {
@@ -763,6 +767,14 @@ fn parse_ops(args: &[String]) -> Result<Command, String> {
                 i += 1;
                 rooms = args.get(i).map(PathBuf::from);
             }
+            "--stagger" => {
+                i += 1;
+                stagger_minutes = Some(parse_u32_arg(args.get(i), "--stagger")?);
+            }
+            "--finale-window" => {
+                i += 1;
+                finale_minutes = Some(parse_u32_arg(args.get(i), "--finale-window")?);
+            }
             other => return Err(format!("unknown ops argument '{other}'")),
         }
         i += 1;
@@ -774,8 +786,19 @@ fn parse_ops(args: &[String]) -> Result<Command, String> {
     if room.is_some() && rooms.is_some() {
         return Err("ops accepts either --room or --rooms, not both".to_string());
     }
+    if stagger_minutes == Some(0) {
+        return Err("--stagger must be greater than 0".to_string());
+    }
+    if finale_minutes == Some(0) {
+        return Err("--finale-window must be greater than 0".to_string());
+    }
 
-    Ok(Command::Ops(OpsArgs { room, rooms }))
+    Ok(Command::Ops(OpsArgs {
+        room,
+        rooms,
+        stagger_minutes: stagger_minutes.unwrap_or(10),
+        finale_minutes: finale_minutes.unwrap_or(10),
+    }))
 }
 
 pub(crate) fn print_help() {
@@ -795,7 +818,7 @@ pub(crate) fn print_help() {
             amaze bench --rooms <rooms-root> --open --blocker \"P2 promotion\"\n\
             amaze bench --rooms <rooms-root> --open --target DEV-SOCKET-001\n\
             amaze ops --room <room-path>\n\
-            amaze ops --rooms <rooms-root>\n\
+            amaze ops --rooms <rooms-root> [--stagger 10] [--finale-window 10]\n\
             amaze run --room <room-path> --team <team archetype> [--behavior <behavior>] [--clock <minutes>]\n\
             amaze simulate --room <room-path> [--runs 100] [--seed 1] [--target <minutes>]\n\
             amaze optimize --room <room-path> [--target <minutes>]\n\
@@ -916,8 +939,14 @@ mod tests {
             "ops".to_string(),
             "--rooms".to_string(),
             "rooms".to_string(),
+            "--stagger".to_string(),
+            "12".to_string(),
+            "--finale-window".to_string(),
+            "8".to_string(),
         ])
         .expect("parse rooms ops");
-        assert!(matches!(all_rooms.command, Command::Ops(args) if args.rooms.is_some()));
+        assert!(
+            matches!(all_rooms.command, Command::Ops(args) if args.rooms.is_some() && args.stagger_minutes == 12 && args.finale_minutes == 8)
+        );
     }
 }

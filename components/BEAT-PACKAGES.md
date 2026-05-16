@@ -70,7 +70,7 @@ Keep one Rust package for now, but split the code into modules as seams stabiliz
 | `commands\catalog.rs` | inventory and beat-package catalog reports |
 | `commands\visuals.rs` | C4-C5 visual readiness report and portfolio sprint queue |
 | `commands\bench.rs` | bench/admin/chaos evidence report and portfolio sprint queue |
-| `commands\ops.rs` | NPC/operator voice and multi-room rotation readiness reports |
+| `commands\ops.rs` | NPC/operator voice reports, multi-room rotation readiness, and shared-operator stagger models |
 | `commands\score.rs` | draft rubric scorecards for one room or a room portfolio |
 | `commands\simulation.rs` | randomized run simulation, reliability/chaos pressure, and build-time pressure report surfaces |
 | `commands\timing.rs` | run sheets, session optimization reports, timing analysis reports, playtest recording, and team matrices |
