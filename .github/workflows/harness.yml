@@ -14,7 +14,7 @@ permissions:
 jobs:
   amaze-harness:
     name: AMAZE harness
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
@@ -26,33 +26,26 @@ jobs:
           components: rustfmt
 
       - name: Allow GitHub Cargo dependencies
-        shell: pwsh
-        run: git config --global url."https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf "https://github.com/"
+        run: |
+          git config --global url."https://x-access-token:${{ secrets.MDPATH_TOKEN || secrets.GITHUB_TOKEN }}@github.com/".insteadOf "https://github.com/"
 
       - name: Format check
-        shell: pwsh
-        run: cargo fmt --manifest-path tools\amaze-harness\Cargo.toml -- --check
+        run: cargo fmt --manifest-path tools/amaze-harness/Cargo.toml -- --check
 
       - name: Test harness
-        shell: pwsh
-        run: cargo test --quiet --manifest-path tools\amaze-harness\Cargo.toml
+        run: cargo test --quiet --manifest-path tools/amaze-harness/Cargo.toml
 
       - name: Lint room packs
-        shell: pwsh
-        run: cargo run --quiet --manifest-path tools\amaze-harness\Cargo.toml -- lint --rooms rooms
+        run: cargo run --quiet --manifest-path tools/amaze-harness/Cargo.toml -- lint --rooms rooms
 
       - name: Check room packs
-        shell: pwsh
         run: |
-          $rooms = Get-ChildItem rooms -Directory |
-            Where-Object { $_.Name -ne 'TEMPLATE' -and (Test-Path (Join-Path $_.FullName 'BUILD.md')) }
-          foreach ($room in $rooms) {
-            cargo run --quiet --manifest-path tools\amaze-harness\Cargo.toml -- check --room $room.FullName
-            if ($LASTEXITCODE -ne 0) {
-              exit $LASTEXITCODE
-            }
-          }
+          for room in rooms/*; do
+            [ -d "$room" ] || continue
+            [ "$(basename "$room")" != "TEMPLATE" ] || continue
+            [ -f "$room/BUILD.md" ] || continue
+            cargo run --quiet --manifest-path tools/amaze-harness/Cargo.toml -- check --room "$room"
+          done
 
       - name: Score portfolio
-        shell: pwsh
-        run: cargo run --quiet --manifest-path tools\amaze-harness\Cargo.toml -- score --rooms rooms
+        run: cargo run --quiet --manifest-path tools/amaze-harness/Cargo.toml -- score --rooms rooms
