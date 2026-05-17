@@ -437,4 +437,28 @@ mod tests {
         assert!(host.state().hatch_unlocked);
         assert_eq!(host.resource_panel()[2].value, "unlocked");
     }
+
+    #[test]
+    fn product_owned_muddle_host_resumes_from_command_save() {
+        let mut host = silverstream_muddle_host();
+        let mut session = MuddleSession::for_host(&host).expect("host has start room");
+        session
+            .play_turn(&mut host, MuddleCommand::parse("go receiver"))
+            .expect("entry moves to receiver");
+        session
+            .play_turn(&mut host, MuddleCommand::parse("inspect clue"))
+            .expect("clue can be inspected");
+
+        let save = session.save();
+        let mut resumed_host = silverstream_muddle_host();
+        let mut resumed = MuddleSession::resume_for_host(&mut resumed_host, &save)
+            .expect("session resumes by replaying commands");
+        resumed
+            .play_turn(&mut resumed_host, MuddleCommand::parse("tune signal"))
+            .expect("resumed clue state permits tuning");
+
+        assert_eq!(resumed.current_room, "receiver-wall");
+        assert!(resumed_host.state().clue_found);
+        assert!(resumed_host.state().signal_aligned);
+    }
 }
