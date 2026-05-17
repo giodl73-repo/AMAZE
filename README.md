@@ -126,6 +126,8 @@ Run the product-owned MUDDLE launcher from `tools\amaze-harness` with:
 
 ```powershell
 cargo run --quiet --bin amaze-muddle
+cargo run --quiet --bin amaze-muddle -- --save silverstream.muddle
+cargo run --quiet --bin amaze-muddle -- --load silverstream.muddle --save silverstream.muddle
 ```
 
 ## License

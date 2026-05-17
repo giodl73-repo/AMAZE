@@ -1,9 +1,9 @@
 use amaze_harness::silverstream_muddle_host;
-use muddle_cli::{run_muddle_host, MuddleCliHostInfo};
+use muddle_cli::{run_muddle_host_from_env_args, MuddleCliHostInfo};
 
 fn main() -> std::io::Result<()> {
     let mut host = silverstream_muddle_host();
-    run_muddle_host(
+    run_muddle_host_from_env_args(
         &mut host,
         MuddleCliHostInfo {
             name: "amaze-silverstream",
