@@ -115,10 +115,18 @@ work:
 
 ```rust
 let surface = amaze_harness::silverstream_muddle_surface();
+let host = amaze_harness::silverstream_muddle_host();
 ```
 
 The surface provides room ids, exits, resource/status defaults, objectives, and
-command hints without moving MUDDLE renderer code into AMAZE.
+command hints without moving MUDDLE renderer code into AMAZE. The host implements
+MUDDLE's `MuddleHost` contract for stateful Silverstream play.
+
+Run the product-owned MUDDLE launcher from `tools\amaze-harness` with:
+
+```powershell
+cargo run --quiet --bin amaze-muddle
+```
 
 ## License
 

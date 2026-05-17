@@ -9,7 +9,12 @@ edition = "2021"
 name = "amaze"
 path = "src/main.rs"
 
+[[bin]]
+name = "amaze-muddle"
+path = "src/bin/amaze-muddle.rs"
+
 [dependencies]
 mdpath = { git = "https://github.com/giodl73-repo/MDPATH.git" }
+muddle-cli = { git = "https://github.com/giodl73-repo/MUDDLE.git" }
 muddle-core = { git = "https://github.com/giodl73-repo/MUDDLE.git" }
 rally-core = { git = "https://github.com/giodl73-repo/RALLY.git" }

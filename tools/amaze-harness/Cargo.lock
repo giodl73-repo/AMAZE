@@ -7,6 +7,7 @@ name = "amaze-harness"
 version = "0.1.0"
 dependencies = [
  "mdpath",
+ "muddle-cli",
  "muddle-core",
  "rally-core",
 ]
@@ -20,9 +21,44 @@ dependencies = [
 ]
 
 [[package]]
+name = "muddle-amaze-spike"
+version = "0.1.0"
+source = "git+https://github.com/giodl73-repo/MUDDLE.git#f672522f669a382a90bd539c53d62806b79632bf"
+dependencies = [
+ "muddle-core",
+]
+
+[[package]]
+name = "muddle-banish-spike"
+version = "0.1.0"
+source = "git+https://github.com/giodl73-repo/MUDDLE.git#f672522f669a382a90bd539c53d62806b79632bf"
+dependencies = [
+ "muddle-core",
+]
+
+[[package]]
+name = "muddle-cli"
+version = "0.1.0"
+source = "git+https://github.com/giodl73-repo/MUDDLE.git#f672522f669a382a90bd539c53d62806b79632bf"
+dependencies = [
+ "muddle-amaze-spike",
+ "muddle-banish-spike",
+ "muddle-core",
+ "muddle-mock-sim",
+]
+
+[[package]]
 name = "muddle-core"
 version = "0.1.0"
-source = "git+https://github.com/giodl73-repo/MUDDLE.git#c520cc58b062647abd6733898947a4e94301ee09"
+source = "git+https://github.com/giodl73-repo/MUDDLE.git#f672522f669a382a90bd539c53d62806b79632bf"
+
+[[package]]
+name = "muddle-mock-sim"
+version = "0.1.0"
+source = "git+https://github.com/giodl73-repo/MUDDLE.git#f672522f669a382a90bd539c53d62806b79632bf"
+dependencies = [
+ "muddle-core",
+]
 
 [[package]]
 name = "proc-macro2"
