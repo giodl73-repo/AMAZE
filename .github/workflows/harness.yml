@@ -35,8 +35,24 @@ jobs:
       - name: Test harness
         run: cargo test --quiet --manifest-path tools/amaze-harness/Cargo.toml
 
+      - name: Release build
+        run: cargo build --quiet --release --manifest-path tools/amaze-harness/Cargo.toml
+
+      - name: MUDDLE launcher smoke
+        run: |
+          cat > tools/amaze-harness/target/amaze-smoke.script <<'EOF'
+          go receiver
+          inspect clue
+          tune signal
+          unlock hatch
+          go hatch
+          quit
+          EOF
+          tools/amaze-harness/target/release/amaze-muddle --script tools/amaze-harness/target/amaze-smoke.script --save tools/amaze-harness/target/amaze-smoke.muddle --transcript tools/amaze-harness/target/amaze-smoke.txt
+          ! grep -E "Command failed|UnknownCommand|Error:" tools/amaze-harness/target/amaze-smoke.txt
+
       - name: Lint room packs
-        run: cargo run --quiet --manifest-path tools/amaze-harness/Cargo.toml -- lint --rooms rooms
+        run: cargo run --quiet --manifest-path tools/amaze-harness/Cargo.toml --bin amaze -- lint --rooms rooms
 
       - name: Check room packs
         run: |
@@ -44,8 +60,8 @@ jobs:
             [ -d "$room" ] || continue
             [ "$(basename "$room")" != "TEMPLATE" ] || continue
             [ -f "$room/BUILD.md" ] || continue
-            cargo run --quiet --manifest-path tools/amaze-harness/Cargo.toml -- check --room "$room"
+            cargo run --quiet --manifest-path tools/amaze-harness/Cargo.toml --bin amaze -- check --room "$room"
           done
 
       - name: Score portfolio
-        run: cargo run --quiet --manifest-path tools/amaze-harness/Cargo.toml -- score --rooms rooms
+        run: cargo run --quiet --manifest-path tools/amaze-harness/Cargo.toml --bin amaze -- score --rooms rooms
