@@ -108,6 +108,18 @@ playtest, and field-ready versions.
 Foundation scaffold plus first room seed:
 [`rooms/0001-signal-in-the-silverstream/`](rooms/0001-signal-in-the-silverstream/).
 
+## MUDDLE surface API
+
+The harness exposes a product-owned Silverstream play surface for MUDDLE adapter
+work:
+
+```rust
+let surface = amaze_harness::silverstream_muddle_surface();
+```
+
+The surface provides room ids, exits, resource/status defaults, objectives, and
+command hints without moving MUDDLE renderer code into AMAZE.
+
 ## License
 
 Private repository. License decision pending.
