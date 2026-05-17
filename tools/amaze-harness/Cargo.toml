@@ -11,4 +11,5 @@ path = "src/main.rs"
 
 [dependencies]
 mdpath = { git = "https://github.com/giodl73-repo/MDPATH.git" }
+muddle-core = { git = "https://github.com/giodl73-repo/MUDDLE.git" }
 rally-core = { git = "https://github.com/giodl73-repo/RALLY.git" }

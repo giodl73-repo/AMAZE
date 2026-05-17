@@ -7,6 +7,7 @@ name = "amaze-harness"
 version = "0.1.0"
 dependencies = [
  "mdpath",
+ "muddle-core",
  "rally-core",
 ]
 
@@ -17,6 +18,11 @@ source = "git+https://github.com/giodl73-repo/MDPATH.git#147aac6cfd95ca249860c9a
 dependencies = [
  "thiserror",
 ]
+
+[[package]]
+name = "muddle-core"
+version = "0.1.0"
+source = "git+https://github.com/giodl73-repo/MUDDLE.git#c520cc58b062647abd6733898947a4e94301ee09"
 
 [[package]]
 name = "proc-macro2"
