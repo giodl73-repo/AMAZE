@@ -2,7 +2,7 @@ use std::collections::HashMap;
 
 use muddle_core::{
     MuddleCommand, MuddleCommandHint, MuddleCommandOutcome, MuddleError, MuddleExit, MuddleHost,
-    MuddleResource, MuddleRoom,
+    MuddleInventoryItem, MuddleResource, MuddleRoom,
 };
 
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -256,6 +256,29 @@ impl MuddleHost for AmazeSilverstreamMuddleHost {
         ]
     }
 
+    fn inventory_panel(&self) -> Vec<MuddleInventoryItem> {
+        let mut items = vec![MuddleInventoryItem {
+            label: "operator radio".to_string(),
+            detail: format!("{} hints used", self.state.hints_used),
+        }];
+
+        if self.state.clue_found {
+            items.push(MuddleInventoryItem {
+                label: "silver frequency mark".to_string(),
+                detail: "receiver tuning clue".to_string(),
+            });
+        }
+
+        if self.state.hatch_unlocked {
+            items.push(MuddleInventoryItem {
+                label: "hatch reset key".to_string(),
+                detail: "exit is open".to_string(),
+            });
+        }
+
+        items
+    }
+
     fn map_panel(&self, current_room: &str) -> Option<String> {
         Some(format!(
             "{} Entry -- {} Receiver Wall -- {} Hatch Exit",
@@ -436,6 +459,10 @@ mod tests {
         assert_eq!(session.current_room, "hatch-exit");
         assert!(host.state().hatch_unlocked);
         assert_eq!(host.resource_panel()[2].value, "unlocked");
+        assert!(host
+            .inventory_panel()
+            .iter()
+            .any(|item| item.label == "hatch reset key"));
     }
 
     #[test]
