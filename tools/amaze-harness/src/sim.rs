@@ -1,43 +1,29 @@
 pub(crate) struct Lcg {
-    state: u64,
+    seed: rally_core::RunSeed,
 }
 
 impl Lcg {
     pub(crate) fn new(seed: u64) -> Self {
         Self {
-            state: if seed == 0 { 1 } else { seed },
+            seed: rally_core::RunSeed::from_u64(seed),
         }
     }
 
     pub(crate) fn next_u32(&mut self, max: u32) -> u32 {
-        if max == 0 {
-            return 0;
-        }
-        self.state = self
-            .state
-            .wrapping_mul(6364136223846793005)
-            .wrapping_add(1442695040888963407);
-        ((self.state >> 32) as u32) % max
+        self.seed.next_bounded(max)
     }
 
     pub(crate) fn percent(&mut self, chance: u32) -> bool {
-        self.next_u32(100) < chance.min(100)
+        self.seed.percent_chance(chance)
     }
 }
 
 pub(crate) fn sample_between(rng: &mut Lcg, min: u32, max_inclusive: u32) -> u32 {
-    if max_inclusive <= min {
-        return min;
-    }
-    min + rng.next_u32(max_inclusive - min + 1)
+    rally_core::sample_between(&mut rng.seed, min, max_inclusive)
 }
 
 pub(crate) fn percent(numerator: u32, denominator: u32) -> f64 {
-    if denominator == 0 {
-        0.0
-    } else {
-        numerator as f64 * 100.0 / denominator as f64
-    }
+    rally_core::percent_of(numerator, denominator)
 }
 
 #[cfg(test)]

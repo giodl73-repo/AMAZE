@@ -7,6 +7,7 @@ name = "amaze-harness"
 version = "0.1.0"
 dependencies = [
  "mdpath",
+ "rally-core",
 ]
 
 [[package]]
@@ -34,6 +35,11 @@ checksum = "41f2619966050689382d2b44f664f4bc593e129785a36d6ee376ddf37259b924"
 dependencies = [
  "proc-macro2",
 ]
+
+[[package]]
+name = "rally-core"
+version = "0.1.0"
+source = "git+https://github.com/giodl73-repo/RALLY.git#b2e383b77919d35f22b830a7964b872bd18f0f19"
 
 [[package]]
 name = "syn"
