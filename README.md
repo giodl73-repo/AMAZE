@@ -121,7 +121,8 @@ let host = amaze_harness::silverstream_muddle_host();
 The surface provides room ids, exits, resource/status defaults, objectives, and
 command hints without moving MUDDLE renderer code into AMAZE. The host implements
 MUDDLE's `MuddleHost` contract for stateful Silverstream play, including
-checkpoint export/import for clue, signal, hatch, and hint state.
+checkpoint export/import for the route rail, breaker panel, galley reveal, fold
+table, radio broadcast, hatch, and hint state.
 
 Run the product-owned MUDDLE launcher from `tools\amaze-harness` with:
 
@@ -137,10 +138,12 @@ cargo run --quiet --bin amaze-muddle-macroquad
 cargo run --quiet --bin amaze-muddle-macroquad -- --save silverstream.macroquad.muddle --transcript silverstream.macroquad.txt
 ```
 
-The native Macroquad launcher opens directly into Silverstream with a
+The native Macroquad launcher opens directly into the full Silverstream
+route-to-radio arc with a
 product-owned title and default save/transcript/import/export paths. The first
-complete command arc is: `go receiver`, `inspect clue`, `tune signal`,
-`unlock hatch`, `go hatch`.
+complete command arc is: `go route`, `sort postcards`, `go breaker`,
+`set breakers`, `go galley`, `sort galley`, `go table`, `align table`,
+`go radio`, `tune radio`, `unlock hatch`, `go hatch`.
 
 ## License
 

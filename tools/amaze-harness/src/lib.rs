@@ -58,8 +58,11 @@ pub struct AmazeSilverstreamMuddleHost {
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct AmazeSilverstreamMuddleState {
-    pub clue_found: bool,
-    pub signal_aligned: bool,
+    pub route_planned: bool,
+    pub breakers_set: bool,
+    pub galley_sorted: bool,
+    pub table_aligned: bool,
+    pub broadcast_tuned: bool,
     pub hatch_unlocked: bool,
     pub hints_used: u8,
 }
@@ -73,22 +76,91 @@ pub fn silverstream_muddle_surface() -> AmazeMuddleSurface {
             AmazeMuddleRoom {
                 id: "silverstream-entry",
                 title: "Silverstream Entry",
-                description: "Enter the trailer-scale Silverstream escape room.",
+                description:
+                    "Enter the trailer-scale Silverstream escape room and face the route rail.",
                 exits: vec![AmazeMuddleExit {
-                    command: "go receiver",
-                    target_room: "receiver-wall",
-                    label: "Receiver Wall",
+                    command: "go route",
+                    target_room: "route-rail",
+                    label: "Route Rail",
                 }],
             },
             AmazeMuddleRoom {
-                id: "receiver-wall",
-                title: "Receiver Wall",
-                description: "Solve a hidden clue, signal dial, and resettable hatch.",
+                id: "route-rail",
+                title: "Route Rail",
+                description: "Order postcards against the public map before powering the trailer.",
                 exits: vec![
                     AmazeMuddleExit {
                         command: "go entry",
                         target_room: "silverstream-entry",
                         label: "Silverstream Entry",
+                    },
+                    AmazeMuddleExit {
+                        command: "go breaker",
+                        target_room: "breaker-panel",
+                        label: "Breaker Panel",
+                    },
+                ],
+            },
+            AmazeMuddleRoom {
+                id: "breaker-panel",
+                title: "Breaker Panel",
+                description: "Set the low-voltage prop breakers to wake the UV-safe cabinet path.",
+                exits: vec![
+                    AmazeMuddleExit {
+                        command: "go route",
+                        target_room: "route-rail",
+                        label: "Route Rail",
+                    },
+                    AmazeMuddleExit {
+                        command: "go galley",
+                        target_room: "galley-cabinet",
+                        label: "Galley Cabinet",
+                    },
+                ],
+            },
+            AmazeMuddleRoom {
+                id: "galley-cabinet",
+                title: "Galley Cabinet",
+                description: "Sort the counted galley objects and reveal the frequency mark.",
+                exits: vec![
+                    AmazeMuddleExit {
+                        command: "go breaker",
+                        target_room: "breaker-panel",
+                        label: "Breaker Panel",
+                    },
+                    AmazeMuddleExit {
+                        command: "go table",
+                        target_room: "fold-table",
+                        label: "Fold Table",
+                    },
+                ],
+            },
+            AmazeMuddleRoom {
+                id: "fold-table",
+                title: "Fold Table",
+                description: "Align the transform table to expose the bearing for the final radio.",
+                exits: vec![
+                    AmazeMuddleExit {
+                        command: "go galley",
+                        target_room: "galley-cabinet",
+                        label: "Galley Cabinet",
+                    },
+                    AmazeMuddleExit {
+                        command: "go radio",
+                        target_room: "radio-nook",
+                        label: "Radio Nook",
+                    },
+                ],
+            },
+            AmazeMuddleRoom {
+                id: "radio-nook",
+                title: "Radio Nook",
+                description: "Tune the tactile radio and trigger the final Silverstream broadcast.",
+                exits: vec![
+                    AmazeMuddleExit {
+                        command: "go table",
+                        target_room: "fold-table",
+                        label: "Fold Table",
                     },
                     AmazeMuddleExit {
                         command: "go hatch",
@@ -110,12 +182,24 @@ pub fn silverstream_muddle_surface() -> AmazeMuddleSurface {
         ],
         resources: vec![
             AmazeMuddlePanelValue {
-                label: "clue",
-                value: "hidden",
+                label: "route",
+                value: "unordered",
             },
             AmazeMuddlePanelValue {
-                label: "signal",
-                value: "drifting",
+                label: "breakers",
+                value: "off",
+            },
+            AmazeMuddlePanelValue {
+                label: "galley",
+                value: "unsorted",
+            },
+            AmazeMuddlePanelValue {
+                label: "table",
+                value: "folded",
+            },
+            AmazeMuddlePanelValue {
+                label: "radio",
+                value: "static",
             },
             AmazeMuddlePanelValue {
                 label: "hatch",
@@ -125,32 +209,63 @@ pub fn silverstream_muddle_surface() -> AmazeMuddleSurface {
         objectives: vec![
             AmazeMuddleObjective {
                 room_id: "silverstream-entry",
-                text: "Move to the receiver wall.",
+                text: "Start at the route rail and make the trailer route public.",
             },
             AmazeMuddleObjective {
-                room_id: "receiver-wall",
-                text: "Find the hidden clue, tune the signal, and unlock the hatch.",
+                room_id: "route-rail",
+                text: "Sort the postcards against the mounted map.",
+            },
+            AmazeMuddleObjective {
+                room_id: "breaker-panel",
+                text: "Set breakers in route order to power the reveal path.",
+            },
+            AmazeMuddleObjective {
+                room_id: "galley-cabinet",
+                text: "Sort counted galley objects and reveal the frequency.",
+            },
+            AmazeMuddleObjective {
+                room_id: "fold-table",
+                text: "Align the transform table to expose the bearing.",
+            },
+            AmazeMuddleObjective {
+                room_id: "radio-nook",
+                text: "Tune the radio, unlock the hatch, and exit.",
             },
             AmazeMuddleObjective {
                 room_id: "hatch-exit",
-                text: "Escape complete; review the transcript and reset path.",
+                text: "Escape complete; review transcript, bypasses, and reset path.",
             },
         ],
         commands: vec![
             AmazeMuddleCommand {
-                room_id: "receiver-wall",
-                command: "inspect clue",
-                description: "Search for the hidden clue.",
+                room_id: "route-rail",
+                command: "sort postcards",
+                description: "Order the route postcards against the wall map.",
             },
             AmazeMuddleCommand {
-                room_id: "receiver-wall",
-                command: "tune signal",
-                description: "Align the receiver signal.",
+                room_id: "breaker-panel",
+                command: "set breakers",
+                description: "Set the prop breakers in route order.",
             },
             AmazeMuddleCommand {
-                room_id: "receiver-wall",
+                room_id: "galley-cabinet",
+                command: "sort galley",
+                description: "Place the counted galley objects into their homes.",
+            },
+            AmazeMuddleCommand {
+                room_id: "fold-table",
+                command: "align table",
+                description: "Rotate the transform table to the visible bearing.",
+            },
+            AmazeMuddleCommand {
+                room_id: "radio-nook",
+                command: "tune radio",
+                description: "Tune the tactile radio to the revealed frequency.",
+            },
+            AmazeMuddleCommand {
+                room_id: "radio-nook",
                 command: "unlock hatch",
-                description: "Open the hatch after solving the wall.",
+                description: "Open the hatch after the final broadcast.",
             },
         ],
     }
@@ -189,8 +304,11 @@ impl AmazeSilverstreamMuddleHost {
         Self {
             rooms,
             state: AmazeSilverstreamMuddleState {
-                clue_found: false,
-                signal_aligned: false,
+                route_planned: false,
+                breakers_set: false,
+                galley_sorted: false,
+                table_aligned: false,
+                broadcast_tuned: false,
                 hatch_unlocked: false,
                 hints_used: 0,
             },
@@ -208,10 +326,13 @@ impl AmazeSilverstreamMuddleHost {
                 room_id: room_id.to_string(),
             })?;
         Ok(MuddleCommandOutcome::stay(format!(
-            "{}\n| amaze: clue_found={} signal_aligned={} hatch_unlocked={} hints_used={}",
+            "{}\n| amaze: route_planned={} breakers_set={} galley_sorted={} table_aligned={} broadcast_tuned={} hatch_unlocked={} hints_used={}",
             room.ascii_card(),
-            self.state.clue_found,
-            self.state.signal_aligned,
+            self.state.route_planned,
+            self.state.breakers_set,
+            self.state.galley_sorted,
+            self.state.table_aligned,
+            self.state.broadcast_tuned,
             self.state.hatch_unlocked,
             self.state.hints_used
         )))
@@ -230,19 +351,43 @@ impl MuddleHost for AmazeSilverstreamMuddleHost {
     fn resource_panel(&self) -> Vec<MuddleResource> {
         vec![
             MuddleResource {
-                label: "clue".to_string(),
-                value: if self.state.clue_found {
-                    "found".to_string()
+                label: "route".to_string(),
+                value: if self.state.route_planned {
+                    "ordered".to_string()
                 } else {
-                    "hidden".to_string()
+                    "unordered".to_string()
                 },
             },
             MuddleResource {
-                label: "signal".to_string(),
-                value: if self.state.signal_aligned {
-                    "aligned".to_string()
+                label: "breakers".to_string(),
+                value: if self.state.breakers_set {
+                    "set".to_string()
                 } else {
-                    "drifting".to_string()
+                    "off".to_string()
+                },
+            },
+            MuddleResource {
+                label: "galley".to_string(),
+                value: if self.state.galley_sorted {
+                    "sorted".to_string()
+                } else {
+                    "unsorted".to_string()
+                },
+            },
+            MuddleResource {
+                label: "table".to_string(),
+                value: if self.state.table_aligned {
+                    "bearing shown".to_string()
+                } else {
+                    "folded".to_string()
+                },
+            },
+            MuddleResource {
+                label: "radio".to_string(),
+                value: if self.state.broadcast_tuned {
+                    "broadcast".to_string()
+                } else {
+                    "static".to_string()
                 },
             },
             MuddleResource {
@@ -262,10 +407,24 @@ impl MuddleHost for AmazeSilverstreamMuddleHost {
             detail: format!("{} hints used", self.state.hints_used),
         }];
 
-        if self.state.clue_found {
+        if self.state.route_planned {
+            items.push(MuddleInventoryItem {
+                label: "ordered postcard route".to_string(),
+                detail: "breaker sequence is public".to_string(),
+            });
+        }
+
+        if self.state.galley_sorted {
             items.push(MuddleInventoryItem {
                 label: "silver frequency mark".to_string(),
-                detail: "receiver tuning clue".to_string(),
+                detail: "galley reveal for the radio dial".to_string(),
+            });
+        }
+
+        if self.state.table_aligned {
+            items.push(MuddleInventoryItem {
+                label: "compass bearing".to_string(),
+                detail: "fold table bearing is exposed".to_string(),
             });
         }
 
@@ -281,26 +440,55 @@ impl MuddleHost for AmazeSilverstreamMuddleHost {
 
     fn map_panel(&self, current_room: &str) -> Option<String> {
         Some(format!(
-            "{} Entry -- {} Receiver Wall -- {} Hatch Exit",
+            "{} Entry -- {} Route -- {} Breakers -- {} Galley -- {} Table -- {} Radio -- {} Hatch",
             marker(current_room, "silverstream-entry"),
-            marker(current_room, "receiver-wall"),
+            marker(current_room, "route-rail"),
+            marker(current_room, "breaker-panel"),
+            marker(current_room, "galley-cabinet"),
+            marker(current_room, "fold-table"),
+            marker(current_room, "radio-nook"),
             marker(current_room, "hatch-exit")
         ))
     }
 
     fn objective_panel(&self, current_room: &str) -> Vec<String> {
         match current_room {
-            "silverstream-entry" => vec!["Move to the receiver wall.".to_string()],
-            "receiver-wall" if !self.state.clue_found => {
-                vec!["Find the hidden clue before tuning the signal.".to_string()]
+            "silverstream-entry" => vec!["Move to the route rail.".to_string()],
+            "route-rail" if !self.state.route_planned => {
+                vec!["Sort postcards against the mounted map.".to_string()]
             }
-            "receiver-wall" if !self.state.signal_aligned => {
-                vec!["Tune the signal using the discovered clue.".to_string()]
+            "route-rail" => vec!["Move to the breaker panel.".to_string()],
+            "breaker-panel" if !self.state.route_planned => {
+                vec!["Return to the route rail before setting breakers.".to_string()]
             }
-            "receiver-wall" if !self.state.hatch_unlocked => {
-                vec!["Unlock the hatch after aligning the signal.".to_string()]
+            "breaker-panel" if !self.state.breakers_set => {
+                vec!["Set breakers in the route order.".to_string()]
             }
-            "receiver-wall" => vec!["Exit through the hatch.".to_string()],
+            "breaker-panel" => vec!["Move to the galley cabinet.".to_string()],
+            "galley-cabinet" if !self.state.breakers_set => {
+                vec!["Set the breakers before sorting the galley.".to_string()]
+            }
+            "galley-cabinet" if !self.state.galley_sorted => {
+                vec!["Sort counted galley objects to reveal the frequency.".to_string()]
+            }
+            "galley-cabinet" => vec!["Move to the fold table.".to_string()],
+            "fold-table" if !self.state.galley_sorted => {
+                vec!["Reveal the frequency in the galley first.".to_string()]
+            }
+            "fold-table" if !self.state.table_aligned => {
+                vec!["Align the fold table to expose the compass bearing.".to_string()]
+            }
+            "fold-table" => vec!["Move to the radio nook.".to_string()],
+            "radio-nook" if !self.state.table_aligned => {
+                vec!["Expose the table bearing before tuning the radio.".to_string()]
+            }
+            "radio-nook" if !self.state.broadcast_tuned => {
+                vec!["Tune the radio to trigger the final broadcast.".to_string()]
+            }
+            "radio-nook" if !self.state.hatch_unlocked => {
+                vec!["Unlock the hatch after the broadcast.".to_string()]
+            }
+            "radio-nook" => vec!["Exit through the hatch.".to_string()],
             "hatch-exit" => {
                 vec!["Escape complete; review the transcript and reset path.".to_string()]
             }
@@ -312,20 +500,47 @@ impl MuddleHost for AmazeSilverstreamMuddleHost {
         match current_room {
             "silverstream-entry" => hints(&[
                 ("look", "Show the entry room."),
-                ("go receiver", "Move to the puzzle wall."),
+                ("go route", "Move to the route rail."),
             ]),
-            "receiver-wall" => hints(&[
-                ("look", "Show the receiver wall."),
-                ("inspect clue", "Search for the hidden clue."),
-                ("tune signal", "Align the receiver signal."),
-                ("unlock hatch", "Open the hatch after solving the wall."),
+            "route-rail" => hints(&[
+                ("look", "Show the route rail."),
+                ("sort postcards", "Order the postcards against the map."),
                 ("request hint", "Use an operator hint."),
                 ("go entry", "Return to the entry."),
+                ("go breaker", "Move to the breaker panel."),
+            ]),
+            "breaker-panel" => hints(&[
+                ("look", "Show the breaker panel."),
+                ("set breakers", "Set the prop breakers."),
+                ("request hint", "Use an operator hint."),
+                ("go route", "Return to the route rail."),
+                ("go galley", "Move to the galley cabinet."),
+            ]),
+            "galley-cabinet" => hints(&[
+                ("look", "Show the galley cabinet."),
+                ("sort galley", "Sort the counted galley objects."),
+                ("request hint", "Use an operator hint."),
+                ("go breaker", "Return to the breaker panel."),
+                ("go table", "Move to the fold table."),
+            ]),
+            "fold-table" => hints(&[
+                ("look", "Show the fold table."),
+                ("align table", "Align the transform table."),
+                ("request hint", "Use an operator hint."),
+                ("go galley", "Return to the galley cabinet."),
+                ("go radio", "Move to the radio nook."),
+            ]),
+            "radio-nook" => hints(&[
+                ("look", "Show the radio nook."),
+                ("tune radio", "Tune the tactile radio."),
+                ("unlock hatch", "Open the hatch after the broadcast."),
+                ("request hint", "Use an operator hint."),
+                ("go table", "Return to the fold table."),
                 ("go hatch", "Exit if the hatch is unlocked."),
             ]),
             "hatch-exit" => hints(&[
                 ("look", "Show the hatch exit."),
-                ("go receiver", "Return to the receiver wall."),
+                ("go radio", "Return to the radio nook."),
             ]),
             _ => Vec::new(),
         }
@@ -333,17 +548,23 @@ impl MuddleHost for AmazeSilverstreamMuddleHost {
 
     fn export_checkpoint(&self) -> Option<String> {
         Some(format!(
-            "clue_found={};signal_aligned={};hatch_unlocked={};hints_used={}",
-            self.state.clue_found,
-            self.state.signal_aligned,
+            "route_planned={};breakers_set={};galley_sorted={};table_aligned={};broadcast_tuned={};hatch_unlocked={};hints_used={}",
+            self.state.route_planned,
+            self.state.breakers_set,
+            self.state.galley_sorted,
+            self.state.table_aligned,
+            self.state.broadcast_tuned,
             self.state.hatch_unlocked,
             self.state.hints_used
         ))
     }
 
     fn import_checkpoint(&mut self, checkpoint: &str) -> Result<(), MuddleError> {
-        let mut clue_found = None;
-        let mut signal_aligned = None;
+        let mut route_planned = None;
+        let mut breakers_set = None;
+        let mut galley_sorted = None;
+        let mut table_aligned = None;
+        let mut broadcast_tuned = None;
         let mut hatch_unlocked = None;
         let mut hints_used = None;
 
@@ -354,9 +575,21 @@ impl MuddleHost for AmazeSilverstreamMuddleHost {
                         message: format!("malformed checkpoint field `{part}`"),
                     })?;
             match key {
-                "clue_found" => clue_found = Some(parse_checkpoint_bool(key, value)?),
-                "signal_aligned" => signal_aligned = Some(parse_checkpoint_bool(key, value)?),
+                "route_planned" => route_planned = Some(parse_checkpoint_bool(key, value)?),
+                "breakers_set" => breakers_set = Some(parse_checkpoint_bool(key, value)?),
+                "galley_sorted" => galley_sorted = Some(parse_checkpoint_bool(key, value)?),
+                "table_aligned" => table_aligned = Some(parse_checkpoint_bool(key, value)?),
+                "broadcast_tuned" => broadcast_tuned = Some(parse_checkpoint_bool(key, value)?),
                 "hatch_unlocked" => hatch_unlocked = Some(parse_checkpoint_bool(key, value)?),
+                "clue_found" => {
+                    route_planned = Some(parse_checkpoint_bool(key, value)?);
+                }
+                "signal_aligned" => {
+                    let value = parse_checkpoint_bool(key, value)?;
+                    galley_sorted = Some(value);
+                    table_aligned = Some(value);
+                    broadcast_tuned = Some(value);
+                }
                 "hints_used" => {
                     hints_used = Some(value.parse::<u8>().map_err(|_| {
                         MuddleError::InvalidHostCheckpoint {
@@ -373,11 +606,18 @@ impl MuddleHost for AmazeSilverstreamMuddleHost {
         }
 
         self.state = AmazeSilverstreamMuddleState {
-            clue_found: clue_found.ok_or_else(|| MuddleError::InvalidHostCheckpoint {
-                message: "missing clue_found checkpoint field".to_string(),
+            route_planned: route_planned.ok_or_else(|| MuddleError::InvalidHostCheckpoint {
+                message: "missing route_planned checkpoint field".to_string(),
             })?,
-            signal_aligned: signal_aligned.ok_or_else(|| MuddleError::InvalidHostCheckpoint {
-                message: "missing signal_aligned checkpoint field".to_string(),
+            breakers_set: breakers_set.unwrap_or_else(|| route_planned.unwrap_or(false)),
+            galley_sorted: galley_sorted.ok_or_else(|| MuddleError::InvalidHostCheckpoint {
+                message: "missing galley_sorted checkpoint field".to_string(),
+            })?,
+            table_aligned: table_aligned.ok_or_else(|| MuddleError::InvalidHostCheckpoint {
+                message: "missing table_aligned checkpoint field".to_string(),
+            })?,
+            broadcast_tuned: broadcast_tuned.ok_or_else(|| MuddleError::InvalidHostCheckpoint {
+                message: "missing broadcast_tuned checkpoint field".to_string(),
             })?,
             hatch_unlocked: hatch_unlocked.ok_or_else(|| MuddleError::InvalidHostCheckpoint {
                 message: "missing hatch_unlocked checkpoint field".to_string(),
@@ -396,58 +636,147 @@ impl MuddleHost for AmazeSilverstreamMuddleHost {
     ) -> Result<MuddleCommandOutcome, MuddleError> {
         match (room_id, command.normalized().as_str()) {
             (_, "look") | (_, "status") => self.look(room_id),
-            ("silverstream-entry", "go receiver") => Ok(MuddleCommandOutcome::move_to(
-                "You step up to the receiver wall.",
-                "receiver-wall",
+            ("silverstream-entry", "go route") => Ok(MuddleCommandOutcome::move_to(
+                "You step up to the route rail and postcard map.",
+                "route-rail",
             )),
-            ("receiver-wall", "inspect clue") => {
-                self.state.clue_found = true;
+            ("route-rail", "sort postcards") => {
+                self.state.route_planned = true;
                 Ok(MuddleCommandOutcome::stay(
-                    "You find a silver frequency mark under the receiver bezel.",
+                    "You order the six postcards against the mounted route map. The breaker labels now read as a sequence.",
                 ))
             }
-            ("receiver-wall", "tune signal") if !self.state.clue_found => {
+            ("route-rail", "request hint") => {
+                self.state.hints_used += 1;
                 Ok(MuddleCommandOutcome::stay(
-                    "The receiver drifts. You need the hidden frequency clue first.",
+                    "Operator hint: match postcard mileage plaques to the public route silhouettes.",
                 ))
             }
-            ("receiver-wall", "tune signal") => {
-                self.state.signal_aligned = true;
+            ("route-rail", "go entry") => Ok(MuddleCommandOutcome::move_to(
+                "You return to the Silverstream entry.",
+                "silverstream-entry",
+            )),
+            ("route-rail", "go breaker") => Ok(MuddleCommandOutcome::move_to(
+                "You move to the low-voltage breaker panel.",
+                "breaker-panel",
+            )),
+            ("breaker-panel", "set breakers") if !self.state.route_planned => {
                 Ok(MuddleCommandOutcome::stay(
-                    "The signal locks to the silver mark. The hatch relay clicks.",
+                    "The switches need a route order. Sort the postcards before setting breakers.",
                 ))
             }
-            ("receiver-wall", "unlock hatch") if !self.state.signal_aligned => Ok(
-                MuddleCommandOutcome::stay("The hatch stays locked until the signal is aligned."),
+            ("breaker-panel", "set breakers") => {
+                self.state.breakers_set = true;
+                Ok(MuddleCommandOutcome::stay(
+                    "The prop breakers click into route order. A safe reveal light wakes in the galley.",
+                ))
+            }
+            ("breaker-panel", "request hint") => {
+                self.state.hints_used += 1;
+                Ok(MuddleCommandOutcome::stay(
+                    "Operator hint: use the postcard order left-to-right on the breaker labels.",
+                ))
+            }
+            ("breaker-panel", "go route") => Ok(MuddleCommandOutcome::move_to(
+                "You return to the route rail.",
+                "route-rail",
+            )),
+            ("breaker-panel", "go galley") => Ok(MuddleCommandOutcome::move_to(
+                "You move to the galley cabinet and counted object tray.",
+                "galley-cabinet",
+            )),
+            ("galley-cabinet", "sort galley") if !self.state.breakers_set => {
+                Ok(MuddleCommandOutcome::stay(
+                    "The cabinet is dark. Set the breakers before sorting objects.",
+                ))
+            }
+            ("galley-cabinet", "sort galley") => {
+                self.state.galley_sorted = true;
+                Ok(MuddleCommandOutcome::stay(
+                    "You return each chunky galley object to its silhouette. The frequency mark appears with a printed backup label.",
+                ))
+            }
+            ("galley-cabinet", "request hint") => {
+                self.state.hints_used += 1;
+                Ok(MuddleCommandOutcome::stay(
+                    "Operator hint: count the mug, tin plate, spice jar, towel tag, ticket stub, and key fob before reading the reveal.",
+                ))
+            }
+            ("galley-cabinet", "go breaker") => Ok(MuddleCommandOutcome::move_to(
+                "You return to the breaker panel.",
+                "breaker-panel",
+            )),
+            ("galley-cabinet", "go table") => Ok(MuddleCommandOutcome::move_to(
+                "You move to the fold-down transform table.",
+                "fold-table",
+            )),
+            ("fold-table", "align table") if !self.state.galley_sorted => {
+                Ok(MuddleCommandOutcome::stay(
+                    "You need the galley frequency before the table bearing makes sense.",
+                ))
+            }
+            ("fold-table", "align table") => {
+                self.state.table_aligned = true;
+                Ok(MuddleCommandOutcome::stay(
+                    "The table rotates to its safe stop and exposes a compass bearing for the radio.",
+                ))
+            }
+            ("fold-table", "request hint") => {
+                self.state.hints_used += 1;
+                Ok(MuddleCommandOutcome::stay(
+                    "Operator hint: rotate only to the marked detent; the bearing is visual, not force-based.",
+                ))
+            }
+            ("fold-table", "go galley") => Ok(MuddleCommandOutcome::move_to(
+                "You return to the galley cabinet.",
+                "galley-cabinet",
+            )),
+            ("fold-table", "go radio") => Ok(MuddleCommandOutcome::move_to(
+                "You move to the radio nook.",
+                "radio-nook",
+            )),
+            ("radio-nook", "tune radio") if !self.state.table_aligned => {
+                Ok(MuddleCommandOutcome::stay(
+                    "The radio stays in static until the table bearing is exposed.",
+                ))
+            }
+            ("radio-nook", "tune radio") => {
+                self.state.broadcast_tuned = true;
+                Ok(MuddleCommandOutcome::stay(
+                    "The tactile radio locks onto Silverstream. A final broadcast confirms the escape route.",
+                ))
+            }
+            ("radio-nook", "unlock hatch") if !self.state.broadcast_tuned => Ok(
+                MuddleCommandOutcome::stay("The hatch interlock waits for the final broadcast."),
             ),
-            ("receiver-wall", "unlock hatch") => {
+            ("radio-nook", "unlock hatch") => {
                 self.state.hatch_unlocked = true;
                 Ok(MuddleCommandOutcome::stay(
                     "The hatch unlocks with a clean resettable latch motion.",
                 ))
             }
-            ("receiver-wall", "request hint") => {
+            ("radio-nook", "request hint") => {
                 self.state.hints_used += 1;
                 Ok(MuddleCommandOutcome::stay(
-                    "Operator hint: inspect the receiver bezel before tuning.",
+                    "Operator hint: combine the printed frequency and table bearing on the radio dial.",
                 ))
             }
-            ("receiver-wall", "go hatch") if self.state.hatch_unlocked => {
+            ("radio-nook", "go hatch") if self.state.hatch_unlocked => {
                 Ok(MuddleCommandOutcome::move_to(
                     "You open the hatch and exit the Silverstream room.",
                     "hatch-exit",
                 ))
             }
-            ("receiver-wall", "go hatch") => Ok(MuddleCommandOutcome::stay(
+            ("radio-nook", "go hatch") => Ok(MuddleCommandOutcome::stay(
                 "The hatch is still locked. Solve the receiver sequence first.",
             )),
-            ("receiver-wall", "go entry") => Ok(MuddleCommandOutcome::move_to(
-                "You return to the Silverstream entry.",
-                "silverstream-entry",
+            ("radio-nook", "go table") => Ok(MuddleCommandOutcome::move_to(
+                "You return to the fold table.",
+                "fold-table",
             )),
-            ("hatch-exit", "go receiver") => Ok(MuddleCommandOutcome::move_to(
-                "You return to the receiver wall for reset review.",
-                "receiver-wall",
+            ("hatch-exit", "go radio") => Ok(MuddleCommandOutcome::move_to(
+                "You return to the radio nook for reset review.",
+                "radio-nook",
             )),
             _ => Err(MuddleError::UnknownCommand {
                 room_id: room_id.to_string(),
@@ -496,11 +825,11 @@ mod tests {
 
         assert_eq!(surface.host_name, "amaze-silverstream");
         assert_eq!(surface.start_room, "silverstream-entry");
-        assert!(surface.rooms.iter().any(|room| room.id == "receiver-wall"));
+        assert!(surface.rooms.iter().any(|room| room.id == "radio-nook"));
         assert!(surface
             .commands
             .iter()
-            .any(|command| command.command == "unlock hatch"));
+            .any(|command| command.command == "tune radio"));
     }
 
     #[test]
@@ -508,25 +837,28 @@ mod tests {
         let mut host = silverstream_muddle_host();
         let mut session = MuddleSession::for_host(&host).expect("host has start room");
 
-        session
-            .play_turn(&mut host, MuddleCommand::parse("go receiver"))
-            .expect("entry moves to receiver");
-        session
-            .play_turn(&mut host, MuddleCommand::parse("inspect clue"))
-            .expect("clue can be inspected");
-        session
-            .play_turn(&mut host, MuddleCommand::parse("tune signal"))
-            .expect("signal tunes after clue");
-        session
-            .play_turn(&mut host, MuddleCommand::parse("unlock hatch"))
-            .expect("hatch unlocks");
-        session
-            .play_turn(&mut host, MuddleCommand::parse("go hatch"))
-            .expect("unlocked hatch exits");
+        for command in [
+            "go route",
+            "sort postcards",
+            "go breaker",
+            "set breakers",
+            "go galley",
+            "sort galley",
+            "go table",
+            "align table",
+            "go radio",
+            "tune radio",
+            "unlock hatch",
+            "go hatch",
+        ] {
+            session
+                .play_turn(&mut host, MuddleCommand::parse(command))
+                .expect("command plays");
+        }
 
         assert_eq!(session.current_room, "hatch-exit");
         assert!(host.state().hatch_unlocked);
-        assert_eq!(host.resource_panel()[2].value, "unlocked");
+        assert_eq!(host.resource_panel()[5].value, "unlocked");
         assert!(host
             .inventory_panel()
             .iter()
@@ -538,23 +870,26 @@ mod tests {
         let mut host = silverstream_muddle_host();
         let mut session = MuddleSession::for_host(&host).expect("host has start room");
         session
-            .play_turn(&mut host, MuddleCommand::parse("go receiver"))
-            .expect("entry moves to receiver");
+            .play_turn(&mut host, MuddleCommand::parse("go route"))
+            .expect("entry moves to route rail");
         session
-            .play_turn(&mut host, MuddleCommand::parse("inspect clue"))
-            .expect("clue can be inspected");
+            .play_turn(&mut host, MuddleCommand::parse("sort postcards"))
+            .expect("route can be planned");
 
         let save = session.save();
         let mut resumed_host = silverstream_muddle_host();
         let mut resumed = MuddleSession::resume_for_host(&mut resumed_host, &save)
             .expect("session resumes by replaying commands");
         resumed
-            .play_turn(&mut resumed_host, MuddleCommand::parse("tune signal"))
-            .expect("resumed clue state permits tuning");
+            .play_turn(&mut resumed_host, MuddleCommand::parse("go breaker"))
+            .expect("resumed route can move to breakers");
+        resumed
+            .play_turn(&mut resumed_host, MuddleCommand::parse("set breakers"))
+            .expect("resumed route state permits breaker sequence");
 
-        assert_eq!(resumed.current_room, "receiver-wall");
-        assert!(resumed_host.state().clue_found);
-        assert!(resumed_host.state().signal_aligned);
+        assert_eq!(resumed.current_room, "breaker-panel");
+        assert!(resumed_host.state().route_planned);
+        assert!(resumed_host.state().breakers_set);
     }
 
     #[test]
@@ -562,10 +897,17 @@ mod tests {
         let mut host = silverstream_muddle_host();
         let mut session = MuddleSession::for_host(&host).expect("host has start room");
         for command in [
-            "go receiver",
-            "inspect clue",
+            "go route",
+            "sort postcards",
             "request hint",
-            "tune signal",
+            "go breaker",
+            "set breakers",
+            "go galley",
+            "sort galley",
+            "go table",
+            "align table",
+            "go radio",
+            "tune radio",
             "unlock hatch",
         ] {
             session
@@ -576,12 +918,18 @@ mod tests {
         let save = session.save_for_host(&host);
         assert_eq!(
             save.host_checkpoint.as_deref(),
-            Some("clue_found=true;signal_aligned=true;hatch_unlocked=true;hints_used=1")
+            Some("route_planned=true;breakers_set=true;galley_sorted=true;table_aligned=true;broadcast_tuned=true;hatch_unlocked=true;hints_used=1")
         );
 
         let checkpoint_only_save = muddle_core::MuddleSessionSave {
-            current_room: "receiver-wall".to_string(),
-            commands: vec!["go receiver".to_string()],
+            current_room: "radio-nook".to_string(),
+            commands: vec![
+                "go route".to_string(),
+                "go breaker".to_string(),
+                "go galley".to_string(),
+                "go table".to_string(),
+                "go radio".to_string(),
+            ],
             host_checkpoint: save.host_checkpoint,
         };
         let mut resumed_host = silverstream_muddle_host();

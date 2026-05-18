@@ -9,7 +9,7 @@ fn main() -> std::io::Result<()> {
             name: "amaze-silverstream",
             description: "AMAZE Silverstream: product-owned MUDDLE host.",
             suggested_commands:
-                "`look`, `go receiver`, `inspect clue`, `tune signal`, `unlock hatch`, `go hatch`, `quit`.",
+                "`go route`, `sort postcards`, `set breakers`, `sort galley`, `align table`, `tune radio`, `unlock hatch`, `go hatch`, `quit`.",
         },
     )
     .map(|_| ())

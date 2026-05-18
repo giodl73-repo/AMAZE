@@ -7,7 +7,7 @@ fn main() -> std::io::Result<()> {
         category: "Games",
         description: "AMAZE Silverstream: product-owned MUDDLE window host.",
         suggested_commands:
-            "`look`, `go receiver`, `inspect clue`, `tune signal`, `unlock hatch`, `go hatch`.",
+            "`go route`, `sort postcards`, `set breakers`, `sort galley`, `align table`, `tune radio`, `unlock hatch`, `go hatch`.",
         create: || Box::new(silverstream_muddle_host()),
     }])
 }

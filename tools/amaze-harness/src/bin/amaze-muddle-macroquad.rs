@@ -36,9 +36,9 @@ async fn main() {
     let registrations = vec![MuddleClientHostRegistration {
         name: HOST_NAME,
         category: "Games",
-        description: "AMAZE Silverstream: native escape-room vertical slice.",
+        description: "AMAZE Silverstream: native route-to-radio escape-room slice.",
         suggested_commands:
-            "`go receiver`, `inspect clue`, `tune signal`, `unlock hatch`, `go hatch`.",
+            "`go route`, `sort postcards`, `set breakers`, `sort galley`, `align table`, `tune radio`, `unlock hatch`, `go hatch`.",
         create: || Box::new(silverstream_muddle_host()),
     }];
 
