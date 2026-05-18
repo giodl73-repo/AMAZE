@@ -24,7 +24,7 @@ dependencies = [
 [[package]]
 name = "muddle-amaze-spike"
 version = "0.1.0"
-source = "git+https://github.com/giodl73-repo/MUDDLE.git#29ae889a1f491d5d1358adeae84e68a8616ae967"
+source = "git+https://github.com/giodl73-repo/MUDDLE.git#34b38271ea0aa14d58da817cae5a8cda29fe8f20"
 dependencies = [
  "muddle-core",
 ]
@@ -32,7 +32,7 @@ dependencies = [
 [[package]]
 name = "muddle-banish-spike"
 version = "0.1.0"
-source = "git+https://github.com/giodl73-repo/MUDDLE.git#29ae889a1f491d5d1358adeae84e68a8616ae967"
+source = "git+https://github.com/giodl73-repo/MUDDLE.git#34b38271ea0aa14d58da817cae5a8cda29fe8f20"
 dependencies = [
  "muddle-core",
 ]
@@ -40,7 +40,7 @@ dependencies = [
 [[package]]
 name = "muddle-cli"
 version = "0.1.0"
-source = "git+https://github.com/giodl73-repo/MUDDLE.git#29ae889a1f491d5d1358adeae84e68a8616ae967"
+source = "git+https://github.com/giodl73-repo/MUDDLE.git#34b38271ea0aa14d58da817cae5a8cda29fe8f20"
 dependencies = [
  "muddle-amaze-spike",
  "muddle-banish-spike",
@@ -51,12 +51,12 @@ dependencies = [
 [[package]]
 name = "muddle-core"
 version = "0.1.0"
-source = "git+https://github.com/giodl73-repo/MUDDLE.git#29ae889a1f491d5d1358adeae84e68a8616ae967"
+source = "git+https://github.com/giodl73-repo/MUDDLE.git#34b38271ea0aa14d58da817cae5a8cda29fe8f20"
 
 [[package]]
 name = "muddle-mock-sim"
 version = "0.1.0"
-source = "git+https://github.com/giodl73-repo/MUDDLE.git#29ae889a1f491d5d1358adeae84e68a8616ae967"
+source = "git+https://github.com/giodl73-repo/MUDDLE.git#34b38271ea0aa14d58da817cae5a8cda29fe8f20"
 dependencies = [
  "muddle-core",
 ]
@@ -64,7 +64,7 @@ dependencies = [
 [[package]]
 name = "muddle-window"
 version = "0.1.0"
-source = "git+https://github.com/giodl73-repo/MUDDLE.git#29ae889a1f491d5d1358adeae84e68a8616ae967"
+source = "git+https://github.com/giodl73-repo/MUDDLE.git#34b38271ea0aa14d58da817cae5a8cda29fe8f20"
 dependencies = [
  "muddle-amaze-spike",
  "muddle-banish-spike",
