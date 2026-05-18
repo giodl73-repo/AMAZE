@@ -2,7 +2,7 @@ use std::collections::HashMap;
 
 use muddle_core::{
     MuddleCommand, MuddleCommandHint, MuddleCommandOutcome, MuddleError, MuddleExit, MuddleHost,
-    MuddleInventoryItem, MuddleResource, MuddleRoom,
+    MuddleInventoryItem, MuddleResource, MuddleRoom, MuddleVisualNode,
 };
 
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -546,6 +546,113 @@ impl MuddleHost for AmazeSilverstreamMuddleHost {
         }
     }
 
+    fn visual_nodes(&self, current_room: &str) -> Vec<MuddleVisualNode> {
+        let mut children = vec![
+            MuddleVisualNode::sprite(
+                "silverstream-trailer",
+                "Silverstream trailer",
+                "sprites/amaze/silverstream-trailer.png",
+                "A compact Silverstream trailer escape-room cutaway.",
+            )
+            .with_layer(0)
+            .with_rect(0, 0, 12, 6),
+            MuddleVisualNode::text("current-room-label", "Current room", current_room)
+                .with_layer(30)
+                .with_rect(1, 0, 4, 1),
+            amaze_room_token("route-token", "Route rail", "route-rail", current_room, 1),
+            amaze_room_token(
+                "breaker-token",
+                "Breaker panel",
+                "breaker-panel",
+                current_room,
+                2,
+            ),
+            amaze_room_token(
+                "galley-token",
+                "Galley cabinet",
+                "galley-cabinet",
+                current_room,
+                3,
+            ),
+            amaze_room_token("table-token", "Fold table", "fold-table", current_room, 4),
+            amaze_room_token("radio-token", "Radio nook", "radio-nook", current_room, 5),
+            amaze_room_token("hatch-token", "Hatch exit", "hatch-exit", current_room, 6),
+        ];
+
+        if self.state.route_planned {
+            children.push(
+                MuddleVisualNode::sprite(
+                    "route-solved-badge",
+                    "Route ordered",
+                    "sprites/amaze/route-postcards.png",
+                    "Ordered postcard route badge.",
+                )
+                .with_layer(20)
+                .with_rect(1, 6, 2, 1)
+                .with_frame("ordered"),
+            );
+        }
+        if self.state.breakers_set {
+            children.push(
+                MuddleVisualNode::sprite(
+                    "breaker-solved-badge",
+                    "Breakers set",
+                    "sprites/amaze/breaker-panel.png",
+                    "Low-voltage breaker panel solved badge.",
+                )
+                .with_layer(20)
+                .with_rect(3, 6, 2, 1)
+                .with_frame("set"),
+            );
+        }
+        if self.state.galley_sorted {
+            children.push(
+                MuddleVisualNode::sprite(
+                    "galley-solved-badge",
+                    "Galley sorted",
+                    "sprites/amaze/galley-cabinet.png",
+                    "Sorted galley object reveal badge.",
+                )
+                .with_layer(20)
+                .with_rect(5, 6, 2, 1)
+                .with_frame("frequency"),
+            );
+        }
+        if self.state.table_aligned {
+            children.push(
+                MuddleVisualNode::sprite(
+                    "table-solved-badge",
+                    "Table aligned",
+                    "sprites/amaze/fold-table.png",
+                    "Fold table bearing badge.",
+                )
+                .with_layer(20)
+                .with_rect(7, 6, 2, 1)
+                .with_frame("bearing"),
+            );
+        }
+        if self.state.broadcast_tuned {
+            children.push(
+                MuddleVisualNode::sprite(
+                    "radio-solved-badge",
+                    "Radio broadcast",
+                    "sprites/amaze/radio-dial.png",
+                    "Tuned radio broadcast badge.",
+                )
+                .with_layer(20)
+                .with_rect(9, 6, 2, 1)
+                .with_frame("broadcast")
+                .with_animation("pulse"),
+            );
+        }
+
+        vec![MuddleVisualNode::group(
+            "silverstream-scene",
+            "Silverstream scene",
+            children,
+        )]
+    }
+
     fn export_checkpoint(&self) -> Option<String> {
         Some(format!(
             "route_planned={};breakers_set={};galley_sorted={};table_aligned={};broadcast_tuned={};hatch_unlocked={};hints_used={}",
@@ -794,6 +901,29 @@ fn marker(current_room: &str, room_id: &str) -> &'static str {
     }
 }
 
+fn amaze_room_token(
+    id: &str,
+    label: &str,
+    room_id: &str,
+    current_room: &str,
+    order: i32,
+) -> MuddleVisualNode {
+    let frame = if current_room == room_id {
+        "active"
+    } else {
+        "idle"
+    };
+    MuddleVisualNode::sprite(
+        id,
+        label,
+        format!("sprites/amaze/{room_id}.png"),
+        format!("{label} room token"),
+    )
+    .with_layer(10)
+    .with_rect(order * 2 - 1, 2, 1, 1)
+    .with_frame(frame)
+}
+
 fn hints(items: &[(&str, &str)]) -> Vec<MuddleCommandHint> {
     items
         .iter()
@@ -863,6 +993,56 @@ mod tests {
             .inventory_panel()
             .iter()
             .any(|item| item.label == "hatch reset key"));
+    }
+
+    #[test]
+    fn product_owned_muddle_host_emits_visual_scene_nodes() {
+        let mut host = silverstream_muddle_host();
+        let mut session = MuddleSession::for_host(&host).expect("host has start room");
+        session
+            .play_turn(&mut host, MuddleCommand::parse("go route"))
+            .expect("entry moves to route rail");
+        session
+            .play_turn(&mut host, MuddleCommand::parse("sort postcards"))
+            .expect("route can be planned");
+
+        let visuals = host.visual_nodes(&session.current_room);
+        let scene = visuals.first().expect("scene is emitted");
+        assert_eq!(scene.id, "silverstream-scene");
+        assert!(scene.children.iter().any(|node| node.id == "route-token"
+            && node
+                .sprite
+                .as_ref()
+                .and_then(|sprite| sprite.frame.as_deref())
+                == Some("active")));
+        assert!(scene
+            .children
+            .iter()
+            .any(|node| node.id == "route-solved-badge"));
+    }
+
+    #[test]
+    fn product_owned_muddle_snapshot_carries_visual_scene_nodes() {
+        let host = silverstream_muddle_host();
+        let session = MuddleSession::for_host(&host).expect("host has start room");
+        let snapshot = session.client_snapshot(
+            &host,
+            muddle_core::MuddleClientInfo {
+                host: "amaze-silverstream".to_string(),
+                description: "AMAZE Silverstream".to_string(),
+                suggested_commands: "look".to_string(),
+            },
+            "Ready.",
+        );
+
+        assert!(snapshot
+            .visual_nodes
+            .iter()
+            .any(|node| node.id == "silverstream-scene"));
+        assert!(snapshot
+            .controls
+            .iter()
+            .any(|control| control.id == "visuals"));
     }
 
     #[test]
