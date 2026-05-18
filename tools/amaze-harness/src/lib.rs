@@ -753,6 +753,15 @@ impl MuddleHost for AmazeSilverstreamMuddleHost {
                     "You order the six postcards against the mounted route map. The breaker labels now read as a sequence.",
                 ))
             }
+            (_, "sort postcards") if !self.state.route_planned => {
+                self.state.route_planned = true;
+                Ok(MuddleCommandOutcome::stay(
+                    "You backtrack to the route rail long enough to order the postcards. The breaker sequence is now readable.",
+                ))
+            }
+            (_, "sort postcards") => Ok(MuddleCommandOutcome::stay(
+                "The postcard route is already ordered and ready for the breaker panel.",
+            )),
             ("route-rail", "request hint") => {
                 self.state.hints_used += 1;
                 Ok(MuddleCommandOutcome::stay(
@@ -787,6 +796,9 @@ impl MuddleHost for AmazeSilverstreamMuddleHost {
             ("breaker-panel", "go route") => Ok(MuddleCommandOutcome::move_to(
                 "You return to the route rail.",
                 "route-rail",
+            )),
+            ("breaker-panel", "go breaker") => Ok(MuddleCommandOutcome::stay(
+                "You are already at the breaker panel.",
             )),
             ("breaker-panel", "go galley") => Ok(MuddleCommandOutcome::move_to(
                 "You move to the galley cabinet and counted object tray.",
@@ -876,6 +888,13 @@ impl MuddleHost for AmazeSilverstreamMuddleHost {
             }
             ("radio-nook", "go hatch") => Ok(MuddleCommandOutcome::stay(
                 "The hatch is still locked. Solve the receiver sequence first.",
+            )),
+            (_, "go hatch") if self.state.hatch_unlocked => Ok(MuddleCommandOutcome::move_to(
+                "You follow the solved route to the open hatch and exit the Silverstream room.",
+                "hatch-exit",
+            )),
+            (_, "go hatch") => Ok(MuddleCommandOutcome::stay(
+                "The hatch route is visible, but it needs the route, breakers, galley, table, and radio solved first.",
             )),
             ("radio-nook", "go table") => Ok(MuddleCommandOutcome::move_to(
                 "You return to the fold table.",
@@ -1019,6 +1038,37 @@ mod tests {
             .children
             .iter()
             .any(|node| node.id == "route-solved-badge"));
+    }
+
+    #[test]
+    fn product_owned_muddle_host_recovers_from_friction_path() {
+        let mut host = silverstream_muddle_host();
+        let mut session = MuddleSession::for_host(&host).expect("host has start room");
+        for command in [
+            "go hatch",
+            "go route",
+            "go breaker",
+            "set breakers",
+            "sort postcards",
+            "go breaker",
+            "set breakers",
+            "go galley",
+            "sort galley",
+            "go table",
+            "align table",
+            "go radio",
+            "unlock hatch",
+            "tune radio",
+            "unlock hatch",
+            "go hatch",
+        ] {
+            session
+                .play_turn(&mut host, MuddleCommand::parse(command))
+                .expect("friction path remains recoverable");
+        }
+
+        assert_eq!(session.current_room, "hatch-exit");
+        assert!(host.state().hatch_unlocked);
     }
 
     #[test]
