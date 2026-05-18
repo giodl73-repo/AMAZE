@@ -120,7 +120,8 @@ let host = amaze_harness::silverstream_muddle_host();
 
 The surface provides room ids, exits, resource/status defaults, objectives, and
 command hints without moving MUDDLE renderer code into AMAZE. The host implements
-MUDDLE's `MuddleHost` contract for stateful Silverstream play.
+MUDDLE's `MuddleHost` contract for stateful Silverstream play, including
+checkpoint export/import for clue, signal, hatch, and hint state.
 
 Run the product-owned MUDDLE launcher from `tools\amaze-harness` with:
 

@@ -331,6 +331,64 @@ impl MuddleHost for AmazeSilverstreamMuddleHost {
         }
     }
 
+    fn export_checkpoint(&self) -> Option<String> {
+        Some(format!(
+            "clue_found={};signal_aligned={};hatch_unlocked={};hints_used={}",
+            self.state.clue_found,
+            self.state.signal_aligned,
+            self.state.hatch_unlocked,
+            self.state.hints_used
+        ))
+    }
+
+    fn import_checkpoint(&mut self, checkpoint: &str) -> Result<(), MuddleError> {
+        let mut clue_found = None;
+        let mut signal_aligned = None;
+        let mut hatch_unlocked = None;
+        let mut hints_used = None;
+
+        for part in checkpoint.split(';') {
+            let (key, value) =
+                part.split_once('=')
+                    .ok_or_else(|| MuddleError::InvalidHostCheckpoint {
+                        message: format!("malformed checkpoint field `{part}`"),
+                    })?;
+            match key {
+                "clue_found" => clue_found = Some(parse_checkpoint_bool(key, value)?),
+                "signal_aligned" => signal_aligned = Some(parse_checkpoint_bool(key, value)?),
+                "hatch_unlocked" => hatch_unlocked = Some(parse_checkpoint_bool(key, value)?),
+                "hints_used" => {
+                    hints_used = Some(value.parse::<u8>().map_err(|_| {
+                        MuddleError::InvalidHostCheckpoint {
+                            message: format!("invalid hints_used checkpoint field `{value}`"),
+                        }
+                    })?);
+                }
+                _ => {
+                    return Err(MuddleError::InvalidHostCheckpoint {
+                        message: format!("unknown checkpoint field `{key}`"),
+                    });
+                }
+            }
+        }
+
+        self.state = AmazeSilverstreamMuddleState {
+            clue_found: clue_found.ok_or_else(|| MuddleError::InvalidHostCheckpoint {
+                message: "missing clue_found checkpoint field".to_string(),
+            })?,
+            signal_aligned: signal_aligned.ok_or_else(|| MuddleError::InvalidHostCheckpoint {
+                message: "missing signal_aligned checkpoint field".to_string(),
+            })?,
+            hatch_unlocked: hatch_unlocked.ok_or_else(|| MuddleError::InvalidHostCheckpoint {
+                message: "missing hatch_unlocked checkpoint field".to_string(),
+            })?,
+            hints_used: hints_used.ok_or_else(|| MuddleError::InvalidHostCheckpoint {
+                message: "missing hints_used checkpoint field".to_string(),
+            })?,
+        };
+        Ok(())
+    }
+
     fn handle_command(
         &mut self,
         room_id: &str,
@@ -417,6 +475,16 @@ fn hints(items: &[(&str, &str)]) -> Vec<MuddleCommandHint> {
         .collect()
 }
 
+fn parse_checkpoint_bool(key: &str, value: &str) -> Result<bool, MuddleError> {
+    match value {
+        "true" => Ok(true),
+        "false" => Ok(false),
+        _ => Err(MuddleError::InvalidHostCheckpoint {
+            message: format!("invalid boolean checkpoint field `{key}={value}`"),
+        }),
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -487,5 +555,44 @@ mod tests {
         assert_eq!(resumed.current_room, "receiver-wall");
         assert!(resumed_host.state().clue_found);
         assert!(resumed_host.state().signal_aligned);
+    }
+
+    #[test]
+    fn product_owned_muddle_host_resumes_from_checkpoint_save() {
+        let mut host = silverstream_muddle_host();
+        let mut session = MuddleSession::for_host(&host).expect("host has start room");
+        for command in [
+            "go receiver",
+            "inspect clue",
+            "request hint",
+            "tune signal",
+            "unlock hatch",
+        ] {
+            session
+                .play_turn(&mut host, MuddleCommand::parse(command))
+                .expect("command plays");
+        }
+
+        let save = session.save_for_host(&host);
+        assert_eq!(
+            save.host_checkpoint.as_deref(),
+            Some("clue_found=true;signal_aligned=true;hatch_unlocked=true;hints_used=1")
+        );
+
+        let checkpoint_only_save = muddle_core::MuddleSessionSave {
+            current_room: "receiver-wall".to_string(),
+            commands: vec!["go receiver".to_string()],
+            host_checkpoint: save.host_checkpoint,
+        };
+        let mut resumed_host = silverstream_muddle_host();
+        let mut resumed = MuddleSession::resume_for_host(&mut resumed_host, &checkpoint_only_save)
+            .expect("session resumes from host checkpoint");
+        resumed
+            .play_turn(&mut resumed_host, MuddleCommand::parse("go hatch"))
+            .expect("checkpoint restored unlocked hatch");
+
+        assert_eq!(resumed.current_room, "hatch-exit");
+        assert!(resumed_host.state().hatch_unlocked);
+        assert_eq!(resumed_host.state().hints_used, 1);
     }
 }
