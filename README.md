@@ -130,6 +130,8 @@ cargo run --quiet --bin amaze-muddle -- --save silverstream.muddle
 cargo run --quiet --bin amaze-muddle -- --load silverstream.muddle --save silverstream.muddle
 cargo run --quiet --bin amaze-muddle -- --transcript silverstream-transcript.txt
 cargo run --quiet --bin amaze-muddle-window -- --open
+cargo run --quiet --bin amaze-muddle-window -- --save silverstream.window.muddle --transcript silverstream.window.txt --open
+cargo run --quiet --bin amaze-muddle-window -- --load silverstream.window.muddle --save silverstream.window.muddle --transcript silverstream.window.txt --open
 ```
 
 ## License
