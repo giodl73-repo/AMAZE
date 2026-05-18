@@ -133,7 +133,14 @@ cargo run --quiet --bin amaze-muddle -- --transcript silverstream-transcript.txt
 cargo run --quiet --bin amaze-muddle-window -- --open
 cargo run --quiet --bin amaze-muddle-window -- --save silverstream.window.muddle --transcript silverstream.window.txt --open
 cargo run --quiet --bin amaze-muddle-window -- --load silverstream.window.muddle --save silverstream.window.muddle --transcript silverstream.window.txt --open
+cargo run --quiet --bin amaze-muddle-macroquad
+cargo run --quiet --bin amaze-muddle-macroquad -- --save silverstream.macroquad.muddle --transcript silverstream.macroquad.txt
 ```
+
+The native Macroquad launcher opens directly into Silverstream with a
+product-owned title and default save/transcript/import/export paths. The first
+complete command arc is: `go receiver`, `inspect clue`, `tune signal`,
+`unlock hatch`, `go hatch`.
 
 ## License
 
