@@ -19,7 +19,7 @@ async fn main() {
         Err(error) => {
             eprintln!("{error}");
             eprintln!("{}", macroquad_usage());
-            return;
+            std::process::exit(1);
         }
     };
     if options.host_name.is_none() && !options.list_hosts && !options.show_help {
@@ -52,5 +52,6 @@ async fn main() {
     .await
     {
         eprintln!("{error}");
+        std::process::exit(1);
     }
 }
