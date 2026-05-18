@@ -4,6 +4,7 @@ use muddle_window::{run_muddle_window_hosts_from_env_args, MuddleWindowHostRegis
 fn main() -> std::io::Result<()> {
     run_muddle_window_hosts_from_env_args(vec![MuddleWindowHostRegistration {
         name: "amaze-silverstream",
+        category: "Games",
         description: "AMAZE Silverstream: product-owned MUDDLE window host.",
         suggested_commands:
             "`look`, `go receiver`, `inspect clue`, `tune signal`, `unlock hatch`, `go hatch`.",
