@@ -1,5 +1,12 @@
 use std::collections::HashMap;
 
+use court_core::{
+    CourtAction, CourtActionAvailability, CourtAssessmentClaim, CourtAssessmentTarget,
+    CourtCompletionOutcome, CourtCritiqueFinding, CourtExperience, CourtExperienceIntent,
+    CourtFindingSeverity, CourtFindingSource, CourtFocusTestFinding, CourtPlaytestSession,
+    CourtPostmortemNote, CourtPrototypeRevision, CourtProvenance, CourtSceneNode, CourtSceneRole,
+    CourtSnapshot, CourtSnapshotMetadata, CourtSurfaceKind, CourtValidationPacket,
+};
 use muddle_core::{
     MuddleCommand, MuddleCommandHint, MuddleCommandOutcome, MuddleError, MuddleExit, MuddleHost,
     MuddleInventoryItem, MuddleResource, MuddleRoom, MuddleVisualNode,
@@ -498,6 +505,124 @@ pub fn prism_vault_muddle_surface() -> AmazeMuddleSurface {
 
 pub fn prism_vault_muddle_host() -> AmazePrismVaultMuddleHost {
     AmazePrismVaultMuddleHost::new(prism_vault_muddle_surface())
+}
+
+pub fn prism_vault_court_snapshot() -> CourtSnapshot {
+    let surface = prism_vault_muddle_surface();
+
+    CourtSnapshot {
+        metadata: CourtSnapshotMetadata {
+            experience_id: surface.host_name.to_string(),
+            experience_version: "0.1.0".to_string(),
+            surface: CourtSurfaceKind::Native2d,
+            scene_contract_version: "court.scene.v1".to_string(),
+        },
+        experience: CourtExperience {
+            id: surface.host_name.to_string(),
+            title: surface.title.to_string(),
+            surface: CourtSurfaceKind::Native2d,
+            intent: CourtExperienceIntent {
+                product_owner: "AMAZE".to_string(),
+                audience: "escape-room product team and engine adapter reviewers".to_string(),
+                design_thesis:
+                    "Prism Vault can be described as a portable COURT experience while MUDDLE remains the playable path."
+                        .to_string(),
+                non_goals: vec![
+                    "Do not replace the product-owned MUDDLE host.".to_string(),
+                    "Do not move puzzle rules into COURT or RACKET.".to_string(),
+                ],
+            },
+            provenance: CourtProvenance::product_authored("amaze:prism-vault"),
+        },
+        state_label: "muddle-path-intact".to_string(),
+        actions: surface
+            .commands
+            .iter()
+            .map(|command| CourtAction {
+                id: command.command.replace(' ', "-"),
+                label: command.description.to_string(),
+                command: command.command.to_string(),
+                availability: CourtActionAvailability::Legal,
+            })
+            .collect(),
+        scene: surface
+            .rooms
+            .iter()
+            .enumerate()
+            .map(|(index, room)| CourtSceneNode {
+                id: room.id.to_string(),
+                label: room.title.to_string(),
+                player_read_label: room.title.to_string(),
+                product_meaning: room.description.to_string(),
+                role: if room.id == surface.start_room {
+                    CourtSceneRole::Surface
+                } else {
+                    CourtSceneRole::Zone
+                },
+                x: (index as i32) * 2,
+                y: index as i32,
+                width: 2,
+                height: 1,
+                provenance: Some(CourtProvenance::product_authored(format!(
+                    "amaze:prism-vault:{}",
+                    room.id
+                ))),
+                unsupported_features: Vec::new(),
+            })
+            .collect(),
+    }
+}
+
+pub fn prism_vault_court_validation_packet() -> CourtValidationPacket {
+    CourtValidationPacket {
+        experience_id: "amaze-prism-vault".to_string(),
+        prototype_revisions: vec![CourtPrototypeRevision {
+            experience_id: "amaze-prism-vault".to_string(),
+            revision_id: "davis-cup-001".to_string(),
+            design_thesis: "Describe Prism Vault in COURT while preserving the MUDDLE host."
+                .to_string(),
+            changed_areas: vec!["court-snapshot-fixture".to_string()],
+            non_goals: vec!["No MUDDLE migration.".to_string()],
+        }],
+        playtest_sessions: vec![CourtPlaytestSession {
+            session_id: "davis-cup-smoke".to_string(),
+            audience: "adapter reviewers".to_string(),
+            build_revision: "davis-cup-001".to_string(),
+            script_ref: "existing-prism-vault-muddle-path-test".to_string(),
+            observed_blockers: Vec::new(),
+            completion_outcome: CourtCompletionOutcome::Completed,
+        }],
+        critique_findings: vec![CourtCritiqueFinding {
+            reviewer_role: "Framework Steward".to_string(),
+            finding_id: "davis-cup-boundary".to_string(),
+            source: CourtFindingSource::Experience("amaze-prism-vault".to_string()),
+            severity: CourtFindingSeverity::Info,
+            recommendation:
+                "Keep COURT as a descriptive fixture until another product slice adopts it."
+                    .to_string(),
+        }],
+        focus_test_findings: vec![CourtFocusTestFinding {
+            prompt_ref: "existing-prism-vault-command-arc".to_string(),
+            action_ref: Some("unlock-vault".to_string()),
+            observed_comprehension:
+                "The existing MUDDLE path remains the source of playable comprehension evidence."
+                    .to_string(),
+            follow_up_change: "Use COURT fixture for adapter diagnostics only.".to_string(),
+        }],
+        assessment_targets: vec![CourtAssessmentTarget {
+            claim: CourtAssessmentClaim::Comprehension,
+            evidence_needed: "Existing MUDDLE Prism Vault path reaches garden-exit.".to_string(),
+            pass_fail_rule: "Pass when MUDDLE path and COURT/RACKET fixture both validate."
+                .to_string(),
+        }],
+        postmortem_notes: vec![CourtPostmortemNote {
+            release_id: "davis-cup-001".to_string(),
+            worked: "COURT described the product slice without replacing MUDDLE.".to_string(),
+            failed: "No runtime renderer migration attempted in this phase.".to_string(),
+            next_design_constraint:
+                "Only add more product slices after RACKET diagnostics stay clean.".to_string(),
+        }],
+    }
 }
 
 impl AmazePrismVaultMuddleHost {
@@ -2190,6 +2315,7 @@ fn parse_checkpoint_bool(key: &str, value: &str) -> Result<bool, MuddleError> {
 mod tests {
     use super::*;
     use muddle_core::{MuddleCommand, MuddleSession};
+    use racket_core::RacketFramePlan;
 
     #[test]
     fn exposes_silverstream_muddle_surface() {
@@ -2219,6 +2345,27 @@ mod tests {
             .commands
             .iter()
             .any(|command| command.command == "inspect lens"));
+    }
+
+    #[test]
+    fn prism_vault_has_court_adoption_fixture_beside_muddle_path() {
+        let snapshot = prism_vault_court_snapshot();
+        let validation = prism_vault_court_validation_packet();
+        let plan = RacketFramePlan::from_snapshot(&snapshot);
+
+        assert_eq!(snapshot.experience.id, "amaze-prism-vault");
+        assert_eq!(snapshot.metadata.scene_contract_version, "court.scene.v1");
+        assert!(snapshot
+            .available_commands()
+            .any(|command| command == "unlock vault"));
+        assert!(snapshot.has_scene_role(CourtSceneRole::Surface));
+        assert!(snapshot.has_scene_role(CourtSceneRole::Zone));
+        assert_eq!(validation.experience_id, snapshot.experience.id);
+        assert!(validation.has_assessment_claim(CourtAssessmentClaim::Comprehension));
+        assert_eq!(plan.title, "AMAZE Prism Vault");
+        assert_eq!(plan.player_command_count, snapshot.actions.len());
+        assert_eq!(plan.diagnostics.len(), 0);
+        assert!(plan.is_scene_ready());
     }
 
     #[test]

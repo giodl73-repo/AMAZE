@@ -18,12 +18,14 @@ checksum = "683d7910e743518b0e34f1186f92494becacb047c7b6bf616c96772180fef923"
 name = "amaze-harness"
 version = "0.1.0"
 dependencies = [
+ "court-core",
  "macroquad",
  "mdpath",
  "muddle-cli",
  "muddle-core",
  "muddle-macroquad",
  "muddle-window",
+ "racket-core",
  "rally-core",
 ]
 
@@ -62,6 +64,10 @@ name = "color_quant"
 version = "1.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "3d7b894f5411737b7867f4827955924d7c254fc9f4d91a6aad6b097804b1018b"
+
+[[package]]
+name = "court-core"
+version = "0.1.0"
 
 [[package]]
 name = "crc32fast"
@@ -332,6 +338,13 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "41f2619966050689382d2b44f664f4bc593e129785a36d6ee376ddf37259b924"
 dependencies = [
  "proc-macro2",
+]
+
+[[package]]
+name = "racket-core"
+version = "0.1.0"
+dependencies = [
+ "court-core",
 ]
 
 [[package]]

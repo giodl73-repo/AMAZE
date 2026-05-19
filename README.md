@@ -132,6 +132,20 @@ artifacts, active beam state, richer objectives, and staged inventory/resource
 changes so the Macroquad slice feels populated while still using product-owned
 MUDDLE content.
 
+## COURT adoption fixture
+
+Prism Vault also exposes a COURT description beside the MUDDLE host:
+
+```rust
+let court_snapshot = amaze_harness::prism_vault_court_snapshot();
+let validation = amaze_harness::prism_vault_court_validation_packet();
+```
+
+This is a Davis Cup adoption fixture, not a migration. MUDDLE remains the
+playable path and owns the current room-command client contract; COURT describes
+the portable experience shape; RACKET can consume the snapshot for adapter
+compatibility diagnostics without owning AMAZE puzzle rules.
+
 Run the product-owned MUDDLE launcher from `tools\amaze-harness` with:
 
 ```powershell

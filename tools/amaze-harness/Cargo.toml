@@ -26,6 +26,7 @@ name = "amaze-muddle-macroquad"
 path = "src/bin/amaze-muddle-macroquad.rs"
 
 [dependencies]
+court-core = { path = "..\\..\\..\\court\\crates\\court-core" }
 macroquad = "0.4"
 mdpath = { git = "https://github.com/giodl73-repo/MDPATH.git" }
 muddle-cli = { git = "https://github.com/giodl73-repo/MUDDLE.git" }
@@ -33,3 +34,6 @@ muddle-core = { git = "https://github.com/giodl73-repo/MUDDLE.git" }
 muddle-macroquad = { git = "https://github.com/giodl73-repo/MUDDLE.git" }
 muddle-window = { git = "https://github.com/giodl73-repo/MUDDLE.git" }
 rally-core = { git = "https://github.com/giodl73-repo/RALLY.git" }
+
+[dev-dependencies]
+racket-core = { path = "..\\..\\..\\racket\\crates\\racket-core" }
