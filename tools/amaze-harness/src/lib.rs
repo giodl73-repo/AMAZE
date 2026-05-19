@@ -968,10 +968,61 @@ impl MuddleHost for AmazePrismVaultMuddleHost {
                 "prism-vault-map",
                 "Prism Vault map",
                 "sprites/amaze/prism-vault-map.png",
-                "A prism-entry-to-garden escape-room strip.",
+                "A physical prism-entry-to-garden escape-room cutaway with walls, floor, and doorframes.",
             )
             .with_layer(0)
             .with_rect(0, 0, 12, 6),
+            MuddleVisualNode::sprite(
+                "prism-back-wall",
+                "Back wall",
+                "sprites/amaze/prism-back-wall.png",
+                "The rear escape-room wall carrying the lens, color, mirror, and vault stations.",
+            )
+            .with_layer(1)
+            .with_rect(0, 0, 12, 2)
+            .with_frame("prism-warm"),
+            MuddleVisualNode::sprite(
+                "prism-left-wall",
+                "Left wall",
+                "sprites/amaze/prism-left-wall.png",
+                "Left physical wall plane; props are mounted to it rather than floating.",
+            )
+            .with_layer(2)
+            .with_rect(0, 1, 1, 5)
+            .with_frame("prism-violet"),
+            MuddleVisualNode::sprite(
+                "prism-right-wall",
+                "Right wall",
+                "sprites/amaze/prism-right-wall.png",
+                "Right physical wall plane framing the vault door.",
+            )
+            .with_layer(2)
+            .with_rect(11, 1, 1, 5)
+            .with_frame("prism-cyan"),
+            MuddleVisualNode::sprite(
+                "prism-floor-grid",
+                "Escape-room floor",
+                "sprites/amaze/prism-floor-grid.png",
+                "Tiled floor grid showing where the player stands between wall-mounted puzzles.",
+            )
+            .with_layer(1)
+            .with_rect(1, 4, 10, 2)
+            .with_frame("prism-warm"),
+            MuddleVisualNode::sprite(
+                "prism-door-frame",
+                "Vault door frame",
+                "sprites/amaze/prism-door-frame.png",
+                "A real doorframe around the vault threshold, so the exit reads as a place.",
+            )
+            .with_layer(12)
+            .with_rect(9, 2, 2, 3)
+            .with_frame(if self.state.exit_open {
+                "prism-garden"
+            } else if self.state.vault_unlocked {
+                "prism-gold"
+            } else {
+                "prism-locked"
+            }),
             MuddleVisualNode::text("current-room-label", "Current room", current_room)
                 .with_layer(30)
                 .with_rect(1, 0, 4, 1),
@@ -1684,10 +1735,50 @@ impl MuddleHost for AmazeSilverstreamMuddleHost {
                 "silverstream-trailer",
                 "Silverstream trailer",
                 "sprites/amaze/silverstream-trailer.png",
-                "A compact Silverstream trailer escape-room cutaway.",
+                "A compact Silverstream trailer escape-room cutaway with walls, floor, hatch, and mounted puzzle fixtures.",
             )
             .with_layer(0)
             .with_rect(0, 0, 12, 6),
+            MuddleVisualNode::sprite(
+                "silverstream-back-wall",
+                "Trailer back wall",
+                "sprites/amaze/silverstream-back-wall.png",
+                "The back wall where the breaker panel, galley cabinet, fold table, and radio are physically mounted.",
+            )
+            .with_layer(1)
+            .with_rect(0, 0, 12, 2)
+            .with_frame("wall"),
+            MuddleVisualNode::sprite(
+                "silverstream-floor",
+                "Trailer floor",
+                "sprites/amaze/silverstream-floor.png",
+                "Narrow trailer floor showing player path between escape-room stations.",
+            )
+            .with_layer(1)
+            .with_rect(1, 4, 10, 2)
+            .with_frame("floor"),
+            MuddleVisualNode::sprite(
+                "silverstream-left-wall",
+                "Left trailer wall",
+                "sprites/amaze/silverstream-left-wall.png",
+                "Left curved trailer wall that anchors the route rail.",
+            )
+            .with_layer(2)
+            .with_rect(0, 1, 1, 5)
+            .with_frame("wall"),
+            MuddleVisualNode::sprite(
+                "silverstream-hatch-frame",
+                "Hatch frame",
+                "sprites/amaze/silverstream-hatch-frame.png",
+                "Physical hatch threshold at the end of the trailer.",
+            )
+            .with_layer(12)
+            .with_rect(10, 2, 2, 3)
+            .with_frame(if self.state.hatch_unlocked {
+                "unlocked"
+            } else {
+                "locked"
+            }),
             MuddleVisualNode::text("current-room-label", "Current room", current_room)
                 .with_layer(30)
                 .with_rect(1, 0, 4, 1),
@@ -2217,6 +2308,14 @@ mod tests {
             .children
             .iter()
             .any(|node| node.id == "route-solved-badge"));
+        assert!(scene
+            .children
+            .iter()
+            .any(|node| node.id == "silverstream-back-wall"));
+        assert!(scene
+            .children
+            .iter()
+            .any(|node| node.id == "silverstream-hatch-frame"));
     }
 
     #[test]
@@ -2476,7 +2575,19 @@ mod tests {
             .find(|node| node.id == "prism-vault-scene")
             .expect("scene group exists");
 
-        assert!(scene.children.len() >= 18);
+        assert!(scene.children.len() >= 23);
+        assert!(scene
+            .children
+            .iter()
+            .any(|node| node.id == "prism-back-wall"));
+        assert!(scene
+            .children
+            .iter()
+            .any(|node| node.id == "prism-floor-grid"));
+        assert!(scene
+            .children
+            .iter()
+            .any(|node| node.id == "prism-door-frame"));
         assert!(host.resource_panel().len() >= 7);
         assert!(host.inventory_panel().len() >= 3);
         assert!(host.objective_panel("lens-bench").len() >= 2);
