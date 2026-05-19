@@ -144,7 +144,8 @@ let validation = amaze_harness::prism_vault_court_validation_packet();
 This is a Davis Cup adoption fixture, not a migration. MUDDLE remains the
 playable path and owns the current room-command client contract; COURT describes
 the portable experience shape; RACKET can consume the snapshot for adapter
-compatibility diagnostics without owning AMAZE puzzle rules.
+compatibility diagnostics and a windowless runtime-loop smoke without owning
+AMAZE puzzle rules.
 
 Run the product-owned MUDDLE launcher from `tools\amaze-harness` with:
 

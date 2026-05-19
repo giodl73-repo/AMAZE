@@ -2315,7 +2315,7 @@ fn parse_checkpoint_bool(key: &str, value: &str) -> Result<bool, MuddleError> {
 mod tests {
     use super::*;
     use muddle_core::{MuddleCommand, MuddleSession};
-    use racket_core::RacketFramePlan;
+    use racket_core::{run_runtime_loop, RacketFramePlan, RacketRuntimeConfig};
 
     #[test]
     fn exposes_silverstream_muddle_surface() {
@@ -2366,6 +2366,19 @@ mod tests {
         assert_eq!(plan.player_command_count, snapshot.actions.len());
         assert_eq!(plan.diagnostics.len(), 0);
         assert!(plan.is_scene_ready());
+    }
+
+    #[test]
+    fn prism_vault_court_fixture_runs_through_racket_runtime_loop() {
+        let snapshot = prism_vault_court_snapshot();
+        let report = run_runtime_loop(&snapshot, RacketRuntimeConfig { max_frames: 2 });
+
+        assert!(report.completed);
+        assert_eq!(report.frames.len(), 2);
+        assert_eq!(report.ready_frame_count(), 2);
+        assert_eq!(report.frames[0].plan.title, "AMAZE Prism Vault");
+        assert_eq!(report.frames[1].frame_index, 1);
+        assert_eq!(report.diagnostics.len(), 0);
     }
 
     #[test]
