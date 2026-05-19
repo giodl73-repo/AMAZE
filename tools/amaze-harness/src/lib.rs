@@ -275,6 +275,732 @@ pub fn silverstream_muddle_host() -> AmazeSilverstreamMuddleHost {
     AmazeSilverstreamMuddleHost::new(silverstream_muddle_surface())
 }
 
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct AmazePrismVaultMuddleHost {
+    rooms: HashMap<String, MuddleRoom>,
+    state: AmazePrismVaultMuddleState,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct AmazePrismVaultMuddleState {
+    pub lens_aligned: bool,
+    pub color_mixed: bool,
+    pub mirrors_set: bool,
+    pub vault_unlocked: bool,
+    pub exit_open: bool,
+    pub hints_used: u8,
+}
+
+pub fn prism_vault_muddle_surface() -> AmazeMuddleSurface {
+    AmazeMuddleSurface {
+        host_name: "amaze-prism-vault",
+        title: "AMAZE Prism Vault",
+        start_room: "prism-entry",
+        rooms: vec![
+            AmazeMuddleRoom {
+                id: "prism-entry",
+                title: "Prism Entry",
+                description:
+                    "A daylight-safe foyer frames the lens bench and a locked garden exit.",
+                exits: vec![AmazeMuddleExit {
+                    command: "go lens",
+                    target_room: "lens-bench",
+                    label: "Lens Bench",
+                }],
+            },
+            AmazeMuddleRoom {
+                id: "lens-bench",
+                title: "Lens Bench",
+                description: "A chunky lens rail needs alignment before color can be trusted.",
+                exits: vec![
+                    AmazeMuddleExit {
+                        command: "go entry",
+                        target_room: "prism-entry",
+                        label: "Prism Entry",
+                    },
+                    AmazeMuddleExit {
+                        command: "go color",
+                        target_room: "color-sink",
+                        label: "Color Sink",
+                    },
+                ],
+            },
+            AmazeMuddleRoom {
+                id: "color-sink",
+                title: "Color Sink",
+                description: "Three tactile color sliders mix a code visible to the mirror wall.",
+                exits: vec![
+                    AmazeMuddleExit {
+                        command: "go lens",
+                        target_room: "lens-bench",
+                        label: "Lens Bench",
+                    },
+                    AmazeMuddleExit {
+                        command: "go mirrors",
+                        target_room: "mirror-wall",
+                        label: "Mirror Wall",
+                    },
+                ],
+            },
+            AmazeMuddleRoom {
+                id: "mirror-wall",
+                title: "Mirror Wall",
+                description: "Resettable mirrors bounce the mixed code toward the vault door.",
+                exits: vec![
+                    AmazeMuddleExit {
+                        command: "go color",
+                        target_room: "color-sink",
+                        label: "Color Sink",
+                    },
+                    AmazeMuddleExit {
+                        command: "go vault",
+                        target_room: "vault-door",
+                        label: "Vault Door",
+                    },
+                ],
+            },
+            AmazeMuddleRoom {
+                id: "vault-door",
+                title: "Vault Door",
+                description:
+                    "The prism vault accepts the reflected code and releases the reset key.",
+                exits: vec![
+                    AmazeMuddleExit {
+                        command: "go mirrors",
+                        target_room: "mirror-wall",
+                        label: "Mirror Wall",
+                    },
+                    AmazeMuddleExit {
+                        command: "go exit",
+                        target_room: "garden-exit",
+                        label: "Garden Exit",
+                    },
+                ],
+            },
+            AmazeMuddleRoom {
+                id: "garden-exit",
+                title: "Garden Exit",
+                description: "A reset-ready garden door completes the Prism Vault escape.",
+                exits: vec![AmazeMuddleExit {
+                    command: "go vault",
+                    target_room: "vault-door",
+                    label: "Vault Door",
+                }],
+            },
+        ],
+        resources: vec![
+            AmazeMuddlePanelValue {
+                label: "lens",
+                value: "skewed",
+            },
+            AmazeMuddlePanelValue {
+                label: "color",
+                value: "unmixed",
+            },
+            AmazeMuddlePanelValue {
+                label: "mirrors",
+                value: "scattered",
+            },
+            AmazeMuddlePanelValue {
+                label: "vault",
+                value: "locked",
+            },
+            AmazeMuddlePanelValue {
+                label: "exit",
+                value: "closed",
+            },
+        ],
+        objectives: vec![
+            AmazeMuddleObjective {
+                room_id: "prism-entry",
+                text: "Enter the lens bench and establish a safe light path.",
+            },
+            AmazeMuddleObjective {
+                room_id: "lens-bench",
+                text: "Align the lens rail before mixing the color code.",
+            },
+            AmazeMuddleObjective {
+                room_id: "color-sink",
+                text: "Mix the color sliders into the prism code.",
+            },
+            AmazeMuddleObjective {
+                room_id: "mirror-wall",
+                text: "Set mirrors to carry the code to the vault.",
+            },
+            AmazeMuddleObjective {
+                room_id: "vault-door",
+                text: "Unlock the vault and open the garden exit.",
+            },
+            AmazeMuddleObjective {
+                room_id: "garden-exit",
+                text: "Escape complete; verify the reset key and transcript.",
+            },
+        ],
+        commands: vec![
+            AmazeMuddleCommand {
+                room_id: "lens-bench",
+                command: "align lens",
+                description: "Seat the chunky lens rail into the safe detent.",
+            },
+            AmazeMuddleCommand {
+                room_id: "color-sink",
+                command: "mix color",
+                description: "Mix the tactile color sliders into a visible code.",
+            },
+            AmazeMuddleCommand {
+                room_id: "mirror-wall",
+                command: "set mirrors",
+                description: "Set the resettable mirror wall to carry the code.",
+            },
+            AmazeMuddleCommand {
+                room_id: "vault-door",
+                command: "unlock vault",
+                description: "Open the prism vault after the mirrors are set.",
+            },
+        ],
+    }
+}
+
+pub fn prism_vault_muddle_host() -> AmazePrismVaultMuddleHost {
+    AmazePrismVaultMuddleHost::new(prism_vault_muddle_surface())
+}
+
+impl AmazePrismVaultMuddleHost {
+    pub fn new(surface: AmazeMuddleSurface) -> Self {
+        let rooms = surface
+            .rooms
+            .into_iter()
+            .map(|room| {
+                (
+                    room.id.to_string(),
+                    MuddleRoom {
+                        id: room.id.to_string(),
+                        title: room.title.to_string(),
+                        description: room.description.to_string(),
+                        exits: room
+                            .exits
+                            .into_iter()
+                            .map(|exit| MuddleExit {
+                                command: exit.command.to_string(),
+                                target_room: exit.target_room.to_string(),
+                                label: exit.label.to_string(),
+                            })
+                            .collect(),
+                    },
+                )
+            })
+            .collect();
+
+        Self {
+            rooms,
+            state: AmazePrismVaultMuddleState {
+                lens_aligned: false,
+                color_mixed: false,
+                mirrors_set: false,
+                vault_unlocked: false,
+                exit_open: false,
+                hints_used: 0,
+            },
+        }
+    }
+
+    pub fn state(&self) -> &AmazePrismVaultMuddleState {
+        &self.state
+    }
+
+    fn look(&self, room_id: &str) -> Result<MuddleCommandOutcome, MuddleError> {
+        let room = self
+            .room(room_id)
+            .ok_or_else(|| MuddleError::RoomNotFound {
+                room_id: room_id.to_string(),
+            })?;
+        Ok(MuddleCommandOutcome::stay(format!(
+            "{}\n| amaze: lens_aligned={} color_mixed={} mirrors_set={} vault_unlocked={} exit_open={} hints_used={}",
+            room.ascii_card(),
+            self.state.lens_aligned,
+            self.state.color_mixed,
+            self.state.mirrors_set,
+            self.state.vault_unlocked,
+            self.state.exit_open,
+            self.state.hints_used
+        )))
+    }
+}
+
+impl MuddleHost for AmazePrismVaultMuddleHost {
+    fn start_room(&self) -> &str {
+        "prism-entry"
+    }
+
+    fn room(&self, room_id: &str) -> Option<&MuddleRoom> {
+        self.rooms.get(room_id)
+    }
+
+    fn resource_panel(&self) -> Vec<MuddleResource> {
+        vec![
+            MuddleResource {
+                label: "lens".to_string(),
+                value: if self.state.lens_aligned {
+                    "aligned"
+                } else {
+                    "skewed"
+                }
+                .to_string(),
+            },
+            MuddleResource {
+                label: "color".to_string(),
+                value: if self.state.color_mixed {
+                    "mixed"
+                } else {
+                    "unmixed"
+                }
+                .to_string(),
+            },
+            MuddleResource {
+                label: "mirrors".to_string(),
+                value: if self.state.mirrors_set {
+                    "set"
+                } else {
+                    "scattered"
+                }
+                .to_string(),
+            },
+            MuddleResource {
+                label: "vault".to_string(),
+                value: if self.state.vault_unlocked {
+                    "open"
+                } else {
+                    "locked"
+                }
+                .to_string(),
+            },
+            MuddleResource {
+                label: "exit".to_string(),
+                value: if self.state.exit_open {
+                    "escaped"
+                } else {
+                    "closed"
+                }
+                .to_string(),
+            },
+        ]
+    }
+
+    fn inventory_panel(&self) -> Vec<MuddleInventoryItem> {
+        let mut items = vec![MuddleInventoryItem {
+            label: "operator card".to_string(),
+            detail: format!("{} prism hints used", self.state.hints_used),
+        }];
+        if self.state.lens_aligned {
+            items.push(MuddleInventoryItem {
+                label: "aligned lens".to_string(),
+                detail: "safe light path established".to_string(),
+            });
+        }
+        if self.state.color_mixed {
+            items.push(MuddleInventoryItem {
+                label: "prism code".to_string(),
+                detail: "color sliders expose the vault code".to_string(),
+            });
+        }
+        if self.state.mirrors_set {
+            items.push(MuddleInventoryItem {
+                label: "mirror path".to_string(),
+                detail: "reflected code reaches the vault door".to_string(),
+            });
+        }
+        if self.state.exit_open {
+            items.push(MuddleInventoryItem {
+                label: "prism reset key".to_string(),
+                detail: "reset safe exit complete".to_string(),
+            });
+        }
+        items
+    }
+
+    fn map_panel(&self, current_room: &str) -> Option<String> {
+        Some(format!(
+            "{} Entry -- {} Lens -- {} Color -- {} Mirrors -- {} Vault -- {} Garden",
+            marker(current_room, "prism-entry"),
+            marker(current_room, "lens-bench"),
+            marker(current_room, "color-sink"),
+            marker(current_room, "mirror-wall"),
+            marker(current_room, "vault-door"),
+            marker(current_room, "garden-exit")
+        ))
+    }
+
+    fn objective_panel(&self, current_room: &str) -> Vec<String> {
+        match current_room {
+            "prism-entry" => vec!["Move to the lens bench.".to_string()],
+            "lens-bench" if !self.state.lens_aligned => {
+                vec!["Align the lens rail before mixing color.".to_string()]
+            }
+            "lens-bench" => vec!["Move to the color sink.".to_string()],
+            "color-sink" if !self.state.lens_aligned => {
+                vec!["Return to the lens bench before mixing color.".to_string()]
+            }
+            "color-sink" if !self.state.color_mixed => {
+                vec!["Mix the prism color code.".to_string()]
+            }
+            "color-sink" => vec!["Move to the mirror wall.".to_string()],
+            "mirror-wall" if !self.state.color_mixed => {
+                vec!["Mix the color code before setting mirrors.".to_string()]
+            }
+            "mirror-wall" if !self.state.mirrors_set => {
+                vec!["Set mirrors to carry the code to the vault.".to_string()]
+            }
+            "mirror-wall" => vec!["Move to the vault door.".to_string()],
+            "vault-door" if !self.state.mirrors_set => {
+                vec!["Set the mirror wall before unlocking the vault.".to_string()]
+            }
+            "vault-door" if !self.state.vault_unlocked => {
+                vec!["Unlock the vault to release the reset key.".to_string()]
+            }
+            "vault-door" => vec!["Go exit through the open garden door.".to_string()],
+            "garden-exit" => {
+                vec!["Escape complete; review the reset key and transcript.".to_string()]
+            }
+            _ => Vec::new(),
+        }
+    }
+
+    fn command_panel(&self, current_room: &str) -> Vec<MuddleCommandHint> {
+        match current_room {
+            "prism-entry" => hints(&[
+                ("look", "Show the prism entry."),
+                ("go lens", "Move to the lens bench."),
+            ]),
+            "lens-bench" => hints(&[
+                ("look", "Show the lens bench."),
+                ("align lens", "Align the chunky lens rail."),
+                ("request hint", "Ask for an operator-safe hint."),
+                ("go entry", "Return to the prism entry."),
+                ("go color", "Move to the color sink."),
+            ]),
+            "color-sink" => hints(&[
+                ("look", "Show the color sink."),
+                ("mix color", "Mix the prism color code."),
+                ("request hint", "Ask for an operator-safe hint."),
+                ("go lens", "Return to the lens bench."),
+                ("go mirrors", "Move to the mirror wall."),
+            ]),
+            "mirror-wall" => hints(&[
+                ("look", "Show the mirror wall."),
+                ("set mirrors", "Set the mirror path."),
+                ("request hint", "Ask for an operator-safe hint."),
+                ("go color", "Return to the color sink."),
+                ("go vault", "Move to the vault door."),
+            ]),
+            "vault-door" => hints(&[
+                ("look", "Show the vault door."),
+                ("unlock vault", "Unlock the prism vault."),
+                ("request hint", "Ask for an operator-safe hint."),
+                ("go mirrors", "Return to the mirror wall."),
+                ("go exit", "Exit if the vault is unlocked."),
+            ]),
+            "garden-exit" => hints(&[
+                ("look", "Show the garden exit."),
+                ("go vault", "Return to the vault door."),
+            ]),
+            _ => Vec::new(),
+        }
+    }
+
+    fn visual_nodes(&self, current_room: &str) -> Vec<MuddleVisualNode> {
+        let mut children = vec![
+            MuddleVisualNode::sprite(
+                "prism-vault-map",
+                "Prism Vault map",
+                "sprites/amaze/prism-vault-map.png",
+                "A prism-entry-to-garden escape-room strip.",
+            )
+            .with_layer(0)
+            .with_rect(0, 0, 12, 6),
+            MuddleVisualNode::text("current-room-label", "Current room", current_room)
+                .with_layer(30)
+                .with_rect(1, 0, 4, 1),
+            amaze_room_token("prism-entry-token", "Entry", "prism-entry", current_room, 1),
+            amaze_room_token("lens-token", "Lens bench", "lens-bench", current_room, 2),
+            amaze_room_token("color-token", "Color sink", "color-sink", current_room, 3),
+            amaze_room_token(
+                "mirror-token",
+                "Mirror wall",
+                "mirror-wall",
+                current_room,
+                4,
+            ),
+            amaze_room_token("vault-token", "Vault door", "vault-door", current_room, 5),
+            amaze_room_token(
+                "garden-token",
+                "Garden exit",
+                "garden-exit",
+                current_room,
+                6,
+            ),
+        ];
+
+        if self.state.lens_aligned {
+            children.push(
+                MuddleVisualNode::sprite(
+                    "lens-aligned-badge",
+                    "Lens aligned",
+                    "sprites/amaze/prism-lens.png",
+                    "Aligned lens badge.",
+                )
+                .with_layer(20)
+                .with_rect(1, 6, 2, 1)
+                .with_frame("aligned"),
+            );
+        }
+        if self.state.color_mixed {
+            children.push(
+                MuddleVisualNode::sprite(
+                    "color-mixed-badge",
+                    "Color mixed",
+                    "sprites/amaze/prism-color.png",
+                    "Mixed color code badge.",
+                )
+                .with_layer(20)
+                .with_rect(3, 6, 2, 1)
+                .with_frame("mixed"),
+            );
+        }
+        if self.state.mirrors_set {
+            children.push(
+                MuddleVisualNode::sprite(
+                    "mirrors-set-badge",
+                    "Mirrors set",
+                    "sprites/amaze/prism-mirrors.png",
+                    "Mirror path set badge.",
+                )
+                .with_layer(20)
+                .with_rect(5, 6, 2, 1)
+                .with_frame("set"),
+            );
+        }
+        if self.state.vault_unlocked {
+            children.push(
+                MuddleVisualNode::sprite(
+                    "vault-open-badge",
+                    "Vault open",
+                    "sprites/amaze/prism-vault.png",
+                    "Open prism vault badge.",
+                )
+                .with_layer(20)
+                .with_rect(7, 6, 2, 1)
+                .with_frame("open")
+                .with_animation("pulse"),
+            );
+        }
+
+        vec![MuddleVisualNode::group(
+            "prism-vault-scene",
+            "Prism Vault scene",
+            children,
+        )]
+    }
+
+    fn export_checkpoint(&self) -> Option<String> {
+        Some(format!(
+            "lens_aligned={};color_mixed={};mirrors_set={};vault_unlocked={};exit_open={};hints_used={}",
+            self.state.lens_aligned,
+            self.state.color_mixed,
+            self.state.mirrors_set,
+            self.state.vault_unlocked,
+            self.state.exit_open,
+            self.state.hints_used
+        ))
+    }
+
+    fn import_checkpoint(&mut self, checkpoint: &str) -> Result<(), MuddleError> {
+        let mut lens_aligned = None;
+        let mut color_mixed = None;
+        let mut mirrors_set = None;
+        let mut vault_unlocked = None;
+        let mut exit_open = None;
+        let mut hints_used = None;
+
+        for part in checkpoint.split(';') {
+            let (key, value) =
+                part.split_once('=')
+                    .ok_or_else(|| MuddleError::InvalidHostCheckpoint {
+                        message: format!("malformed checkpoint field `{part}`"),
+                    })?;
+            match key {
+                "lens_aligned" => lens_aligned = Some(parse_checkpoint_bool(key, value)?),
+                "color_mixed" => color_mixed = Some(parse_checkpoint_bool(key, value)?),
+                "mirrors_set" => mirrors_set = Some(parse_checkpoint_bool(key, value)?),
+                "vault_unlocked" => vault_unlocked = Some(parse_checkpoint_bool(key, value)?),
+                "exit_open" => exit_open = Some(parse_checkpoint_bool(key, value)?),
+                "hints_used" => {
+                    hints_used = Some(value.parse::<u8>().map_err(|_| {
+                        MuddleError::InvalidHostCheckpoint {
+                            message: format!("invalid hints_used checkpoint field `{value}`"),
+                        }
+                    })?);
+                }
+                _ => {
+                    return Err(MuddleError::InvalidHostCheckpoint {
+                        message: format!("unknown checkpoint field `{key}`"),
+                    });
+                }
+            }
+        }
+
+        self.state = AmazePrismVaultMuddleState {
+            lens_aligned: lens_aligned.ok_or_else(|| MuddleError::InvalidHostCheckpoint {
+                message: "missing lens_aligned checkpoint field".to_string(),
+            })?,
+            color_mixed: color_mixed.ok_or_else(|| MuddleError::InvalidHostCheckpoint {
+                message: "missing color_mixed checkpoint field".to_string(),
+            })?,
+            mirrors_set: mirrors_set.ok_or_else(|| MuddleError::InvalidHostCheckpoint {
+                message: "missing mirrors_set checkpoint field".to_string(),
+            })?,
+            vault_unlocked: vault_unlocked.ok_or_else(|| MuddleError::InvalidHostCheckpoint {
+                message: "missing vault_unlocked checkpoint field".to_string(),
+            })?,
+            exit_open: exit_open.ok_or_else(|| MuddleError::InvalidHostCheckpoint {
+                message: "missing exit_open checkpoint field".to_string(),
+            })?,
+            hints_used: hints_used.ok_or_else(|| MuddleError::InvalidHostCheckpoint {
+                message: "missing hints_used checkpoint field".to_string(),
+            })?,
+        };
+        Ok(())
+    }
+
+    fn handle_command(
+        &mut self,
+        room_id: &str,
+        command: &MuddleCommand,
+    ) -> Result<MuddleCommandOutcome, MuddleError> {
+        let normalized = command.normalized();
+        match (room_id, normalized.as_str()) {
+            (_, "look") => self.look(room_id),
+            ("prism-entry", "go lens") => Ok(MuddleCommandOutcome::move_to(
+                "You move to the chunky lens bench.",
+                "lens-bench",
+            )),
+            ("lens-bench", "align lens") => {
+                self.state.lens_aligned = true;
+                Ok(MuddleCommandOutcome::stay(
+                    "The lens rail seats into its safe detent. The color sink wakes.",
+                ))
+            }
+            ("lens-bench", "request hint") => {
+                self.state.hints_used += 1;
+                Ok(MuddleCommandOutcome::stay(
+                    "Operator hint: align the large arrow mark with the daylight stripe.",
+                ))
+            }
+            ("lens-bench", "go entry") => Ok(MuddleCommandOutcome::move_to(
+                "You return to the Prism entry.",
+                "prism-entry",
+            )),
+            ("lens-bench", "go color") => Ok(MuddleCommandOutcome::move_to(
+                "You move to the tactile color sink.",
+                "color-sink",
+            )),
+            ("color-sink", "mix color") if !self.state.lens_aligned => {
+                Ok(MuddleCommandOutcome::stay(
+                    "The color sliders need a safe light path. Align the lens first.",
+                ))
+            }
+            ("color-sink", "mix color") => {
+                self.state.color_mixed = true;
+                Ok(MuddleCommandOutcome::stay(
+                    "The color sliders settle into cyan, amber, and violet. A prism code appears.",
+                ))
+            }
+            ("color-sink", "request hint") => {
+                self.state.hints_used += 1;
+                Ok(MuddleCommandOutcome::stay(
+                    "Operator hint: match the tactile slider notches to the three lens marks.",
+                ))
+            }
+            ("color-sink", "go lens") => Ok(MuddleCommandOutcome::move_to(
+                "You return to the lens bench.",
+                "lens-bench",
+            )),
+            ("color-sink", "go mirrors") => Ok(MuddleCommandOutcome::move_to(
+                "You move to the mirror wall.",
+                "mirror-wall",
+            )),
+            ("mirror-wall", "set mirrors") if !self.state.color_mixed => {
+                Ok(MuddleCommandOutcome::stay(
+                    "The mirrors need the color code. Mix color before setting mirrors.",
+                ))
+            }
+            ("mirror-wall", "set mirrors") => {
+                self.state.mirrors_set = true;
+                Ok(MuddleCommandOutcome::stay(
+                    "The mirrors click into a resettable path and throw the prism code at the vault.",
+                ))
+            }
+            ("mirror-wall", "request hint") => {
+                self.state.hints_used += 1;
+                Ok(MuddleCommandOutcome::stay(
+                    "Operator hint: start with the largest mirror, then follow the colored edge labels.",
+                ))
+            }
+            ("mirror-wall", "go color") => Ok(MuddleCommandOutcome::move_to(
+                "You return to the color sink.",
+                "color-sink",
+            )),
+            ("mirror-wall", "go vault") => Ok(MuddleCommandOutcome::move_to(
+                "You move to the prism vault door.",
+                "vault-door",
+            )),
+            ("vault-door", "unlock vault") if !self.state.mirrors_set => {
+                Ok(MuddleCommandOutcome::stay(
+                    "The vault lens is dark. Set mirrors before unlocking the vault.",
+                ))
+            }
+            ("vault-door", "unlock vault") => {
+                self.state.vault_unlocked = true;
+                self.state.exit_open = true;
+                Ok(MuddleCommandOutcome::stay(
+                    "The prism vault opens. A reset key drops and the garden exit unlocks.",
+                ))
+            }
+            ("vault-door", "request hint") => {
+                self.state.hints_used += 1;
+                Ok(MuddleCommandOutcome::stay(
+                    "Operator hint: the vault accepts the reflected code, not a manual force input.",
+                ))
+            }
+            ("vault-door", "go mirrors") => Ok(MuddleCommandOutcome::move_to(
+                "You return to the mirror wall.",
+                "mirror-wall",
+            )),
+            ("vault-door", "go exit") if self.state.exit_open => Ok(MuddleCommandOutcome::move_to(
+                "You step through the garden exit with the prism key reset.",
+                "garden-exit",
+            )),
+            ("vault-door", "go exit") => Ok(MuddleCommandOutcome::stay(
+                "The garden exit is still closed. Unlock the prism vault first.",
+            )),
+            ("garden-exit", "go vault") => Ok(MuddleCommandOutcome::move_to(
+                "You return to the vault door for reset review.",
+                "vault-door",
+            )),
+            (_, "go exit") if self.state.exit_open => Ok(MuddleCommandOutcome::move_to(
+                "You follow the solved light path and step through the garden exit.",
+                "garden-exit",
+            )),
+            (_, "go exit") => Ok(MuddleCommandOutcome::stay(
+                "The exit route needs the lens, color, mirrors, and vault solved first.",
+            )),
+            _ => Err(MuddleError::UnknownCommand {
+                room_id: room_id.to_string(),
+                command: command.clone(),
+            }),
+        }
+    }
+}
+
 impl AmazeSilverstreamMuddleHost {
     pub fn new(surface: AmazeMuddleSurface) -> Self {
         let rooms = surface
@@ -982,6 +1708,19 @@ mod tests {
     }
 
     #[test]
+    fn exposes_prism_vault_muddle_surface() {
+        let surface = prism_vault_muddle_surface();
+
+        assert_eq!(surface.host_name, "amaze-prism-vault");
+        assert_eq!(surface.start_room, "prism-entry");
+        assert!(surface.rooms.iter().any(|room| room.id == "vault-door"));
+        assert!(surface
+            .commands
+            .iter()
+            .any(|command| command.command == "unlock vault"));
+    }
+
+    #[test]
     fn product_owned_muddle_host_plays_silverstream_path() {
         let mut host = silverstream_muddle_host();
         let mut session = MuddleSession::for_host(&host).expect("host has start room");
@@ -1012,6 +1751,36 @@ mod tests {
             .inventory_panel()
             .iter()
             .any(|item| item.label == "hatch reset key"));
+    }
+
+    #[test]
+    fn product_owned_muddle_host_plays_prism_vault_path() {
+        let mut host = prism_vault_muddle_host();
+        let mut session = MuddleSession::for_host(&host).expect("host has start room");
+
+        for command in [
+            "go lens",
+            "align lens",
+            "go color",
+            "mix color",
+            "go mirrors",
+            "set mirrors",
+            "go vault",
+            "unlock vault",
+            "go exit",
+        ] {
+            session
+                .play_turn(&mut host, MuddleCommand::parse(command))
+                .expect("command plays");
+        }
+
+        assert_eq!(session.current_room, "garden-exit");
+        assert!(host.state().exit_open);
+        assert_eq!(host.resource_panel()[4].value, "escaped");
+        assert!(host
+            .inventory_panel()
+            .iter()
+            .any(|item| item.label == "prism reset key"));
     }
 
     #[test]
@@ -1072,6 +1841,35 @@ mod tests {
     }
 
     #[test]
+    fn product_owned_prism_vault_recovers_from_friction_path() {
+        let mut host = prism_vault_muddle_host();
+        let mut session = MuddleSession::for_host(&host).expect("host has start room");
+        for command in [
+            "go exit",
+            "go lens",
+            "go color",
+            "mix color",
+            "go lens",
+            "align lens",
+            "go color",
+            "mix color",
+            "go mirrors",
+            "set mirrors",
+            "go vault",
+            "go exit",
+            "unlock vault",
+            "go exit",
+        ] {
+            session
+                .play_turn(&mut host, MuddleCommand::parse(command))
+                .expect("friction path remains recoverable");
+        }
+
+        assert_eq!(session.current_room, "garden-exit");
+        assert!(host.state().exit_open);
+    }
+
+    #[test]
     fn product_owned_muddle_snapshot_carries_visual_scene_nodes() {
         let host = silverstream_muddle_host();
         let session = MuddleSession::for_host(&host).expect("host has start room");
@@ -1089,6 +1887,30 @@ mod tests {
             .visual_nodes
             .iter()
             .any(|node| node.id == "silverstream-scene"));
+        assert!(snapshot
+            .controls
+            .iter()
+            .any(|control| control.id == "visuals"));
+    }
+
+    #[test]
+    fn product_owned_prism_vault_snapshot_carries_visual_scene_nodes() {
+        let host = prism_vault_muddle_host();
+        let session = MuddleSession::for_host(&host).expect("host has start room");
+        let snapshot = session.client_snapshot(
+            &host,
+            muddle_core::MuddleClientInfo {
+                host: "amaze-prism-vault".to_string(),
+                description: "AMAZE Prism Vault".to_string(),
+                suggested_commands: "look".to_string(),
+            },
+            "Ready.",
+        );
+
+        assert!(snapshot
+            .visual_nodes
+            .iter()
+            .any(|node| node.id == "prism-vault-scene"));
         assert!(snapshot
             .controls
             .iter()
@@ -1171,6 +1993,54 @@ mod tests {
 
         assert_eq!(resumed.current_room, "hatch-exit");
         assert!(resumed_host.state().hatch_unlocked);
+        assert_eq!(resumed_host.state().hints_used, 1);
+    }
+
+    #[test]
+    fn product_owned_prism_vault_resumes_from_checkpoint_save() {
+        let mut host = prism_vault_muddle_host();
+        let mut session = MuddleSession::for_host(&host).expect("host has start room");
+        for command in [
+            "go lens",
+            "request hint",
+            "align lens",
+            "go color",
+            "mix color",
+            "go mirrors",
+            "set mirrors",
+            "go vault",
+            "unlock vault",
+        ] {
+            session
+                .play_turn(&mut host, MuddleCommand::parse(command))
+                .expect("command plays");
+        }
+
+        let save = session.save_for_host(&host);
+        assert_eq!(
+            save.host_checkpoint.as_deref(),
+            Some("lens_aligned=true;color_mixed=true;mirrors_set=true;vault_unlocked=true;exit_open=true;hints_used=1")
+        );
+
+        let checkpoint_only_save = muddle_core::MuddleSessionSave {
+            current_room: "vault-door".to_string(),
+            commands: vec![
+                "go lens".to_string(),
+                "go color".to_string(),
+                "go mirrors".to_string(),
+                "go vault".to_string(),
+            ],
+            host_checkpoint: save.host_checkpoint,
+        };
+        let mut resumed_host = prism_vault_muddle_host();
+        let mut resumed = MuddleSession::resume_for_host(&mut resumed_host, &checkpoint_only_save)
+            .expect("session resumes from host checkpoint");
+        resumed
+            .play_turn(&mut resumed_host, MuddleCommand::parse("go exit"))
+            .expect("checkpoint restored open exit");
+
+        assert_eq!(resumed.current_room, "garden-exit");
+        assert!(resumed_host.state().exit_open);
         assert_eq!(resumed_host.state().hints_used, 1);
     }
 }

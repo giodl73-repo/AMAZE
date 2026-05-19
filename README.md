@@ -110,12 +110,14 @@ Foundation scaffold plus first room seed:
 
 ## MUDDLE surface API
 
-The harness exposes a product-owned Silverstream play surface for MUDDLE adapter
+The harness exposes product-owned escape-room play surfaces for MUDDLE adapter
 work:
 
 ```rust
 let surface = amaze_harness::silverstream_muddle_surface();
 let host = amaze_harness::silverstream_muddle_host();
+let prism_surface = amaze_harness::prism_vault_muddle_surface();
+let prism_host = amaze_harness::prism_vault_muddle_host();
 ```
 
 The surface provides room ids, exits, resource/status defaults, objectives, and
@@ -123,6 +125,9 @@ command hints without moving MUDDLE renderer code into AMAZE. The host implement
 MUDDLE's `MuddleHost` contract for stateful Silverstream play, including
 checkpoint export/import for the route rail, breaker panel, galley reveal, fold
 table, radio broadcast, hatch, and hint state.
+Prism Vault adds a second MUDDLE room with lens, color, mirror, vault, and
+garden-exit checkpoint state so the shared clients can be tested against
+multiple AMAZE hosts.
 
 Run the product-owned MUDDLE launcher from `tools\amaze-harness` with:
 
@@ -131,10 +136,13 @@ cargo run --quiet --bin amaze-muddle
 cargo run --quiet --bin amaze-muddle -- --save silverstream.muddle
 cargo run --quiet --bin amaze-muddle -- --load silverstream.muddle --save silverstream.muddle
 cargo run --quiet --bin amaze-muddle -- --transcript silverstream-transcript.txt
+cargo run --quiet --bin amaze-prism-muddle
 cargo run --quiet --bin amaze-muddle-window -- --open
+cargo run --quiet --bin amaze-muddle-window -- --host amaze-prism-vault --open
 cargo run --quiet --bin amaze-muddle-window -- --save silverstream.window.muddle --transcript silverstream.window.txt --open
 cargo run --quiet --bin amaze-muddle-window -- --load silverstream.window.muddle --save silverstream.window.muddle --transcript silverstream.window.txt --open
 cargo run --quiet --bin amaze-muddle-macroquad
+cargo run --quiet --bin amaze-muddle-macroquad -- --host amaze-prism-vault
 cargo run --quiet --bin amaze-muddle-macroquad -- --save silverstream.macroquad.muddle --transcript silverstream.macroquad.txt
 ```
 
@@ -144,6 +152,9 @@ product-owned title and default save/transcript/import/export paths. The first
 complete command arc is: `go route`, `sort postcards`, `go breaker`,
 `set breakers`, `go galley`, `sort galley`, `go table`, `align table`,
 `go radio`, `tune radio`, `unlock hatch`, `go hatch`.
+The Prism Vault command arc is: `go lens`, `align lens`, `go color`,
+`mix color`, `go mirrors`, `set mirrors`, `go vault`, `unlock vault`,
+`go exit`.
 
 ## License
 

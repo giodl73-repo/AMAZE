@@ -1,4 +1,4 @@
-use amaze_harness::silverstream_muddle_host;
+use amaze_harness::{prism_vault_muddle_host, silverstream_muddle_host};
 use macroquad::prelude::*;
 use muddle_core::MuddleClientHostRegistration;
 use muddle_macroquad::{
@@ -40,6 +40,14 @@ async fn main() {
         suggested_commands:
             "`go route`, `sort postcards`, `set breakers`, `sort galley`, `align table`, `tune radio`, `unlock hatch`, `go hatch`.",
         create: || Box::new(silverstream_muddle_host()),
+    },
+    MuddleClientHostRegistration {
+        name: "amaze-prism-vault",
+        category: "Games",
+        description: "AMAZE Prism Vault: native light-and-mirror escape-room slice.",
+        suggested_commands:
+            "`go lens`, `align lens`, `mix color`, `set mirrors`, `unlock vault`, `go exit`.",
+        create: || Box::new(prism_vault_muddle_host()),
     }];
 
     if let Err(error) = run_muddle_macroquad_hosts(
