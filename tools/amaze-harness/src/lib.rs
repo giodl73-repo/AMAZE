@@ -844,7 +844,7 @@ impl MuddleHost for AmazePrismVaultMuddleHost {
             )
             .with_layer(8)
             .with_rect(0, 1, 1, 1)
-            .with_frame("ready"),
+            .with_frame("prism-warm"),
             MuddleVisualNode::sprite(
                 "operator-timer",
                 "Room timer",
@@ -853,7 +853,7 @@ impl MuddleHost for AmazePrismVaultMuddleHost {
             )
             .with_layer(8)
             .with_rect(11, 1, 1, 1)
-            .with_frame("active"),
+            .with_frame("prism-gold"),
             MuddleVisualNode::sprite(
                 "staff-reset-card",
                 "Reset card",
@@ -863,9 +863,9 @@ impl MuddleHost for AmazePrismVaultMuddleHost {
             .with_layer(8)
             .with_rect(11, 6, 1, 1)
             .with_frame(if self.state.exit_open {
-                "ready"
+                "prism-garden"
             } else {
-                "idle"
+                "prism-locked"
             }),
             MuddleVisualNode::sprite(
                 "light-conduit",
@@ -876,11 +876,11 @@ impl MuddleHost for AmazePrismVaultMuddleHost {
             .with_layer(5)
             .with_rect(1, 4, 10, 1)
             .with_frame(if self.state.mirrors_set {
-                "set"
+                "prism-solved"
             } else if self.state.lens_aligned {
-                "active"
+                "prism-cyan"
             } else {
-                "idle"
+                "prism-locked"
             }),
             amaze_room_token("prism-entry-token", "Entry", "prism-entry", current_room, 1),
             amaze_room_token("lens-token", "Lens bench", "lens-bench", current_room, 2),
@@ -909,9 +909,9 @@ impl MuddleHost for AmazePrismVaultMuddleHost {
             .with_layer(12)
             .with_rect(3, 3, 1, 1)
             .with_frame(if self.state.lens_aligned {
-                "set"
+                "prism-solved"
             } else {
-                "idle"
+                "prism-warm"
             }),
             MuddleVisualNode::sprite(
                 "color-slider-prop",
@@ -922,11 +922,11 @@ impl MuddleHost for AmazePrismVaultMuddleHost {
             .with_layer(12)
             .with_rect(5, 3, 1, 1)
             .with_frame(if self.state.color_mixed {
-                "ready"
+                "prism-solved"
             } else if self.state.lens_aligned {
-                "active"
+                "prism-cyan"
             } else {
-                "idle"
+                "prism-violet"
             }),
             MuddleVisualNode::sprite(
                 "mirror-prop",
@@ -937,11 +937,11 @@ impl MuddleHost for AmazePrismVaultMuddleHost {
             .with_layer(12)
             .with_rect(7, 3, 1, 1)
             .with_frame(if self.state.mirrors_set {
-                "set"
+                "prism-solved"
             } else if self.state.color_mixed {
-                "active"
+                "prism-violet"
             } else {
-                "idle"
+                "prism-locked"
             }),
             MuddleVisualNode::sprite(
                 "vault-prop",
@@ -952,11 +952,24 @@ impl MuddleHost for AmazePrismVaultMuddleHost {
             .with_layer(12)
             .with_rect(9, 3, 1, 1)
             .with_frame(if self.state.vault_unlocked {
-                "open"
+                "prism-gold"
             } else if self.state.mirrors_set {
-                "active"
+                "prism-cyan"
             } else {
-                "idle"
+                "prism-locked"
+            }),
+            MuddleVisualNode::sprite(
+                "garden-arch-prop",
+                "Garden arch",
+                "sprites/amaze/prism-garden-arch.png",
+                "Indoor ivy arch that marks the release moment.",
+            )
+            .with_layer(12)
+            .with_rect(11, 3, 1, 2)
+            .with_frame(if self.state.exit_open {
+                "prism-garden"
+            } else {
+                "prism-locked"
             }),
         ];
 
@@ -970,7 +983,7 @@ impl MuddleHost for AmazePrismVaultMuddleHost {
                 )
                 .with_layer(20)
                 .with_rect(1, 6, 2, 1)
-                .with_frame("aligned"),
+                .with_frame("prism-cyan"),
             );
         }
         if self.state.color_mixed {
@@ -983,7 +996,7 @@ impl MuddleHost for AmazePrismVaultMuddleHost {
                 )
                 .with_layer(20)
                 .with_rect(3, 6, 2, 1)
-                .with_frame("mixed"),
+                .with_frame("prism-violet"),
             );
         }
         if self.state.mirrors_set {
@@ -996,7 +1009,7 @@ impl MuddleHost for AmazePrismVaultMuddleHost {
                 )
                 .with_layer(20)
                 .with_rect(5, 6, 2, 1)
-                .with_frame("set"),
+                .with_frame("prism-solved"),
             );
         }
         if self.state.vault_unlocked {
@@ -1009,7 +1022,7 @@ impl MuddleHost for AmazePrismVaultMuddleHost {
                 )
                 .with_layer(20)
                 .with_rect(7, 6, 2, 1)
-                .with_frame("open")
+                .with_frame("prism-gold")
                 .with_animation("pulse"),
             );
         }
