@@ -2,10 +2,11 @@ use std::collections::HashMap;
 
 use court_core::{
     CourtAction, CourtActionAvailability, CourtAssessmentClaim, CourtAssessmentTarget,
-    CourtCompletionOutcome, CourtCritiqueFinding, CourtExperience, CourtExperienceIntent,
-    CourtFindingSeverity, CourtFindingSource, CourtFocusTestFinding, CourtPlaytestSession,
-    CourtPostmortemNote, CourtPrototypeRevision, CourtProvenance, CourtSceneNode, CourtSceneRole,
-    CourtSnapshot, CourtSnapshotMetadata, CourtSurfaceKind, CourtValidationPacket,
+    CourtCompletionOutcome, CourtCritiqueFinding, CourtEvidenceKind, CourtEvidenceReference,
+    CourtExperience, CourtExperienceIntent, CourtFindingSeverity, CourtFindingSource,
+    CourtFocusTestFinding, CourtPlaytestSession, CourtPostmortemNote, CourtPrototypeRevision,
+    CourtProvenance, CourtSceneNode, CourtSceneRole, CourtSnapshot, CourtSnapshotMetadata,
+    CourtSurfaceKind, CourtValidationPacket,
 };
 use muddle_core::{
     MuddleCommand, MuddleCommandHint, MuddleCommandOutcome, MuddleError, MuddleExit, MuddleHost,
@@ -584,6 +585,27 @@ pub fn prism_vault_court_validation_packet() -> CourtValidationPacket {
             changed_areas: vec!["court-snapshot-fixture".to_string()],
             non_goals: vec!["No MUDDLE migration.".to_string()],
         }],
+        evidence_references: vec![
+            CourtEvidenceReference {
+                owner_repo: "AMAZE".to_string(),
+                artifact_ref:
+                    "tools\\amaze-harness\\src\\lib.rs::product_owned_prism_vault_checkpoint_roundtrips_each_stage"
+                        .to_string(),
+                evidence_kind: CourtEvidenceKind::MuddlePathTest,
+                summary:
+                    "Product-owned MUDDLE test proves Prism Vault staged save/resume recovery."
+                        .to_string(),
+            },
+            CourtEvidenceReference {
+                owner_repo: "TRACKER".to_string(),
+                artifact_ref: "scripts\\launch-muddle-native.ps1 -VisualSmoke -Target amaze-prism"
+                    .to_string(),
+                evidence_kind: CourtEvidenceKind::PersonaHarness,
+                summary:
+                    "Portfolio smoke references late-game Prism Vault visual and command-state coverage."
+                        .to_string(),
+            },
+        ],
         playtest_sessions: vec![CourtPlaytestSession {
             session_id: "davis-cup-smoke".to_string(),
             audience: "adapter reviewers".to_string(),
@@ -2362,6 +2384,10 @@ mod tests {
         assert!(snapshot.has_scene_role(CourtSceneRole::Zone));
         assert_eq!(validation.experience_id, snapshot.experience.id);
         assert!(validation.has_assessment_claim(CourtAssessmentClaim::Comprehension));
+        assert!(validation.has_evidence_reference(
+            "AMAZE",
+            "tools\\amaze-harness\\src\\lib.rs::product_owned_prism_vault_checkpoint_roundtrips_each_stage"
+        ));
         assert_eq!(plan.title, "AMAZE Prism Vault");
         assert_eq!(plan.player_command_count, snapshot.actions.len());
         assert_eq!(plan.diagnostics.len(), 0);
