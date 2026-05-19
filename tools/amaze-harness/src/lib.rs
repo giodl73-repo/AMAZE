@@ -1870,6 +1870,146 @@ mod tests {
     }
 
     #[test]
+    fn product_owned_prism_vault_guardrails_preserve_state_until_prerequisites() {
+        let mut host = prism_vault_muddle_host();
+        let mut session = MuddleSession::for_host(&host).expect("host has start room");
+
+        let turn = session
+            .play_turn(&mut host, MuddleCommand::parse("go exit"))
+            .expect("premature exit gives a recoverable guardrail");
+        assert!(turn.response.contains("needs the lens, color, mirrors"));
+        assert_eq!(session.current_room, "prism-entry");
+        assert!(!host.state().exit_open);
+
+        session
+            .play_turn(&mut host, MuddleCommand::parse("go lens"))
+            .expect("entry moves to lens bench");
+        session
+            .play_turn(&mut host, MuddleCommand::parse("go color"))
+            .expect("lens bench can be bypassed toward color sink");
+        let turn = session
+            .play_turn(&mut host, MuddleCommand::parse("mix color"))
+            .expect("premature color mix gives a recoverable guardrail");
+        assert!(turn.response.contains("Align the lens first"));
+        assert!(!host.state().color_mixed);
+
+        session
+            .play_turn(&mut host, MuddleCommand::parse("go mirrors"))
+            .expect("color sink can be bypassed toward mirror wall");
+        let turn = session
+            .play_turn(&mut host, MuddleCommand::parse("set mirrors"))
+            .expect("premature mirror set gives a recoverable guardrail");
+        assert!(turn.response.contains("Mix color before setting mirrors"));
+        assert!(!host.state().mirrors_set);
+
+        session
+            .play_turn(&mut host, MuddleCommand::parse("go vault"))
+            .expect("mirror wall can be bypassed toward vault door");
+        let turn = session
+            .play_turn(&mut host, MuddleCommand::parse("unlock vault"))
+            .expect("premature vault unlock gives a recoverable guardrail");
+        assert!(turn.response.contains("Set mirrors before unlocking"));
+        assert!(!host.state().vault_unlocked);
+
+        let turn = session
+            .play_turn(&mut host, MuddleCommand::parse("go exit"))
+            .expect("closed garden exit gives a recoverable guardrail");
+        assert!(turn.response.contains("still closed"));
+        assert_eq!(session.current_room, "vault-door");
+        assert!(!host.state().exit_open);
+    }
+
+    #[test]
+    fn product_owned_prism_vault_checkpoint_roundtrips_each_stage() {
+        let mut host = prism_vault_muddle_host();
+        let mut session = MuddleSession::for_host(&host).expect("host has start room");
+
+        let stages = [
+            (
+                "go lens",
+                "lens-bench",
+                "lens_aligned=false;color_mixed=false;mirrors_set=false;vault_unlocked=false;exit_open=false;hints_used=0",
+                vec!["go lens"],
+            ),
+            (
+                "align lens",
+                "lens-bench",
+                "lens_aligned=true;color_mixed=false;mirrors_set=false;vault_unlocked=false;exit_open=false;hints_used=0",
+                vec!["go lens"],
+            ),
+            (
+                "go color",
+                "color-sink",
+                "lens_aligned=true;color_mixed=false;mirrors_set=false;vault_unlocked=false;exit_open=false;hints_used=0",
+                vec!["go lens", "go color"],
+            ),
+            (
+                "mix color",
+                "color-sink",
+                "lens_aligned=true;color_mixed=true;mirrors_set=false;vault_unlocked=false;exit_open=false;hints_used=0",
+                vec!["go lens", "go color"],
+            ),
+            (
+                "go mirrors",
+                "mirror-wall",
+                "lens_aligned=true;color_mixed=true;mirrors_set=false;vault_unlocked=false;exit_open=false;hints_used=0",
+                vec!["go lens", "go color", "go mirrors"],
+            ),
+            (
+                "set mirrors",
+                "mirror-wall",
+                "lens_aligned=true;color_mixed=true;mirrors_set=true;vault_unlocked=false;exit_open=false;hints_used=0",
+                vec!["go lens", "go color", "go mirrors"],
+            ),
+            (
+                "go vault",
+                "vault-door",
+                "lens_aligned=true;color_mixed=true;mirrors_set=true;vault_unlocked=false;exit_open=false;hints_used=0",
+                vec!["go lens", "go color", "go mirrors", "go vault"],
+            ),
+            (
+                "unlock vault",
+                "vault-door",
+                "lens_aligned=true;color_mixed=true;mirrors_set=true;vault_unlocked=true;exit_open=true;hints_used=0",
+                vec!["go lens", "go color", "go mirrors", "go vault"],
+            ),
+            (
+                "request hint",
+                "vault-door",
+                "lens_aligned=true;color_mixed=true;mirrors_set=true;vault_unlocked=true;exit_open=true;hints_used=1",
+                vec!["go lens", "go color", "go mirrors", "go vault"],
+            ),
+        ];
+
+        for (command, room, checkpoint, navigation_commands) in stages {
+            session
+                .play_turn(&mut host, MuddleCommand::parse(command))
+                .expect("stage command plays");
+            let save = session.save_for_host(&host);
+            assert_eq!(session.current_room, room);
+            assert_eq!(save.host_checkpoint.as_deref(), Some(checkpoint));
+
+            let checkpoint_only_save = muddle_core::MuddleSessionSave {
+                current_room: room.to_string(),
+                commands: navigation_commands
+                    .into_iter()
+                    .map(ToString::to_string)
+                    .collect(),
+                host_checkpoint: save.host_checkpoint,
+            };
+            let mut resumed_host = prism_vault_muddle_host();
+            let resumed = MuddleSession::resume_for_host(&mut resumed_host, &checkpoint_only_save)
+                .expect("session resumes from staged host checkpoint");
+
+            assert_eq!(resumed.current_room, room);
+            assert_eq!(
+                resumed_host.export_checkpoint().as_deref(),
+                Some(checkpoint)
+            );
+        }
+    }
+
+    #[test]
     fn product_owned_muddle_snapshot_carries_visual_scene_nodes() {
         let host = silverstream_muddle_host();
         let session = MuddleSession::for_host(&host).expect("host has start room");
