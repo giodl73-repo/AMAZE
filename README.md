@@ -127,7 +127,10 @@ checkpoint export/import for the route rail, breaker panel, galley reveal, fold
 table, radio broadcast, hatch, and hint state.
 Prism Vault adds a second MUDDLE room with lens, color, mirror, vault, and
 garden-exit checkpoint state so the shared clients can be tested against
-multiple AMAZE hosts.
+multiple AMAZE hosts. Its native scene includes room props, operator/reset
+artifacts, active beam state, richer objectives, and staged inventory/resource
+changes so the Macroquad slice feels populated while still using product-owned
+MUDDLE content.
 
 Run the product-owned MUDDLE launcher from `tools\amaze-harness` with:
 
