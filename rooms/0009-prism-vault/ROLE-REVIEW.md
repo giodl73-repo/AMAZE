@@ -19,6 +19,15 @@
 3. Persistent operator/reset props as part of the room fiction.
 4. More differentiated solved/unsolved prop states.
 5. No new puzzle beats until the current six-beat chain feels compelling.
+6. Optional inspect/aha beats should sit in the AMAZE host as product content,
+   not in the shared MUDDLE renderer.
+
+## Follow-up slice
+
+The follow-up implementation added room-local `inspect ...` commands and a
+visible `aha-prompt` scene label for Prism Vault. This answers the Aha Graph,
+Throughput Hint, and Playtest findings by making clue logic and operator/reset
+purpose readable without changing the solved path or mutating puzzle state.
 
 ## Open review questions
 

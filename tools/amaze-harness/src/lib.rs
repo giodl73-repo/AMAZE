@@ -457,6 +457,41 @@ pub fn prism_vault_muddle_surface() -> AmazeMuddleSurface {
                 command: "unlock vault",
                 description: "Open the prism vault after the mirrors are set.",
             },
+            AmazeMuddleCommand {
+                room_id: "prism-entry",
+                command: "inspect timer",
+                description: "Read the room timer, hint cadence, and safety pacing.",
+            },
+            AmazeMuddleCommand {
+                room_id: "prism-entry",
+                command: "inspect exit",
+                description: "Inspect the garden latch and reset-key silhouette.",
+            },
+            AmazeMuddleCommand {
+                room_id: "lens-bench",
+                command: "inspect lens",
+                description: "Inspect the lens rail, brass detents, and daylight gauge.",
+            },
+            AmazeMuddleCommand {
+                room_id: "color-sink",
+                command: "inspect sliders",
+                description: "Inspect the color sliders and tactile notches.",
+            },
+            AmazeMuddleCommand {
+                room_id: "mirror-wall",
+                command: "inspect mirrors",
+                description: "Inspect mirror brackets, labels, and beam routing.",
+            },
+            AmazeMuddleCommand {
+                room_id: "vault-door",
+                command: "inspect vault",
+                description: "Inspect the prism aperture, status lamps, and key chute.",
+            },
+            AmazeMuddleCommand {
+                room_id: "garden-exit",
+                command: "inspect garden",
+                description: "Inspect the ivy arch, key hook, and reset clipboard.",
+            },
         ],
     }
 }
@@ -530,6 +565,113 @@ impl AmazePrismVaultMuddleHost {
             }
             _ => "Prism Vault props are ready.",
         }
+    }
+
+    fn aha_prompt(&self, room_id: &str) -> &'static str {
+        match room_id {
+            "prism-entry" => "Aha: the locked exit is a reset-key story, not a dead end.",
+            "lens-bench" if self.state.lens_aligned => {
+                "Aha: aligned light is now safe enough to carry color."
+            }
+            "lens-bench" => "Aha: the brass detents and daylight stripe define alignment.",
+            "color-sink" if self.state.color_mixed => {
+                "Aha: color becomes a code only after safe light reaches the sink."
+            }
+            "color-sink" => "Aha: tactile notches match the lens marks.",
+            "mirror-wall" if self.state.mirrors_set => {
+                "Aha: the mirror path turns the color code into a vault input."
+            }
+            "mirror-wall" => "Aha: colored edges order the mirrors from large to small.",
+            "vault-door" if self.state.vault_unlocked => {
+                "Aha: the vault releases a reset key, which makes the exit legitimate."
+            }
+            "vault-door" => "Aha: the vault wants reflected code, not force.",
+            "garden-exit" => "Aha: a satisfying escape also leaves staff a clean reset.",
+            _ => "Aha: every visible prop should earn its place.",
+        }
+    }
+
+    fn inspect(&self, room_id: &str, target: &str) -> MuddleCommandOutcome {
+        let response = match (room_id, target) {
+            ("prism-entry", "timer") => {
+                "The room timer is big enough for a nervous team to see. A staff mark says: soft hint at 7 minutes, graceful exit at 12."
+            }
+            ("prism-entry", "exit") | ("prism-entry", "garden") => {
+                "The acrylic garden door is locked from the room side, but the reset placard shows a key silhouette beside the vault symbol."
+            }
+            ("lens-bench", "lens") => {
+                if self.state.lens_aligned {
+                    "The Fresnel lens is seated in the brass detent. The daylight stripe lands cleanly on the color-sink conduit."
+                } else {
+                    "The Fresnel lens is close but skewed. Three brass detents and a striped daylight gauge tell you the rail wants one exact seat."
+                }
+            }
+            ("lens-bench", "detents") | ("lens-bench", "gauge") => {
+                "The detents are not decoration: their spacing matches the three marks printed beside the color sliders."
+            }
+            ("color-sink", "sliders") | ("color-sink", "color") => {
+                if self.state.color_mixed {
+                    "Cyan, amber, and violet now line up on the frosted strip. The resulting code is meant to travel, not be typed."
+                } else if self.state.lens_aligned {
+                    "Each slider has a tactile notch. The lens marks suggest which notches should be paired."
+                } else {
+                    "The sliders move, but the frosted strip stays muddy without aligned light from the lens bench."
+                }
+            }
+            ("color-sink", "strip") => {
+                "The frosted strip is a physical display surface: it only becomes readable when color and light agree."
+            }
+            ("mirror-wall", "mirrors") => {
+                if self.state.mirrors_set {
+                    "The six mirrors now make a clean zig-zag path through the colored edge labels and into the vault aperture."
+                } else if self.state.color_mixed {
+                    "The mirror brackets are numbered by size, but the colored edge labels are the real ordering clue."
+                } else {
+                    "The mirrors can swivel, but without a mixed code there is no meaningful beam to aim."
+                }
+            }
+            ("mirror-wall", "labels") => {
+                "The labels repeat cyan, amber, and violet in a sequence that tells the team how to route the beam."
+            }
+            ("vault-door", "vault") | ("vault-door", "aperture") => {
+                if self.state.vault_unlocked {
+                    "The prism aperture is bright gold. The key chute has dropped the reset key into the player tray."
+                } else if self.state.mirrors_set {
+                    "The aperture is lit and waiting. The status lamps imply the reflected code is ready to be accepted."
+                } else {
+                    "The vault is beautiful but inert: the aperture is dark and the override cover is sealed."
+                }
+            }
+            ("vault-door", "chute") | ("vault-door", "key") => {
+                if self.state.vault_unlocked {
+                    "The reset key sits in the chute tray, tagged for the garden latch and staff reset checklist."
+                } else {
+                    "The chute is empty, but its key-shaped tray makes the payoff readable before it happens."
+                }
+            }
+            ("garden-exit", "garden") | ("garden-exit", "arch") => {
+                "The ivy arch is deliberately gentle after all the machinery: a small release space, a key hook, and a reset clipboard."
+            }
+            ("garden-exit", "clipboard") | ("garden-exit", "reset") => {
+                "The reset clipboard lists lens rail, color sliders, mirror brackets, vault chute, key hook. Staff can verify the whole loop."
+            }
+            (_, "beam") => {
+                if self.state.mirrors_set {
+                    "The beam path is vault-bound: lens, color, and mirrors all agree."
+                } else if self.state.color_mixed {
+                    "The beam is coded but not routed. The mirror wall is the missing bridge."
+                } else if self.state.lens_aligned {
+                    "The beam is safe and clean, but it has not picked up a color code yet."
+                } else {
+                    "The beam path is dark. The first visible job is to align the lens."
+                }
+            }
+            _ => return MuddleCommandOutcome::stay(format!(
+                "You inspect the room details. {}",
+                self.room_detail(room_id)
+            )),
+        };
+        MuddleCommandOutcome::stay(response)
     }
 
     fn look(&self, room_id: &str) -> Result<MuddleCommandOutcome, MuddleError> {
@@ -771,10 +913,13 @@ impl MuddleHost for AmazePrismVaultMuddleHost {
         match current_room {
             "prism-entry" => hints(&[
                 ("look", "Show the prism entry."),
+                ("inspect timer", "Inspect the timer and run clock."),
+                ("inspect exit", "Inspect the locked garden exit."),
                 ("go lens", "Move to the lens bench."),
             ]),
             "lens-bench" => hints(&[
                 ("look", "Show the lens bench."),
+                ("inspect lens", "Inspect the lens rail and daylight gauge."),
                 ("align lens", "Align the chunky lens rail."),
                 ("request hint", "Ask for an operator-safe hint."),
                 ("go entry", "Return to the prism entry."),
@@ -782,6 +927,7 @@ impl MuddleHost for AmazePrismVaultMuddleHost {
             ]),
             "color-sink" => hints(&[
                 ("look", "Show the color sink."),
+                ("inspect sliders", "Inspect the tactile color sliders."),
                 ("mix color", "Mix the prism color code."),
                 ("request hint", "Ask for an operator-safe hint."),
                 ("go lens", "Return to the lens bench."),
@@ -789,6 +935,7 @@ impl MuddleHost for AmazePrismVaultMuddleHost {
             ]),
             "mirror-wall" => hints(&[
                 ("look", "Show the mirror wall."),
+                ("inspect mirrors", "Inspect mirrors and colored labels."),
                 ("set mirrors", "Set the mirror path."),
                 ("request hint", "Ask for an operator-safe hint."),
                 ("go color", "Return to the color sink."),
@@ -796,6 +943,7 @@ impl MuddleHost for AmazePrismVaultMuddleHost {
             ]),
             "vault-door" => hints(&[
                 ("look", "Show the vault door."),
+                ("inspect vault", "Inspect the aperture and status lamps."),
                 ("unlock vault", "Unlock the prism vault."),
                 ("request hint", "Ask for an operator-safe hint."),
                 ("go mirrors", "Return to the mirror wall."),
@@ -803,6 +951,11 @@ impl MuddleHost for AmazePrismVaultMuddleHost {
             ]),
             "garden-exit" => hints(&[
                 ("look", "Show the garden exit."),
+                (
+                    "inspect garden",
+                    "Inspect the release space and reset hook.",
+                ),
+                ("inspect reset", "Inspect the reset checklist."),
                 ("go vault", "Return to the vault door."),
             ]),
             _ => Vec::new(),
@@ -836,6 +989,9 @@ impl MuddleHost for AmazePrismVaultMuddleHost {
             )
             .with_layer(30)
             .with_rect(0, 7, 8, 1),
+            MuddleVisualNode::text("aha-prompt", "Aha prompt", self.aha_prompt(current_room))
+                .with_layer(30)
+                .with_rect(8, 7, 4, 1),
             MuddleVisualNode::sprite(
                 "foyer-lamps",
                 "Amber lamps",
@@ -1112,6 +1268,23 @@ impl MuddleHost for AmazePrismVaultMuddleHost {
         let normalized = command.normalized();
         match (room_id, normalized.as_str()) {
             (_, "look") => self.look(room_id),
+            (_, "inspect timer") => Ok(self.inspect(room_id, "timer")),
+            (_, "inspect exit") => Ok(self.inspect(room_id, "exit")),
+            (_, "inspect garden") => Ok(self.inspect(room_id, "garden")),
+            (_, "inspect lens") => Ok(self.inspect(room_id, "lens")),
+            (_, "inspect detents") => Ok(self.inspect(room_id, "detents")),
+            (_, "inspect gauge") => Ok(self.inspect(room_id, "gauge")),
+            (_, "inspect sliders") => Ok(self.inspect(room_id, "sliders")),
+            (_, "inspect color") => Ok(self.inspect(room_id, "color")),
+            (_, "inspect strip") => Ok(self.inspect(room_id, "strip")),
+            (_, "inspect mirrors") => Ok(self.inspect(room_id, "mirrors")),
+            (_, "inspect labels") => Ok(self.inspect(room_id, "labels")),
+            (_, "inspect vault") => Ok(self.inspect(room_id, "vault")),
+            (_, "inspect aperture") => Ok(self.inspect(room_id, "aperture")),
+            (_, "inspect chute") => Ok(self.inspect(room_id, "chute")),
+            (_, "inspect key") => Ok(self.inspect(room_id, "key")),
+            (_, "inspect reset") => Ok(self.inspect(room_id, "reset")),
+            (_, "inspect beam") => Ok(self.inspect(room_id, "beam")),
             ("prism-entry", "go lens") => Ok(MuddleCommandOutcome::move_to(
                 "You move to the chunky lens bench.",
                 "lens-bench",
@@ -1951,6 +2124,10 @@ mod tests {
             .commands
             .iter()
             .any(|command| command.command == "unlock vault"));
+        assert!(surface
+            .commands
+            .iter()
+            .any(|command| command.command == "inspect lens"));
     }
 
     #[test]
@@ -2308,6 +2485,42 @@ mod tests {
             .expect("lens room exists")
             .description
             .contains("brass detents"));
+    }
+
+    #[test]
+    fn product_owned_prism_vault_inspect_beats_are_recoverable_and_visible() {
+        let mut host = prism_vault_muddle_host();
+        let mut session = MuddleSession::for_host(&host).expect("host has start room");
+
+        let turn = session
+            .play_turn(&mut host, MuddleCommand::parse("inspect timer"))
+            .expect("timer inspection stays recoverable");
+        assert!(turn.response.contains("nervous team"));
+        assert_eq!(session.current_room, "prism-entry");
+        assert!(!host.state().lens_aligned);
+
+        session
+            .play_turn(&mut host, MuddleCommand::parse("go lens"))
+            .expect("lens room is reachable");
+        let turn = session
+            .play_turn(&mut host, MuddleCommand::parse("inspect lens"))
+            .expect("lens inspection stays recoverable");
+        assert!(turn.response.contains("brass detents"));
+        assert_eq!(session.current_room, "lens-bench");
+        assert!(!host.state().lens_aligned);
+
+        let scene = host
+            .visual_nodes("lens-bench")
+            .into_iter()
+            .find(|node| node.id == "prism-vault-scene")
+            .expect("scene group exists");
+        assert!(scene.children.iter().any(|node| {
+            node.id == "aha-prompt"
+                && node
+                    .text
+                    .as_deref()
+                    .is_some_and(|text| text.contains("brass detents"))
+        }));
     }
 
     #[test]

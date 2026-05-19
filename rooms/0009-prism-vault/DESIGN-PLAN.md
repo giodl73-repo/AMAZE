@@ -2,9 +2,9 @@
 
 ## Status
 
-- Lifecycle state: MUDDLE prototype, visual differentiation pass
-- Current version: v0.visual
-- Last evidence source: `amaze-prism` Macroquad play review and role review
+- Lifecycle state: MUDDLE prototype, inspectable aha-beat pass
+- Current version: v0.inspect
+- Last evidence source: `amaze-prism` Macroquad play review, role review, and inspect-beat harness coverage
 - Next gate: role-reviewed native playtest with novice/family/operator personas
 
 ## Experience thesis
@@ -35,6 +35,8 @@ operator-readable reset signals.
 4. Operator/reset artifacts should be present in the fiction so the room feels
    runnable ten times a day.
 5. The final scene should read as "vault open + garden exit" at a glance.
+6. Optional inspections should reward curiosity without mutating puzzle state or
+   replacing the main command path.
 
 ## Beat sequence
 
@@ -60,6 +62,8 @@ operator-readable reset signals.
    evidence, not puzzle order.
 5. Raise/maintain the visual-smoke density gate after the pass so style cannot
    regress silently.
+6. Add room-local `inspect ...` commands and visible aha prompts so each beat
+   explains the clue logic, reset value, or operator purpose behind its props.
 
 ## Non-goals
 
