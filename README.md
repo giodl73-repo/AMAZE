@@ -146,12 +146,13 @@ cargo run --quiet --bin amaze-muddle-macroquad -- --host amaze-prism-vault
 cargo run --quiet --bin amaze-muddle-macroquad -- --save silverstream.macroquad.muddle --transcript silverstream.macroquad.txt
 ```
 
-The native Macroquad launcher opens directly into the full Silverstream
-route-to-radio arc with a
-product-owned title and default save/transcript/import/export paths. The first
-complete command arc is: `go route`, `sort postcards`, `go breaker`,
-`set breakers`, `go galley`, `sort galley`, `go table`, `align table`,
-`go radio`, `tune radio`, `unlock hatch`, `go hatch`.
+The native Macroquad launcher uses AMAZE-level chrome and defaults to the full
+Silverstream route-to-radio arc, with Silverstream save/transcript/import/export
+paths. Passing `--host amaze-prism-vault` opens Prism Vault with Prism-specific
+default save/transcript/import/export paths. The first Silverstream command arc
+is: `go route`, `sort postcards`, `go breaker`, `set breakers`, `go galley`,
+`sort galley`, `go table`, `align table`, `go radio`, `tune radio`,
+`unlock hatch`, `go hatch`.
 The Prism Vault command arc is: `go lens`, `align lens`, `go color`,
 `mix color`, `go mirrors`, `set mirrors`, `go vault`, `unlock vault`,
 `go exit`.

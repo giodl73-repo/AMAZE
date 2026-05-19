@@ -7,9 +7,10 @@ use muddle_macroquad::{
 };
 
 const HOST_NAME: &str = "amaze-silverstream";
+const PRISM_HOST_NAME: &str = "amaze-prism-vault";
 
 fn window_conf() -> Conf {
-    macroquad_window_conf("AMAZE Silverstream")
+    macroquad_window_conf("AMAZE MUDDLE")
 }
 
 #[macroquad::main(window_conf)]
@@ -25,13 +26,23 @@ async fn main() {
     if options.host_name.is_none() && !options.list_hosts && !options.show_help {
         options.host_name = Some(HOST_NAME.to_string());
     }
-    apply_default_macroquad_paths(
-        &mut options,
-        "silverstream.macroquad.muddle",
-        "silverstream.macroquad.txt",
-        "silverstream.import.muddle",
-        "silverstream.export.muddle",
-    );
+    if options.host_name.as_deref() == Some(PRISM_HOST_NAME) {
+        apply_default_macroquad_paths(
+            &mut options,
+            "prism-vault.macroquad.muddle",
+            "prism-vault.macroquad.txt",
+            "prism-vault.import.muddle",
+            "prism-vault.export.muddle",
+        );
+    } else {
+        apply_default_macroquad_paths(
+            &mut options,
+            "silverstream.macroquad.muddle",
+            "silverstream.macroquad.txt",
+            "silverstream.import.muddle",
+            "silverstream.export.muddle",
+        );
+    }
 
     let registrations = vec![MuddleClientHostRegistration {
         name: HOST_NAME,
@@ -42,7 +53,7 @@ async fn main() {
         create: || Box::new(silverstream_muddle_host()),
     },
     MuddleClientHostRegistration {
-        name: "amaze-prism-vault",
+        name: PRISM_HOST_NAME,
         category: "Games",
         description: "AMAZE Prism Vault: native light-and-mirror escape-room slice.",
         suggested_commands:
@@ -54,7 +65,7 @@ async fn main() {
         registrations,
         options,
         MuddleMacroquadRunConfig {
-            screen_title: "AMAZE Silverstream".to_string(),
+            screen_title: "AMAZE MUDDLE".to_string(),
         },
     )
     .await
