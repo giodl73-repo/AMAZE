@@ -1,33 +1,26 @@
 # AMAZE
 
-**A mobile escape-room design workshop for trailer-scale builds.**
+**An escape-room design workshop.**
 
-AMAZE designs escape rooms that can fit inside Airstream-size or larger trailers:
-portable, inspectable, resettable game spaces where puzzle craft, physical layout,
-safety, operations, and build logistics are designed together from the start.
+AMAZE designs escape rooms as physical built environments: inspectable,
+resettable game spaces where puzzle craft, spatial layout, safety, operations,
+and build logistics are designed together from the start.
 
 AMAZE belongs to the Games Design family, alongside puzzle hunts, tabletop
-adventures, and board-game systems. Its medium is different: the final artifact
-is a compact built environment that has to move, reset, survive teams, and keep
-players safe.
+adventures, board-game factories, and world-building simulators. Its medium is
+different: the final artifact is a built environment that resets, survives teams,
+and keeps players safe.
 
 ## Design promise
 
 Every room should be:
 
 1. **Playable** - puzzles produce fair aha moments, not prop-search frustration.
-2. **Buildable** - components fit, mount, reset, and travel inside a real trailer.
+2. **Buildable** - components fit, mount, and reset cleanly in a real space.
 3. **Safe** - egress, fire, electrical, visibility, accessibility, and operator
    controls are design inputs, not late checklists.
-4. **Operable** - staff can reset, monitor, hint, repair, and transport the room.
+4. **Operable** - staff can reset, monitor, hint, and repair the room.
 5. **Memorable** - the space has a reason to exist beyond being a box of locks.
-
-## First target
-
-The first design target is a trailer-scale escape room, roughly Airstream-size or
-larger. The repo should treat exact dimensions, axle/weight limits, power
-availability, staffing, jurisdictional rules, and venue constraints as explicit
-brief variables.
 
 ## Repo layout
 
@@ -42,7 +35,7 @@ AMAZE/
   docs/puzzle-phases.md        puzzle-type phases, waves, pulses, and theme fits
   docs/team-testing.md         whole-team archetypes for simulation/playtest
   docs/behavior-testing.md     first-class behavior probes for simulation/playtest
-  docs/session-duration.md     30/45/60 minute timing profiles and ops slots
+  docs/session-duration.md     30/45/60-minute timing profiles and ops slots
   docs/scene-beat-harness.md   D&D-style simulation harness for rooms
   docs/harness.md              Rust CLI harness for fast beat runs
   docs/build-economics.md      BOM, budget, durability, and reliability gates
@@ -50,8 +43,8 @@ AMAZE/
   personas/                    player, operator, builder, and venue lenses
   rooms/                       one directory per room concept
   components/                  reusable inventory, sourcing, props, locks, sensors, lighting, scenic modules
-  operations/                  reset, staffing, maintenance, transport, and safety checklists
-  research/                    escape-room, trailer, accessibility, and build references
+  operations/                  reset, staffing, maintenance, and safety checklists
+  research/                    escape-room, build, accessibility, and reference materials
   .roles/                      governance and creative review lenses
 ```
 
@@ -62,7 +55,7 @@ BRIEF -> FLOORPLAN -> PUZZLE GRAPH -> SIMULATION -> BOM/BUDGET -> BUILD PLAN -> 
 ```
 
 The workflow is intentionally physical. A puzzle graph that cannot fit in the
-room, survive transport, or reset cleanly is not ready.
+room or reset cleanly is not ready.
 
 ## Design loop
 
@@ -87,9 +80,9 @@ behaviors are tested through [`docs/behavior-testing.md`](docs/behavior-testing.
 Fast beat runs and configurable session optimization can be generated with the
 Rust CLI described in [`docs/harness.md`](docs/harness.md). Session length is a
 room variable: see [`docs/session-duration.md`](docs/session-duration.md) for
-30-minute trailer, 45-minute staffed-hour, and 60-minute standard profiles.
-Every promoted puzzle beat also needs a physical mechanism, reusable inventory
-ID or custom fabrication plan, and build economics review through
+30-minute, 45-minute, and 60-minute timing profiles. Every promoted puzzle beat
+also needs a physical mechanism, reusable inventory ID or custom fabrication
+plan, and build economics review through
 [`docs/build-economics.md`](docs/build-economics.md): BOM, supplier class, price
 band, durability, reliability, breakage recovery, and replacement plan. Common
 parts live in [`components/INVENTORY.md`](components/INVENTORY.md), with sourcing
@@ -141,11 +134,10 @@ let court_snapshot = amaze_harness::prism_vault_court_snapshot();
 let validation = amaze_harness::prism_vault_court_validation_packet();
 ```
 
-This is a Davis Cup adoption fixture, not a migration. MUDDLE remains the
-playable path and owns the current room-command client contract; COURT describes
-the portable experience shape; RACKET can consume the snapshot for adapter
-compatibility diagnostics and a windowless runtime-loop smoke without owning
-AMAZE puzzle rules.
+This is an adoption fixture, not a migration. MUDDLE remains the playable path
+and owns the current room-command client contract; COURT describes the portable
+experience shape; RACKET can consume the snapshot for adapter compatibility
+diagnostics and a windowless runtime-loop smoke without owning AMAZE puzzle rules.
 
 Run the product-owned MUDDLE launcher from `tools\amaze-harness` with:
 
@@ -175,6 +167,22 @@ The Prism Vault command arc is: `go lens`, `align lens`, `go color`,
 `mix color`, `go mirrors`, `set mirrors`, `go vault`, `unlock vault`,
 `go exit`.
 
+## Games infrastructure
+
+AMAZE uses three shared games-design tools:
+
+- **[MUDDLE](https://github.com/giodl73-repo/MUDDLE)** — shared room-command UX
+  engine. AMAZE hosts Silverstream and Prism Vault through MUDDLE's adapter
+  contracts, with CLI, browser-window, and native Macroquad clients.
+- **[RALLY](https://github.com/giodl73-repo/RALLY)** — shared simulation and
+  validation substrate. Deterministic seeded runs, event traces, and validation
+  evidence used across all game-design repos.
+- **[COURT](https://github.com/giodl73-repo/COURT) /
+  [RACKET](https://github.com/giodl73-repo/RACKET)** — scalable experience
+  framework and engine adapter. Prism Vault exposes a COURT adoption fixture
+  that RACKET consumes for compatibility diagnostics and windowless runtime
+  smokes.
+
 ## License
 
-Private repository. License decision pending.
+[MIT](LICENSE) — © 2026 Gio Della-Libera.
